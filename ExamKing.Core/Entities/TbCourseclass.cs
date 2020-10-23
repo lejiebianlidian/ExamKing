@@ -47,6 +47,10 @@ namespace ExamKing.Core.Entites
                 .HasForeignKey(d => d.Courseld)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("course_id");
+
+            //entityBuilder.HasData(
+            //            new { Courseld = 1, Classesld = 1 }
+            //        );
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿{
     "ConnectionStrings": {
-        "ExamConnectionString": "Server=localhost;Port=3306;Database=exam;User=root;Password=root;MultipleActiveResultSets=True;"
+        "ExamConnectionString": "Server=localhost;Port=3306;Database=exam;User=root;Password=root;"
     }
 }

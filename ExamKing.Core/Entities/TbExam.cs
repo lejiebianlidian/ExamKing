@@ -39,6 +39,16 @@ namespace ExamKing.Core.Entites
         public virtual ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
         public virtual ICollection<TbStuscore> TbStuscores { get; set; }
 
+        /// <summary>
+        /// 多对多
+        /// </summary>
+        public ICollection<TbClass> TbClasses { get; set; }
+
+        /// <summary>
+        /// 多对多中间表
+        /// </summary>
+        public List<TbExamclass> TbExamclasses { get; set; }
+
         public void Configure(EntityTypeBuilder<TbExam> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
             entityBuilder.ToTable("tb_exam");

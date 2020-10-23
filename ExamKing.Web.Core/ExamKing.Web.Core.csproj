@@ -6,5 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExamKing.Database.Migrations\ExamKing.Database.Migrations.csproj" />
+    <ProjectReference Include="..\ExamKing.Application\ExamKing.Application.csproj" />
   </ItemGroup>
 </Project>

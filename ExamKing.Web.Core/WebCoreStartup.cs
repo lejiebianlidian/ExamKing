@@ -1,5 +1,4 @@
-﻿using System;
-using Fur;
+﻿using Fur;
 using Fur.UnifyResult;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -23,6 +23,27 @@ namespace ExamKing.Core.Entites
         public virtual TbDept DeptldNavigation { get; set; }
         public virtual ICollection<TbStudent> TbStudents { get; set; }
 
+        /// <summary>
+        /// 多对多
+        /// </summary>
+        public ICollection<TbCourse> TbCourses { get; set; }
+
+        /// <summary>
+        /// 多对多中间表
+        /// </summary>
+        public List<TbCourseclass> TbCourseclasses { get; set; }
+
+        /// <summary>
+        /// 多对多
+        /// </summary>
+        public ICollection<TbExam> TbExams { get; set; }
+
+        /// <summary>
+        /// 多对多中间表
+        /// </summary>
+        public List<TbExamclass> TbExamclasses { get; set; }
+
+
         public void Configure(EntityTypeBuilder<TbClass> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
             entityBuilder.ToTable("tb_classes");
@@ -63,6 +84,12 @@ namespace ExamKing.Core.Entites
                 .HasForeignKey(d => d.Deptld)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("classes_dept_id");
+
+            entityBuilder.HasMany(p => p.TbCourses)
+                .WithMany(p => p.TbClasses);
+
+            entityBuilder.HasMany(p => p.TbExams)
+                .WithMany(p => p.TbClasses);
         }
     }
 }

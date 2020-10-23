@@ -33,6 +33,16 @@ namespace ExamKing.Core.Entites
         public virtual ICollection<TbSelect> TbSelects { get; set; }
         public virtual ICollection<TbStuscore> TbStuscores { get; set; }
 
+        /// <summary>
+        /// 多对多
+        /// </summary>
+        public ICollection<TbClass> TbClasses { get; set; }
+
+        /// <summary>
+        /// 多对多中间表
+        /// </summary>
+        public List<TbCourseclass> TbCourseclasses { get; set; }
+
         public void Configure(EntityTypeBuilder<TbCourse> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
             entityBuilder.ToTable("tb_course");
@@ -85,6 +95,9 @@ namespace ExamKing.Core.Entites
                 .HasForeignKey(d => d.Teacherld)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("course_teacher_id");
+
+            entityBuilder.HasMany(p => p.TbClasses)
+                .WithMany(p => p.TbCourses);
         }
     }
 }

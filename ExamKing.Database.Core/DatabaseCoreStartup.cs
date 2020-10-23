@@ -12,7 +12,7 @@ namespace ExamKing.Database.Core
             services.AddDatabaseAccessor(options =>
             {
                 options.AddDbPool<ExamDbContext>(DbProvider.MySql);
-            });
+            }, "ExamKing.Database.Migrations");
         }
     }
 }
