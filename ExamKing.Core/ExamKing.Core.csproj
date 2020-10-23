@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fur" Version="1.0.0-rc.final.20" />
+    <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.1.20514.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Security\" />
+    <Folder Include="Security\Consts\" />
+  </ItemGroup>
+</Project>
