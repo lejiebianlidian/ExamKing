@@ -1,5 +1,6 @@
 ﻿{
     "ConnectionStrings": {
-        "ExamConnectionString": "Server=localhost;Port=3306;Database=exam;User=root;Password=root;"
+        "ExamConnectionString": "server=localhost;port=3306;database=exam;user=root;password=root",
+        //"TextConnectionString": "Data Source=./Test.db"
     }
 }

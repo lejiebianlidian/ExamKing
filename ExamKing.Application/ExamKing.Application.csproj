@@ -8,9 +8,21 @@
     <ProjectReference Include="..\ExamKing.Core\ExamKing.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Mappers\" />
-    <Folder Include="Admin\" />
-    <Folder Include="Admin\v1\" />
+    <Folder Include="Services\" />
+    <Folder Include="Api\" />
+    <Folder Include="Api\Manage\" />
+    <Folder Include="Api\Student\" />
+    <Folder Include="Api\Teacher\" />
+    <Folder Include="Api\Student\Controllers\" />
+    <Folder Include="Api\Student\Dtos\" />
+    <Folder Include="Services\Interface\" />
+    <Folder Include="Mappers\Dtos\" />
+    <Folder Include="Common\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="applicationsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

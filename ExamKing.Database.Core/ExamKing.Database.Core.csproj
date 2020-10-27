@@ -7,4 +7,9 @@
   <ItemGroup>
     <ProjectReference Include="..\ExamKing.Core\ExamKing.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="dbsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
