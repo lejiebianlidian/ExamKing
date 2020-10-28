@@ -1,7 +1,6 @@
 ﻿using Fur.ObjectMapper;
 using Mapster;
 using ExamKing.Core.Entites;
-using ExamKing.Application.Api.Student;
 
 namespace ExamKing.Application.Mappers
 {

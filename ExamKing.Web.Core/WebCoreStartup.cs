@@ -1,10 +1,9 @@
-﻿using Fur;
-using Fur.UnifyResult;
+﻿using System;
+using Fur;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RESTfulResultProvider = ExamKing.Common.UnifyResult.RESTfulResultProvider;
 
 namespace ExamKing.Web.Core
 {
@@ -13,11 +12,8 @@ namespace ExamKing.Web.Core
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddCorsAccessor()
-                .AddControllersWithViews()
-                .AddInject()
-                .AddUnifyResult<RESTfulResult, RESTfulResultProvider>();
+            services.AddControllersWithViews().AddInject();
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -32,8 +28,6 @@ namespace ExamKing.Web.Core
 
             app.UseRouting();
 
-            app.UseCorsAccessor();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -45,6 +39,7 @@ namespace ExamKing.Web.Core
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

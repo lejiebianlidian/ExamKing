@@ -9,6 +9,6 @@ namespace ExamKing.Application.Services
     /// </summary>
     public interface IClassesService
     {
-        public Task<TbClass> InsertClass(ClassesDto classesDto);
+        public Task<ClassesDto> InsertClass(ClassesDto classesDto);
     }
 }

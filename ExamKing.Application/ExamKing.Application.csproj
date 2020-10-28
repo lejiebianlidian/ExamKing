@@ -3,26 +3,22 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\ExamKing.Application.xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\ExamKing.Application.xml</DocumentationFile>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\ExamKing.Core\ExamKing.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mappers\" />
     <Folder Include="Services\" />
-    <Folder Include="Api\" />
-    <Folder Include="Api\Manage\" />
-    <Folder Include="Api\Student\" />
-    <Folder Include="Api\Teacher\" />
-    <Folder Include="Api\Student\Controllers\" />
-    <Folder Include="Api\Student\Dtos\" />
     <Folder Include="Services\Interface\" />
     <Folder Include="Mappers\Dtos\" />
-    <Folder Include="Common\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="applicationsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

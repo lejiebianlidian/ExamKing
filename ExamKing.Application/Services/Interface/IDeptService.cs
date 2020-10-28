@@ -14,6 +14,6 @@ namespace ExamKing.Application.Services
         /// </summary>
         /// <param name="deptDto"></param>
         /// <returns></returns>
-        public Task<TbDept> InsertDept(DeptDto deptDto);
+        public Task<DeptDto> InsertDept(DeptDto deptDto);
     }
 }

@@ -5,7 +5,6 @@ using ExamKing.Core.Entites;
 using ExamKing.Application.Mappers;
 using Mapster;
 using Fur.DependencyInjection;
-using System;
 
 namespace ExamKing.Application.Services
 {
@@ -23,11 +22,10 @@ namespace ExamKing.Application.Services
         /// </summary>
         /// <param name="deptDto"></param>
         /// <returns></returns>
-        public async Task<TbDept> InsertDept(DeptDto deptDto)
+        public async Task<DeptDto> InsertDept(DeptDto deptDto)
         {
-
             var dept = await _deptRepository.InsertNowAsync(deptDto.Adapt<TbDept>());
-            return dept.Entity;
+            return dept.Entity.Adapt<DeptDto>();
         }
     }
 }
