@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
@@ -9,6 +10,7 @@ using Fur.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json.Linq;
 using Mapster;
+using Microsoft.AspNetCore.Mvc.Core;
 
 namespace ExamKing.WebApp.Student
 {
@@ -32,6 +34,7 @@ namespace ExamKing.WebApp.Student
         /// <param name="loginInput"></param>
         /// <returns></returns>
         [AllowAnonymous]
+        [UnifyResult(typeof(LoginOutput))]
         public async Task<LoginOutput> PostLogin(LoginInput loginInput)
         {
             var student = await _studentService.Login(loginInput.StudentNo, loginInput.Password);
@@ -59,6 +62,7 @@ namespace ExamKing.WebApp.Student
         /// <param name="resgisterInput"></param>
         /// <returns></returns>
         [AllowAnonymous]
+        [UnifyResult(typeof(ResgisterOutput))]
         public async Task<ResgisterOutput> PostRegister(ResgisterInput resgisterInput)
         {
             var student = await _studentService.Register(resgisterInput.Adapt<StudentDto>());
@@ -69,6 +73,7 @@ namespace ExamKing.WebApp.Student
         /// 学生信息
         /// </summary>
         /// <returns></returns>
+        [UnifyResult(typeof(StudentDto))]
         public async Task<StudentDto> GetInfo(int Id)
         {
             var studentInfo = await _studentService.GetInfoById(Id);
