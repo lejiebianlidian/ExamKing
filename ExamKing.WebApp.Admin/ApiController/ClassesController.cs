@@ -26,7 +26,6 @@ namespace ExamKing.WebApp.Admin
         /// <param name="addClassInput"></param>
         /// <returns></returns>
         [IfException(1000, ErrorMessage = "系别不存在")]
-        [UnifyResult(typeof(AddClassOutput))]
         public async Task<AddClassOutput> InsertAddClass(AddClassInput addClassInput)
         {
             var classes = await _classesService.InsertClass(addClassInput.Adapt<ClassesDto>());

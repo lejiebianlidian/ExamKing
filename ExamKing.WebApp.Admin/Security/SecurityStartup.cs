@@ -17,6 +17,7 @@ namespace ExamKing.WebApp.Admin
             {
                 options.AddJWTAuthorization();
             });
+
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

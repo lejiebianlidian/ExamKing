@@ -4,12 +4,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
-using ExamKing.Core.Utils;
 using Fur;
 using Fur.Authorization;
+using Fur.DataEncryption;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json.Linq;
 using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Core;
 
 namespace ExamKing.WebApp.Student
@@ -20,11 +21,14 @@ namespace ExamKing.WebApp.Student
     public class MemberController : ApiControllerBase
     {
         
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStudentService _studentService;
 
         /// <inheritdoc />
-        public MemberController(IStudentService studentService)
+        public MemberController(IHttpContextAccessor httpContextAccessor,
+            IStudentService studentService)
         {
+            _httpContextAccessor = httpContextAccessor;
             _studentService = studentService;
         }
 
@@ -34,7 +38,6 @@ namespace ExamKing.WebApp.Student
         /// <param name="loginInput"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [UnifyResult(typeof(LoginOutput))]
         public async Task<LoginOutput> PostLogin(LoginInput loginInput)
         {
             var student = await _studentService.Login(loginInput.StudentNo, loginInput.Password);
@@ -43,7 +46,7 @@ namespace ExamKing.WebApp.Student
             // 生成 token
             var jwtSettings = App.GetOptions<JWTSettingsOptions>();
             var datetimeOffset = new DateTimeOffset(DateTime.Now);
-            output.AccessToken = JWTEncryption.Encrypt(jwtSettings.IssuerSigningKey, new JObject()
+            output.AccessToken = JWTEncryption.Encrypt(jwtSettings.IssuerSigningKey, new Dictionary<string, object>()
             {
                 { "UserId", student.Id },  // 存储Id
                 { JwtRegisteredClaimNames.Iat, datetimeOffset.ToUnixTimeSeconds() },
@@ -52,6 +55,8 @@ namespace ExamKing.WebApp.Student
                 { JwtRegisteredClaimNames.Iss, jwtSettings.ValidIssuer},
                 { JwtRegisteredClaimNames.Aud, jwtSettings.ValidAudience }
             });
+            // 设置 Swagger 刷新自动授权
+            _httpContextAccessor.HttpContext.Response.Headers["access-token"] = output.AccessToken;
 
             return output;
         }
@@ -62,7 +67,6 @@ namespace ExamKing.WebApp.Student
         /// <param name="resgisterInput"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [UnifyResult(typeof(ResgisterOutput))]
         public async Task<ResgisterOutput> PostRegister(ResgisterInput resgisterInput)
         {
             var student = await _studentService.Register(resgisterInput.Adapt<StudentDto>());
@@ -73,7 +77,6 @@ namespace ExamKing.WebApp.Student
         /// 学生信息
         /// </summary>
         /// <returns></returns>
-        [UnifyResult(typeof(StudentDto))]
         public async Task<StudentDto> GetInfo(int Id)
         {
             var studentInfo = await _studentService.GetInfoById(Id);

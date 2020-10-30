@@ -13,7 +13,7 @@ namespace ExamKing.WebApp.Admin
             services.AddCorsAccessor();
             services
                 .AddControllersWithViews()
-                .AddUnifyResult<RESTfulResult, RESTfulResultProvider>();;
+                .AddUnifyResult<RESTfulResultProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

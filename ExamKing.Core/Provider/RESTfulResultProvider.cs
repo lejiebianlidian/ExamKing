@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
-using Fur.UnifyResult;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Collections.Generic;
+using Fur.DependencyInjection;
+using Fur.UnifyResult;
 
 namespace ExamKing.Core.Provider
 {
     /// <summary>
     /// RESTful 风格返回值
     /// </summary>
+    [SkipScan, UnifyModel(typeof(RESTfulResult<>))]
     public class RESTfulResultProvider : IUnifyResultProvider
     {
         /// <summary>
@@ -19,7 +21,7 @@ namespace ExamKing.Core.Provider
         /// <returns></returns>
         public IActionResult OnException(ExceptionContext context)
         {
-            return new JsonResult(new RESTfulResult
+            return new JsonResult(new RESTfulResult<object>
             {
                 StatusCode = StatusCodes.Status500InternalServerError,
                 Successed = false,
@@ -42,7 +44,7 @@ namespace ExamKing.Core.Provider
             else if (context.Result is ObjectResult objectResult) data = objectResult.Value;
             else return null;
 
-            return new JsonResult(new RESTfulResult
+            return new JsonResult(new RESTfulResult<object>
             {
                 StatusCode = context.Result is EmptyResult ? StatusCodes.Status204NoContent : StatusCodes.Status200OK,
                 Successed = true,
@@ -61,7 +63,7 @@ namespace ExamKing.Core.Provider
         /// <returns></returns>
         public IActionResult OnValidateFailed(ActionExecutingContext context, ModelStateDictionary modelStates, Dictionary<string, IEnumerable<string>> validationResults, string validateFaildMessage)
         {
-            return new JsonResult(new RESTfulResult
+            return new JsonResult(new RESTfulResult<object>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 Successed = false,

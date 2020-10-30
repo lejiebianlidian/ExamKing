@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Fur.UnifyResult;
 using RESTfulResultProvider = ExamKing.Core.Provider.RESTfulResultProvider;
 
 namespace ExamKing.WebApp.Student
@@ -13,14 +12,13 @@ namespace ExamKing.WebApp.Student
             services.AddCorsAccessor();
             services
                 .AddControllersWithViews()
-                .AddUnifyResult<RESTfulResult, RESTfulResultProvider>();
+                .AddUnifyResult<RESTfulResultProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
             app.UseCorsAccessor();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

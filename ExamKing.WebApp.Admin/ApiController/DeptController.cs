@@ -22,7 +22,6 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="deptName">系别名称</param>
         /// <returns>新增系别Id</returns>
-        [UnifyResult((typeof(AddDeptOutput)))]
         public async Task<AddDeptOutput> InsertAddDept(AddDeptInput addDeptInput)
         {
             var dept = await _deptService.InsertDept(addDeptInput.Adapt<DeptDto>());

@@ -13,11 +13,13 @@ namespace ExamKing.WebApp.Student
 
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
+            
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
                         .Inject()
+                        // .UseUrls("http://*:8071")
                         .UseStartup<Startup>();
                 });
         }

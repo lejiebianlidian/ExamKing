@@ -1,8 +1,8 @@
-using ExamKing.Core.Utils;
+using Fur;
 using Fur.Authorization;
+using Fur.DataEncryption;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace ExamKing.WebApp.Student
@@ -15,20 +15,6 @@ namespace ExamKing.WebApp.Student
     /// </remarks>
     public class JWTAuthorizationHandler : AppAuthorizeHandler
     {
-        /// <summary>
-        /// JWT 配置
-        /// </summary>
-        private readonly JWTSettingsOptions _jwtSettings;
-
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="options"></param>
-        public JWTAuthorizationHandler(IOptions<JWTSettingsOptions> options)
-        {
-            _jwtSettings = options.Value;
-        }
-
         public override bool Pipeline(AuthorizationHandlerContext context, DefaultHttpContext httpContext)
         {
             // 判断请求报文头中是否有 "Authorization" 报文头
@@ -39,7 +25,7 @@ namespace ExamKing.WebApp.Student
             var accessToken = bearerToken[7..];
 
             // 验证token
-            var (IsValid, Token) = JWTEncryption.Validate(accessToken, _jwtSettings);
+            var (IsValid, Token) = JWTEncryption.Validate(accessToken, App.GetOptions<JWTSettingsOptions>());
             if (!IsValid) return false;
 
             // 检查权限
