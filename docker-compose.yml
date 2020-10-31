@@ -4,7 +4,7 @@ services:
   publish:
     build:
       context: ./
-      dockerfile: ./docker-compose/publish/Dockerfile
+      dockerfile: ./docker-compose/BPublish/Dockerfile
     container_name: examking_publish
     volumes:
       - ./:/home/examking:rw
