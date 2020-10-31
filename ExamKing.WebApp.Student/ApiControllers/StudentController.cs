@@ -18,14 +18,14 @@ namespace ExamKing.WebApp.Student
     /// <summary>
     /// 学生接口
     /// </summary>
-    public class MemberController : ApiControllerBase
+    public class StudentController : ApiControllerBase
     {
         
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStudentService _studentService;
 
         /// <inheritdoc />
-        public MemberController(IHttpContextAccessor httpContextAccessor,
+        public StudentController(IHttpContextAccessor httpContextAccessor,
             IStudentService studentService)
         {
             _httpContextAccessor = httpContextAccessor;

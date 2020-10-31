@@ -1,0 +1,56 @@
+version: '3.4'
+
+services:
+  publish:
+    build:
+      context: ./
+      dockerfile: ./docker-compose/publish/Dockerfile
+    container_name: examking_publish
+    volumes:
+      - ./:/home/examking:rw
+      - neuget:/var/negut:rw
+      - publish:/home/publish:rw
+  student:
+    build:
+      context: ./
+      dockerfile: ./docker-compose/student/Dockerfile
+      args: 
+        - gitcommithash=${GITCOMMITHASH}
+    container_name: examking_student
+    expose:
+      - 80
+    ports:
+      - 8071:80
+    networks: 
+      - examking_net  
+    depends_on:
+      - publish
+    restart: "always"
+    volumes:
+      - publish:/home/publish:rw
+  admin:
+    build:
+      context: ./
+      dockerfile: ./docker-compose/admin/Dockerfile
+      args: 
+        - gitcommithash=${GITCOMMITHASH}
+    container_name: examking_admin
+    expose:
+      - 80
+    ports:
+      - 8072:80
+    networks: 
+      - examking_net
+    depends_on:
+      - publish
+    restart: "always"
+    volumes:
+      - publish:/home/publish:rw
+
+volumes: 
+  neuget:
+  publish:
+
+networks: # 创建新的网络类型
+  examking_net:
+    driver: bridge  # 网络方式：桥接或集群

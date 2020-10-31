@@ -7,7 +7,7 @@ namespace ExamKing.WebApp.Student
     /// <summary>
     /// 学生API模块控制器基类
     /// </summary>
-    [AppAuthorize, ApiDescriptionSettings(Module = "v1/student")]
+    [AppAuthorize, ApiDescriptionSettings(Module = "v1")]
     public class ApiControllerBase : IDynamicApiController
     {
     }
