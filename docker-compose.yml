@@ -14,8 +14,6 @@ services:
     build:
       context: ./
       dockerfile: ./docker-compose/student/Dockerfile
-      args: 
-        - gitcommithash=${GITCOMMITHASH}
     container_name: examking_student
     expose:
       - 80
@@ -32,8 +30,6 @@ services:
     build:
       context: ./
       dockerfile: ./docker-compose/admin/Dockerfile
-      args: 
-        - gitcommithash=${GITCOMMITHASH}
     container_name: examking_admin
     expose:
       - 80
