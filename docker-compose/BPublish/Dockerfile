@@ -1,6 +1,9 @@
 # Restore And Publish
 FROM mcr.microsoft.com/dotnet/nightly/sdk:5.0-alpine AS build
 
+# 镜像信息
+LABEL author="pig224" email="xiaomo_0258@icloud.com"
+
 # 切换项目目录
 WORKDIR /home/examking
 COPY ./ ./
