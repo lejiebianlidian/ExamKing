@@ -26,5 +26,12 @@ namespace ExamKing.Application.Services
         /// <param name="Id"></param>
         /// <returns></returns>
         public Task<StudentDto> GetInfoById(int Id);
+        
+        /// <summary>
+        /// 修改学生信息
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public Task<StudentDto> UpdateInfo(StudentDto studentDto);
     }
 }

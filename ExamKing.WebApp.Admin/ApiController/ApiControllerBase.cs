@@ -1,5 +1,6 @@
 ﻿using Fur.Authorization;
 using Fur.DynamicApiController;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExamKing.WebApp.Admin
 {

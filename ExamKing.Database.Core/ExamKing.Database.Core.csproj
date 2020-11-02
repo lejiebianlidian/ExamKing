@@ -15,9 +15,24 @@
   <ItemGroup>
     <ProjectReference Include="..\ExamKing.Core\ExamKing.Core.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Update="dbsettings.json">
+    <Content Include="dbsettings.Development.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="dbsettings.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="dbsettings.Production.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <None Remove="dbsettings.Production.json" />
+    <None Remove="dbsettings.Development.json" />
   </ItemGroup>
 </Project>

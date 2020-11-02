@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ExamKing.Core.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
@@ -29,7 +30,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<StudentDto> Login(string studentNo, string password)
         {
-            var student = await _studentRepository.FirstOrDefaultAsync(s => s.StuNo.Equals(studentNo) && s.Password.Equals(password));
+            var student = await _studentRepository.SingleOrDefaultAsync(s => s.StuNo.Equals(studentNo) && s.Password.Equals(password));
             if (student == null) throw Oops.Oh(StudentErrorCodes.s1000);
             return student.Adapt<StudentDto>();
         }
@@ -43,7 +44,7 @@ namespace ExamKing.Application.Services
         public async Task<StudentDto> Register(StudentDto studentDto)
         {
             // 判断班级是否存在
-            var classes = await _studentRepository.Change<TbClass>().FirstOrDefaultAsync(x => x.Id == studentDto.ClassesId);
+            var classes = await _studentRepository.Change<TbClass>().SingleOrDefaultAsync(x => x.Id == studentDto.ClassesId);
             if (classes == null) throw Oops.Oh(StudentErrorCodes.s1001);
             // 判断班级是否属于该系别
             if (classes.Deptld != studentDto.DeptId) throw Oops.Oh(StudentErrorCodes.s1002);
@@ -51,14 +52,40 @@ namespace ExamKing.Application.Services
             return stduent.Entity.Adapt<StudentDto>();
         }
 
+        /// <summary>
+        /// 获取学生信息
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<StudentDto> GetInfoById(int Id)
         {
             var student = await _studentRepository
+                .Entities
                 .Include(x =>x.Classes)
                 .Include(x=>x.Dept)
-                .FirstOrDefaultAsync(x => x.Id == Id);
+                .SingleOrDefaultAsync(x => x.Id == Id);
             if (student == null) throw Oops.Oh(StudentErrorCodes.s1003);
             return student.Adapt<StudentDto>();
+        }
+
+        /// <summary>
+        /// 修改学生信息
+        /// </summary>
+        /// <param name="studentDto"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<StudentDto> UpdateInfo(StudentDto studentDto)
+        {
+            var stu = await _studentRepository
+                .Entities
+                .Include(x=>x.Classes)
+                .Include(x=>x.Dept)
+                .SingleOrDefaultAsync(x => x.Id == studentDto.Id);            
+            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1003);
+            var newStu= studentDto.Adapt(stu);
+            var changeInfo = await _studentRepository.UpdateAsync(stu);
+            return changeInfo.Adapt<StudentDto>();
         }
     }
 }

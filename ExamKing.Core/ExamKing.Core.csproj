@@ -10,13 +10,12 @@
       <DocumentationFile>bin\Release\ExamKing.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Fur" Version="1.0.0-rc.final.54" />
-        <PackageReference Include="Fur.Extras.Authentication.JwtBearer" Version="1.0.0-rc.4" />
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.1.20514.4" />
+        <PackageReference Include="Fur" Version="1.0.0-rc.final.62" />
+        <PackageReference Include="Fur.Extras.Authentication.JwtBearer" Version="1.0.0-rc.6" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.1.20552.1" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Entities\" />
         <Folder Include="Entities\Exam\" />
-        <Folder Include="Utils" />
     </ItemGroup>
 </Project>

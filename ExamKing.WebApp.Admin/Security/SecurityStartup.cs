@@ -12,12 +12,8 @@ namespace ExamKing.WebApp.Admin
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            // 管理员模块鉴权
-            services.AddAppAuthorization<JWTAuthorizationHandler>(options =>
-            {
-                options.AddJWTAuthorization();
-            });
-
+            // 添加JWT授权
+            services.AddJwt<JWTAuthorizationHandler>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

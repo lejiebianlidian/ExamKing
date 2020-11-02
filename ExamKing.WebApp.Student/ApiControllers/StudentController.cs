@@ -21,14 +21,11 @@ namespace ExamKing.WebApp.Student
     public class StudentController : ApiControllerBase
     {
         
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStudentService _studentService;
 
         /// <inheritdoc />
-        public StudentController(IHttpContextAccessor httpContextAccessor,
-            IStudentService studentService)
+        public StudentController(IStudentService studentService)
         {
-            _httpContextAccessor = httpContextAccessor;
             _studentService = studentService;
         }
 
@@ -51,7 +48,7 @@ namespace ExamKing.WebApp.Student
                 { "UserId", student.Id },  // 存储Id
                 { JwtRegisteredClaimNames.Iat, datetimeOffset.ToUnixTimeSeconds() },
                 { JwtRegisteredClaimNames.Nbf, datetimeOffset.ToUnixTimeSeconds() },
-                { JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddSeconds(jwtSettings.ExpiredTime.Value*60)).ToUnixTimeSeconds() },
+                { JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddSeconds(jwtSettings.ExpiredTime.Value*60*60*24*30)).ToUnixTimeSeconds() },
                 { JwtRegisteredClaimNames.Iss, jwtSettings.ValidIssuer},
                 { JwtRegisteredClaimNames.Aud, jwtSettings.ValidAudience }
             });
@@ -67,20 +64,32 @@ namespace ExamKing.WebApp.Student
         /// <param name="resgisterInput"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public async Task<ResgisterOutput> PostRegister(ResgisterInput resgisterInput)
+        public async Task PostRegister(ResgisterInput resgisterInput)
         {
             var student = await _studentService.Register(resgisterInput.Adapt<StudentDto>());
-            return student.Adapt<ResgisterOutput>();
         }
         
         /// <summary>
         /// 学生信息
         /// </summary>
         /// <returns></returns>
-        public async Task<StudentDto> GetInfo(int Id)
+        public async Task<StuInfoDto> GetInfo()
         {
-            var studentInfo = await _studentService.GetInfoById(Id);
-            return studentInfo;
+            var userId = getUserId();
+            var studentInfo = await _studentService.GetInfoById(userId);
+            return studentInfo.Adapt<StuInfoDto>();
+        }
+
+        /// <summary>
+        /// 修改学生信息
+        /// </summary>
+        /// <param name="editStuInput"></param>
+        /// <returns></returns>
+        public async Task UpdateEditInfo(EditStuInput editStuInput)
+        {
+            var changeDto = editStuInput.Adapt<StudentDto>();
+            changeDto.Id = getUserId();
+            await _studentService.UpdateInfo(changeDto);
         }
     }
 }
