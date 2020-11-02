@@ -3,11 +3,6 @@ namespace ExamKing.Application.Mappers
 {
     public class ClassesDto
     {
-        public ClassesDto()
-        {
-            TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            CreateTime = Convert.ToInt64(ts.TotalSeconds).ToString();
-        }
 
         /// <summary>
         /// 班级Id

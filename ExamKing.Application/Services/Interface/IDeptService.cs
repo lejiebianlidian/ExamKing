@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
-using ExamKing.Core.Entites;
 
 namespace ExamKing.Application.Services
 {
@@ -9,6 +9,12 @@ namespace ExamKing.Application.Services
     /// </summary>
     public interface IDeptService
     {
+        /// <summary>
+        /// 查询全部系别
+        /// </summary>
+        /// <returns></returns>
+        public Task<List<DeptDto>> FindDeptAll();
+        
         /// <summary>
         /// 新增系别
         /// </summary>

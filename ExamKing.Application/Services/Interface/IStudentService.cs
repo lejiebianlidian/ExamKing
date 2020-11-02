@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ExamKing.Application.Services
 {
+    /// <summary>
+    /// 学生服务
+    /// </summary>
     public interface IStudentService
     {
         /// <summary>
@@ -26,11 +29,12 @@ namespace ExamKing.Application.Services
         /// <param name="Id"></param>
         /// <returns></returns>
         public Task<StudentDto> GetInfoById(int Id);
-        
+
         /// <summary>
         /// 修改学生信息
         /// </summary>
         /// <param name="Id"></param>
+        /// <param name="studentDto"></param>
         /// <returns></returns>
         public Task<StudentDto> UpdateInfo(StudentDto studentDto);
     }

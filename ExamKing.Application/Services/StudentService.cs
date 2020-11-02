@@ -17,6 +17,11 @@ namespace ExamKing.Application.Services
     public class StudentService : IStudentService, ITransient
     {
         private readonly IRepository<TbStudent> _studentRepository;
+        
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="studentRepository"></param>
         public StudentService(IRepository<TbStudent> studentRepository)
         {
             _studentRepository = studentRepository;
@@ -55,16 +60,16 @@ namespace ExamKing.Application.Services
         /// <summary>
         /// 获取学生信息
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<StudentDto> GetInfoById(int Id)
+        public async Task<StudentDto> GetInfoById(int id)
         {
             var student = await _studentRepository
                 .Entities
                 .Include(x =>x.Classes)
                 .Include(x=>x.Dept)
-                .SingleOrDefaultAsync(x => x.Id == Id);
+                .SingleOrDefaultAsync(x => x.Id == id);
             if (student == null) throw Oops.Oh(StudentErrorCodes.s1003);
             return student.Adapt<StudentDto>();
         }

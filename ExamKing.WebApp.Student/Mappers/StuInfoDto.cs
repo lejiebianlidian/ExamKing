@@ -47,29 +47,9 @@ namespace ExamKing.WebApp.Student
         public string IdCard { get; set; }
 
         /// <summary>
-        /// 创建时间
-        /// </summary>
-        public string CreateTime { get; set; }
-
-        /// <summary>
         /// 班级
         /// </summary>
         public ClassesDto Classes { get; set; }
 
-        // /// <summary>
-        // /// 系别
-        // /// </summary>
-        // public DeptDto Dept { get; set; }
-
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public List<ChildrenDto> Childrens { get; set; }
-
-        ///// <summary>
-        ///// 孩子
-        ///// </summary>
-        //public List<PostDto> Posts { get; set; }
     }
 }

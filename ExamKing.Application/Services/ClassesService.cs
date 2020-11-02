@@ -1,4 +1,5 @@
-﻿using Fur.DatabaseAccessor;
+﻿using System.Collections.Generic;
+using Fur.DatabaseAccessor;
 using Mapster;
 using ExamKing.Core.Entites;
 using ExamKing.Application.Mappers;
@@ -6,15 +7,49 @@ using System.Threading.Tasks;
 using ExamKing.Core.ErrorCodes;
 using Fur.DependencyInjection;
 using Fur.FriendlyException;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExamKing.Application.Services
 {
+    /// <summary>
+    /// 班级服务
+    /// </summary>
     public class ClassesService : IClassesService, ITransient
     {
         private readonly IRepository<TbClass> _classRepository;
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="classRepository"></param>
         public ClassesService(IRepository<TbClass> classRepository)
         {
             _classRepository = classRepository;
+        }
+
+        /// <summary>
+        /// 查询全部班级
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ClassesDto>> FindClassesAll()
+        {
+            var classes = _classRepository
+                .AsQueryable()
+                .ProjectToType<ClassesDto>();
+            return await classes.ToListAsync();
+        }
+
+        
+        /// <summary>
+        /// 根据系别ID查询班级
+        /// </summary>
+        /// <param name="detpId"></param>
+        /// <returns></returns>
+        public async Task<List<ClassesDto>> FindClassessByDeptId(int detpId)
+        {
+            var classes = _classRepository
+                .Where(x=>x.Deptld==detpId)
+                .ProjectToType<ClassesDto>();
+            return await classes.ToListAsync();
         }
 
         /// <summary>
