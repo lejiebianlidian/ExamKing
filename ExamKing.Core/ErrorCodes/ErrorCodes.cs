@@ -27,5 +27,9 @@ namespace ExamKing.Core.ErrorCodes
         s1002,
         [ErrorCodeItemMetadata("学生不存在")]
         s1003,
+        [ErrorCodeItemMetadata("学号已存在")]
+        s1004,
+        [ErrorCodeItemMetadata("身份证后六位不正确")]
+        s1005,
     }
 }

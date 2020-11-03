@@ -37,5 +37,14 @@ namespace ExamKing.Application.Services
         /// <param name="studentDto"></param>
         /// <returns></returns>
         public Task<StudentDto> UpdateInfo(StudentDto studentDto);
+
+        /// <summary>
+        /// 找回密码
+        /// </summary>
+        /// <param name="stuNo"></param>
+        /// <param name="idCard"></param>
+        /// <param name="newPass"></param>
+        /// <returns></returns>
+        public Task<StudentDto> ForgetPass(string stuNo, string idCard, string newPass);
     }
 }

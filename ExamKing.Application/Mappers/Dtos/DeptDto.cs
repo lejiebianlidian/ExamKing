@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace ExamKing.Application.Mappers
 {
     public class DeptDto
@@ -18,5 +20,11 @@ namespace ExamKing.Application.Mappers
         /// 创建时间
         /// </summary>
         public string CreateTime { get; set; }
+        
+        /// <summary>
+        /// 关联班级
+        /// </summary>
+        public ICollection<ClassesDto> Classes { get; set; }
+        
     }
 }

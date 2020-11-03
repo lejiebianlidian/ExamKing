@@ -38,20 +38,6 @@ namespace ExamKing.Application.Services
             return await classes.ToListAsync();
         }
 
-        
-        /// <summary>
-        /// 根据系别ID查询班级
-        /// </summary>
-        /// <param name="detpId"></param>
-        /// <returns></returns>
-        public async Task<List<ClassesDto>> FindClassessByDeptId(int detpId)
-        {
-            var classes = _classRepository
-                .Where(x=>x.Deptld==detpId)
-                .ProjectToType<ClassesDto>();
-            return await classes.ToListAsync();
-        }
-
         /// <summary>
         /// 新增班级    
         /// </summary>
@@ -62,7 +48,6 @@ namespace ExamKing.Application.Services
             // 判断系别是否存在
             var dept = await _classRepository.Change<TbDept>().AnyAsync(x => x.Id == classesDto.Deptld);
             if (dept == false) throw Oops.Oh(ClassErrorCodes.c1000);
-            classesDto.Dept = dept.Adapt<DeptDto>();
             var classes = await _classRepository.InsertNowAsync(classesDto.Adapt<TbClass>());
             return classes.Entity.Adapt<ClassesDto>();
         }

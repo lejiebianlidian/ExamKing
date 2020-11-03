@@ -24,9 +24,6 @@ namespace ExamKing.Application.Mappers
         /// </summary>
         public string CreateTime { get; set; }
 
-        /// <summary>
-        /// 系别
-        /// </summary>
-        public DeptDto Dept { get; set; }
+        
     }
 }

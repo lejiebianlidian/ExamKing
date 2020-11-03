@@ -68,6 +68,17 @@ namespace ExamKing.WebApp.Student
         {
             var student = await _studentService.Register(resgisterInput.Adapt<StudentDto>());
         }
+
+        /// <summary>
+        /// 找回密码
+        /// </summary>
+        /// <param name="forgetPassDto"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public async Task PostForgetPass(ForgetPassDto forgetPassDto)
+        {
+            await _studentService.ForgetPass(forgetPassDto.StuNo, forgetPassDto.IdCard, forgetPassDto.NewPass);
+        }
         
         /// <summary>
         /// 学生信息

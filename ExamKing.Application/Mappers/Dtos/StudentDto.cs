@@ -64,15 +64,5 @@ namespace ExamKing.Application.Mappers
         /// </summary>
         public DeptDto Dept { get; set; }
 
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public List<ChildrenDto> Childrens { get; set; }
-
-        ///// <summary>
-        ///// 孩子
-        ///// </summary>
-        //public List<PostDto> Posts { get; set; }
     }
 }

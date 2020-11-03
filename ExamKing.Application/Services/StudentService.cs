@@ -48,6 +48,9 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<StudentDto> Register(StudentDto studentDto)
         {
+            // 判断学号是否已经注册
+            var stu = await _studentRepository.Where(x => x.StuNo == studentDto.StuNo).SingleOrDefaultAsync();
+            if (stu != null) throw Oops.Oh(StudentErrorCodes.s1004);
             // 判断班级是否存在
             var classes = await _studentRepository.Change<TbClass>().SingleOrDefaultAsync(x => x.Id == studentDto.ClassesId);
             if (classes == null) throw Oops.Oh(StudentErrorCodes.s1001);
@@ -91,6 +94,26 @@ namespace ExamKing.Application.Services
             var newStu= studentDto.Adapt(stu);
             var changeInfo = await _studentRepository.UpdateAsync(stu);
             return changeInfo.Adapt<StudentDto>();
+        }
+
+        /// <summary>
+        /// 找回密码
+        /// </summary>
+        /// <param name="stuNo"></param>
+        /// <param name="idCard"></param>
+        /// <param name="newPass"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<StudentDto> ForgetPass(string stuNo, string idCard, string newPass)
+        {
+            var stu = await _studentRepository.Where(x => x.StuNo == stuNo).SingleOrDefaultAsync();
+            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1003);
+            // 判断身份证后6位是否正确
+            if (idCard != stu.IdCard.Substring(stu.IdCard.Length-6,6)) throw Oops.Oh(StudentErrorCodes.s1005);
+            // 修改密码
+            stu.Password = newPass;
+            var newStu = await _studentRepository.UpdateAsync(stu);
+            return newStu.Entity.Adapt<StudentDto>();
         }
     }
 }

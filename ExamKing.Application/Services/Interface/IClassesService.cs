@@ -17,12 +17,6 @@ namespace ExamKing.Application.Services
         public Task<List<ClassesDto>> FindClassesAll();
 
         /// <summary>
-        /// 根据系别查询班级
-        /// </summary>
-        /// <returns></returns>
-        public Task<List<ClassesDto>> FindClassessByDeptId(int detpId);
-        
-        /// <summary>
         /// 新增班级
         /// </summary>
         /// <param name="classesDto"></param>

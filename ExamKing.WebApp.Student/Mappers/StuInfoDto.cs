@@ -49,7 +49,7 @@ namespace ExamKing.WebApp.Student
         /// <summary>
         /// 班级
         /// </summary>
-        public ClassesDto Classes { get; set; }
+        public DeptDto Dept { get; set; }
 
     }
 }

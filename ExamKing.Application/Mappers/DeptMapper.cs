@@ -12,13 +12,13 @@ namespace ExamKing.Application.Mappers
         {
             config.ForType<TbDept, DeptDto>()
                 .IgnoreNullValues(true) // 忽略空值映射
+                .Map(desc => desc.Classes, desc => desc.TbClasses)
                 .Map(desc => desc.CreateTime, src => TimeUtil.GetDateTime(src.CreateTime).ToString("yyyy-MM-dd HH:mm:ss"));
 
             config.ForType<DeptDto, TbDept>()
                 .IgnoreNullValues(true) // 忽略空值映射
-                .Map(src => src.CreateTime, desc => TimeUtil.GetTimeStampNow());
+                .Map(desc => desc.TbClasses, src => src.Classes)
+                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow());
         }
-        
-        
     }
 }

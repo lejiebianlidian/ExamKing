@@ -29,14 +29,5 @@ namespace ExamKing.WebApp.Student
             return await _classesService.FindClassesAll();
         }
         
-        /// <summary>
-        /// 根据系别查询班级
-        /// </summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        public async Task<List<ClassesDto>> GetClassesByDept(int detpId)
-        {
-            return await _classesService.FindClassessByDeptId(detpId);
-        }
     }
 }

@@ -28,14 +28,16 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
-        /// 查询全部系别
+        /// 查询全部系别和班级
         /// </summary>
         /// <returns></returns>
         public async Task<List<DeptDto>> FindDeptAll()
         {
-            var depts = _deptRepository.AsQueryable()
-                .ProjectToType<DeptDto>();
-            return await depts.ToListAsync();
+            var depts = await _deptRepository
+                .AsQueryable()
+                .Include(x=>x.TbClasses)
+                .ToListAsync();
+            return depts.Adapt<List<DeptDto>>();
         }
 
         /// <summary>
