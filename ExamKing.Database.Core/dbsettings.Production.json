@@ -1,1 +1,5 @@
-{}
+{
+  "ConnectionStrings": {
+    "ExamConnectionString": "server=47.107.57.47;port=3306;database=examking;user=root;password=root"
+  }
+}
