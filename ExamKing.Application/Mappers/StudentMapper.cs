@@ -26,7 +26,7 @@ namespace ExamKing.Application.Mappers
                 .IgnoreIf((src, dest) => src.DeptId <= 0, dest => dest.DeptId)
                 .IgnoreIf((src, dest) => src.StuNo == "", dest => dest.StuNo)
                 .IgnoreIf((src, dest) => src.Password == "", dest => dest.Password)
-                .Map(desc=>desc.Sex, src=> src.Sex=="0"?"男":src.Sex=="1"?"女":"保密")
+                .Map(desc=>desc.Sex, src=> src.Sex)
                 .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow
                     ());
         }
