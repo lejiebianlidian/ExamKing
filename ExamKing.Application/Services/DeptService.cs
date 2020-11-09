@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Fur.DatabaseAccessor;
 using System.Threading.Tasks;
 using ExamKing.Core.Entites;
 
 using ExamKing.Application.Mappers;
+using ExamKing.Core.ErrorCodes;
 using Mapster;
 using Fur.DependencyInjection;
+using Fur.FriendlyException;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamKing.Application.Services
@@ -41,6 +44,20 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
+        /// 分页查询系别
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<DeptDto>> FindDeptAllByPage(int pageIndex = 1, int pageSize = 10)
+        {
+            var pageResult = _deptRepository.AsQueryable(false)
+                .ProjectToType<DeptDto>();
+
+            return await pageResult.ToPagedListAsync(pageIndex, pageSize);
+        }
+
+        /// <summary>
         /// 新增系别
         /// </summary>
         /// <param name="deptDto"></param>
@@ -49,6 +66,36 @@ namespace ExamKing.Application.Services
         {
             var dept = await _deptRepository.InsertNowAsync(deptDto.Adapt<TbDept>());
             return dept.Entity.Adapt<DeptDto>();
+        }
+
+        /// <summary>
+        /// 删除系别
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task DeleteDept(int id)
+        {
+            var dept = await _deptRepository.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (dept == null)
+            {
+                throw Oops.Oh(DeptErrorCodes.d1301);
+            }
+
+            await _deptRepository.DeleteAsync(dept);
+        }
+
+        public async Task<DeptDto> UpdateDept(DeptDto deptDto)
+        {
+            var dept = await _deptRepository.SingleOrDefaultAsync(x => x.Id == deptDto.Id);
+            if (dept == null)
+            {
+                throw Oops.Oh(DeptErrorCodes.d1301);
+            }
+            
+            var changeDept = await _deptRepository.UpdateNowAsync(deptDto.Adapt(dept));
+            return changeDept.Entity.Adapt<DeptDto>();
         }
     }
 }

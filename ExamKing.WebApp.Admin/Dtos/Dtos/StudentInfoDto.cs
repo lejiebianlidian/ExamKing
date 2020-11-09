@@ -1,10 +1,12 @@
-﻿using System;
-namespace ExamKing.Application.Mappers
+using System;
+using ExamKing.Application.Mappers;
+
+namespace ExamKing.WebApp.Admin
 {
     /// <summary>
-    /// 学生DTO
+    /// 学生信息
     /// </summary>
-    public class StudentDto
+    public class StudentInfoDto
     {
 
         /// <summary>
@@ -38,11 +40,6 @@ namespace ExamKing.Application.Mappers
         public string StuNo { get; set; }
 
         /// <summary>
-        /// 密码
-        /// </summary>
-        public string Password { get; set; }
-
-        /// <summary>
         /// 联系电话
         /// </summary>
         public string Telphone { get; set; }
@@ -56,16 +53,12 @@ namespace ExamKing.Application.Mappers
         /// 创建时间
         /// </summary>
         public string CreateTime { get; set; }
-
+        
         /// <summary>
         /// 班级
         /// </summary>
-        public ClassesDto Classes { get; set; }
-
-        /// <summary>
-        /// 系别
-        /// </summary>
         public DeptDto Dept { get; set; }
 
+        
     }
 }

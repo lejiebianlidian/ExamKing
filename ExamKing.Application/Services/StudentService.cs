@@ -28,15 +28,29 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
+        /// 分页查询学生
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<StudentDto>> FindStudentAllByPage(int pageIndex = 1, int pageSize = 10)
+        {
+            var pageResult = _studentRepository.AsQueryable(false)
+                .ProjectToType<StudentDto>();
+
+            return await pageResult.ToPagedListAsync(pageIndex, pageSize);
+        }
+
+        /// <summary>
         /// 学生登录
         /// </summary>
         /// <param name="studentNo"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<StudentDto> Login(string studentNo, string password)
+        public async Task<StudentDto> LoginStudent(string studentNo, string password)
         {
             var student = await _studentRepository.SingleOrDefaultAsync(s => s.StuNo.Equals(studentNo) && s.Password.Equals(password));
-            if (student == null) throw Oops.Oh(StudentErrorCodes.s1000);
+            if (student == null) throw Oops.Oh(StudentErrorCodes.s1201);
             return student.Adapt<StudentDto>();
         }
 
@@ -46,16 +60,16 @@ namespace ExamKing.Application.Services
         /// </summary>
         /// <param name="studentDto"></param>
         /// <returns></returns>
-        public async Task<StudentDto> Register(StudentDto studentDto)
+        public async Task<StudentDto> RegisterStudent(StudentDto studentDto)
         {
             // 判断学号是否已经注册
             var stu = await _studentRepository.Where(x => x.StuNo == studentDto.StuNo).SingleOrDefaultAsync();
-            if (stu != null) throw Oops.Oh(StudentErrorCodes.s1004);
+            if (stu != null) throw Oops.Oh(StudentErrorCodes.s1205);
             // 判断班级是否存在
             var classes = await _studentRepository.Change<TbClass>().SingleOrDefaultAsync(x => x.Id == studentDto.ClassesId);
-            if (classes == null) throw Oops.Oh(StudentErrorCodes.s1001);
+            if (classes == null) throw Oops.Oh(StudentErrorCodes.s1202);
             // 判断班级是否属于该系别
-            if (classes.Deptld != studentDto.DeptId) throw Oops.Oh(StudentErrorCodes.s1002);
+            if (classes.Deptld != studentDto.DeptId) throw Oops.Oh(StudentErrorCodes.s1203);
             var stduent = await _studentRepository.InsertNowAsync(studentDto.Adapt<TbStudent>());
             return stduent.Entity.Adapt<StudentDto>();
         }
@@ -66,14 +80,14 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<StudentDto> GetInfoById(int id)
+        public async Task<StudentDto> GetStudentById(int id)
         {
             var student = await _studentRepository
                 .Entities
                 .Include(x =>x.Classes)
                 .Include(x=>x.Dept)
                 .SingleOrDefaultAsync(x => x.Id == id);
-            if (student == null) throw Oops.Oh(StudentErrorCodes.s1003);
+            if (student == null) throw Oops.Oh(StudentErrorCodes.s1204);
             return student.Adapt<StudentDto>();
         }
 
@@ -83,14 +97,14 @@ namespace ExamKing.Application.Services
         /// <param name="studentDto"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<StudentDto> UpdateInfo(StudentDto studentDto)
+        public async Task<StudentDto> UpdateStudent(StudentDto studentDto)
         {
             var stu = await _studentRepository
                 .Entities
                 .Include(x=>x.Classes)
                 .Include(x=>x.Dept)
                 .SingleOrDefaultAsync(x => x.Id == studentDto.Id);            
-            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1003);
+            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
             var newStu= studentDto.Adapt(stu);
             var changeInfo = await _studentRepository.UpdateAsync(stu);
             return changeInfo.Adapt<StudentDto>();
@@ -107,13 +121,27 @@ namespace ExamKing.Application.Services
         public async Task<StudentDto> ForgetPass(string stuNo, string idCard, string newPass)
         {
             var stu = await _studentRepository.Where(x => x.StuNo == stuNo).SingleOrDefaultAsync();
-            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1003);
+            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
             // 判断身份证后6位是否正确
-            if (idCard != stu.IdCard.Substring(stu.IdCard.Length-6,6)) throw Oops.Oh(StudentErrorCodes.s1005);
+            if (idCard != stu.IdCard.Substring(stu.IdCard.Length-6,6)) throw Oops.Oh(StudentErrorCodes.s1206);
             // 修改密码
             stu.Password = newPass;
             var newStu = await _studentRepository.UpdateAsync(stu);
             return newStu.Entity.Adapt<StudentDto>();
+        }
+
+        /// <summary>
+        /// 删除学生
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task DeleteStudent(int id)
+        {
+            var stu = await _studentRepository.Where(x => x.Id == id).SingleOrDefaultAsync();
+            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
+
+            await _studentRepository.DeleteAsync(stu);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace ExamKing.Core.Entites
 
             entityBuilder.HasComment("管理员表");
 
-            entityBuilder.HasIndex(e => e.Id, "admin_id")
+            entityBuilder.HasIndex(e => e.Id, "id")
                 .IsUnique();
 
             entityBuilder.Property(e => e.Id)

@@ -37,7 +37,7 @@ namespace ExamKing.WebApp.Student
         [AllowAnonymous]
         public async Task<LoginOutput> PostLogin(LoginInput loginInput)
         {
-            var student = await _studentService.Login(loginInput.StudentNo, loginInput.Password);
+            var student = await _studentService.LoginStudent(loginInput.StudentNo, loginInput.Password);
             var output = student.Adapt<LoginOutput>();
             
             // 生成 token
@@ -66,7 +66,7 @@ namespace ExamKing.WebApp.Student
         [AllowAnonymous]
         public async Task PostRegister(ResgisterInput resgisterInput)
         {
-            var student = await _studentService.Register(resgisterInput.Adapt<StudentDto>());
+            var student = await _studentService.RegisterStudent(resgisterInput.Adapt<StudentDto>());
         }
 
         /// <summary>
@@ -84,11 +84,11 @@ namespace ExamKing.WebApp.Student
         /// 学生信息
         /// </summary>
         /// <returns></returns>
-        public async Task<StuInfoDto> GetInfo()
+        public async Task<StudentInfoDto> GetInfo()
         {
-            var userId = getUserId();
-            var studentInfo = await _studentService.GetInfoById(userId);
-            return studentInfo.Adapt<StuInfoDto>();
+            var userId = GetUserId();
+            var studentInfo = await _studentService.GetStudentById(userId);
+            return studentInfo.Adapt<StudentInfoDto>();
         }
 
         /// <summary>
@@ -96,11 +96,11 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         /// <param name="editStuInput"></param>
         /// <returns></returns>
-        public async Task UpdateEditInfo(EditStuInput editStuInput)
+        public async Task UpdateEditInfo(EditStudentInput editStuInput)
         {
             var changeDto = editStuInput.Adapt<StudentDto>();
-            changeDto.Id = getUserId();
-            await _studentService.UpdateInfo(changeDto);
+            changeDto.Id = GetUserId();
+            await _studentService.UpdateStudent(changeDto);
         }
     }
 }

@@ -3,7 +3,10 @@ using ExamKing.Application.Mappers;
 
 namespace ExamKing.WebApp.Student
 {
-    public class StuInfoDto
+    /// <summary>
+    /// 学生信息
+    /// </summary>
+    public class StudentInfoDto
     {
 
         /// <summary>
@@ -46,6 +49,11 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         public string IdCard { get; set; }
 
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public string CreateTime { get; set; }
+        
         /// <summary>
         /// 班级
         /// </summary>

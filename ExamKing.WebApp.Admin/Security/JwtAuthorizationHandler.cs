@@ -3,7 +3,6 @@ using Fur.Authorization;
 using Fur.DataEncryption;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace ExamKing.WebApp.Admin
@@ -14,9 +13,8 @@ namespace ExamKing.WebApp.Admin
     /// <remarks>
     /// 可以在这里自定义自己的权限
     /// </remarks>
-    public class JWTAuthorizationHandler : AppAuthorizeHandler
+    public class JwtAuthorizationHandler : AppAuthorizeHandler
     {
-
         public override bool Pipeline(AuthorizationHandlerContext context, DefaultHttpContext httpContext)
         {
             // 判断请求报文头中是否有 "Authorization" 报文头
@@ -25,9 +23,10 @@ namespace ExamKing.WebApp.Admin
 
             // 获取 token
             var accessToken = bearerToken[7..];
-
+            
             // 验证token
             var (IsValid, Token) = JWTEncryption.Validate(accessToken, App.GetOptions<JWTSettingsOptions>());
+            
             if (!IsValid) return false;
 
             // 检查权限

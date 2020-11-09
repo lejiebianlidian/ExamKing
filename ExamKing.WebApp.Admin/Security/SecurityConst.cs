@@ -3,10 +3,10 @@
 namespace ExamKing.WebApp.Admin
 {
     /// <summary>
-    /// 学生模块权限常量
+    /// 管理员模块权限常量
     /// </summary>
     [SkipScan]
-    public static class StudentConst
+    public static class AdminConst
     {
         
     }

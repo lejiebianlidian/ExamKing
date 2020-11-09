@@ -1,6 +1,5 @@
 using ExamKing.Application.Services;
 using Fur.Authorization;
-using Fur.DatabaseAccessor;
 using Fur.DataEncryption;
 using Fur.DependencyInjection;
 using Fur.FriendlyException;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 
-namespace ExamKing.WebApp.Student
+namespace ExamKing.WebApp.Admin
 {
         /// <summary>
     /// 权限管理器

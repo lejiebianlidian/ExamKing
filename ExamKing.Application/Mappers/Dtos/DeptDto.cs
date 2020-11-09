@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace ExamKing.Application.Mappers
 {
+    
+    /// <summary>
+    /// 系别DTO
+    /// </summary>
     public class DeptDto
     {
 
@@ -24,7 +28,7 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 关联班级
         /// </summary>
-        public ICollection<ClassesDto> Classes { get; set; }
+        public List<ClassesDto> Classes { get; set; }
         
     }
 }

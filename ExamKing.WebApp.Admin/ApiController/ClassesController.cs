@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
+using Fur.DatabaseAccessor;
 using Fur.FriendlyException;
 using Mapster;
 using Microsoft.AspNetCore.Mvc.Core;
@@ -19,17 +20,49 @@ namespace ExamKing.WebApp.Admin
         {
             _classesService = classesService;
         }
+
+        /// <summary>
+        /// 班级列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<ClassesDto>> GetAllClasses(int pageIndex = 1, int pageSize = 10)
+        {
+            return await _classesService.FindClassesAllByPage(pageIndex, pageSize);
+        }
         
         /// <summary>
         /// 新增班级
         /// </summary>
         /// <param name="addClassInput"></param>
         /// <returns></returns>
-        [IfException(1000, ErrorMessage = "系别不存在")]
-        public async Task<AddClassOutput> InsertAddClass(AddClassInput addClassInput)
+        public async Task<AddClassOutput> InsertAddClasses(AddClassInput addClassInput)
         {
-            var classes = await _classesService.InsertClass(addClassInput.Adapt<ClassesDto>());
+            var classes = await _classesService.InsertClasses(addClassInput.Adapt<ClassesDto>());
             return classes.Adapt<AddClassOutput>();
+        }
+
+        /// <summary>
+        /// 修改班级
+        /// </summary>
+        /// <param name="editClassesInput"></param>
+        /// <returns></returns>
+        public async Task<ClassesDto> UpdateEditDept(EditClassesInput editClassesInput)
+        {
+            var changeClasses = await _classesService.UpdateClasses(
+                editClassesInput.Adapt<ClassesDto>());
+            return changeClasses;
+        }
+        
+        /// <summary>
+        /// 删除班级
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteRemoveClasse(int id)
+        {
+            await _classesService.DeleteClasses(id);
         }
     }
 }

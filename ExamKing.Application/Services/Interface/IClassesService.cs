@@ -2,6 +2,7 @@
 using ExamKing.Application.Mappers;
 using System.Threading.Tasks;
 using ExamKing.Core.Entites;
+using Fur.DatabaseAccessor;
 
 namespace ExamKing.Application.Services
 {
@@ -17,10 +18,32 @@ namespace ExamKing.Application.Services
         public Task<List<ClassesDto>> FindClassesAll();
 
         /// <summary>
+        /// 分页查询班级
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public Task<PagedList<ClassesDto>> FindClassesAllByPage(int pageIndex = 1, int pageSize = 10);
+        
+        /// <summary>
         /// 新增班级
         /// </summary>
         /// <param name="classesDto"></param>
         /// <returns></returns>
-        public Task<ClassesDto> InsertClass(ClassesDto classesDto);
+        public Task<ClassesDto> InsertClasses(ClassesDto classesDto);
+
+        /// <summary>
+        /// 删除班级
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task DeleteClasses(int id);
+
+        /// <summary>
+        /// 更新班级
+        /// </summary>
+        /// <param name="classesDto"></param>
+        /// <returns></returns>
+        public Task<ClassesDto> UpdateClasses(ClassesDto classesDto);
     }
 }

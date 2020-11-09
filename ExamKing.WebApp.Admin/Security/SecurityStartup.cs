@@ -1,9 +1,7 @@
-using System;
 using Fur;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace ExamKing.WebApp.Admin
 {
@@ -13,7 +11,7 @@ namespace ExamKing.WebApp.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             // 添加JWT授权
-            services.AddJwt<JWTAuthorizationHandler>();
+            services.AddJwt<JwtAuthorizationHandler>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -13,7 +13,7 @@ namespace ExamKing.WebApp.Student
     /// <remarks>
     /// 可以在这里自定义自己的权限
     /// </remarks>
-    public class JWTAuthorizationHandler : AppAuthorizeHandler
+    public class JwtAuthorizationHandler : AppAuthorizeHandler
     {
         public override bool Pipeline(AuthorizationHandlerContext context, DefaultHttpContext httpContext)
         {

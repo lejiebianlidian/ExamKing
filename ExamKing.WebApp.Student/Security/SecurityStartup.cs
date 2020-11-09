@@ -11,7 +11,7 @@ namespace ExamKing.WebApp.Student
         public void ConfigureServices(IServiceCollection services)
         {
             // 学生模块鉴权
-            services.AddJwt<JWTAuthorizationHandler>();
+            services.AddJwt<JwtAuthorizationHandler>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

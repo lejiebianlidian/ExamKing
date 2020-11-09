@@ -1,8 +1,8 @@
 ﻿using Fur;
-using Fur.Authorization;
 using Fur.DynamicApiController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ExamKing.WebApp.Student
 {
@@ -16,7 +16,7 @@ namespace ExamKing.WebApp.Student
         /// <summary>
         /// HTTP 上下文
         /// </summary>
-        protected IHttpContextAccessor _httpContextAccessor;
+        protected readonly IHttpContextAccessor _httpContextAccessor;
 
         /// <summary>
         /// 构造方法
@@ -31,7 +31,7 @@ namespace ExamKing.WebApp.Student
         /// 获取学生Id
         /// </summary>
         /// <returns></returns>
-        protected int getUserId()
+        protected int GetUserId()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
             return authorizationManager.GetUserId<int>();
