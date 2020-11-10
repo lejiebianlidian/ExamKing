@@ -52,10 +52,11 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="editStudentInput"></param>
         /// <returns></returns>
-        public async Task UpdateEditStudent(EditStudentInput editStudentInput)
+        public async Task<string> UpdateEditStudent(EditStudentInput editStudentInput)
         { 
             await _studentService.UpdateStudent(editStudentInput
                 .Adapt<StudentDto>());
+            return "success";
         }
 
         /// <summary>
@@ -63,9 +64,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task DeleteRemoveStudent(int id)
+        public async Task<string> DeleteRemoveStudent(int id)
         {
             await _studentService.DeleteStudent(id);
+            return "success";
         }
     }
 }

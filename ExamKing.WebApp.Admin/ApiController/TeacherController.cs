@@ -51,9 +51,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="editTeacherInput"></param>
         /// <returns></returns>
-        public async Task UpdateEditTeacher(EditTeacherInput editTeacherInput)
+        public async Task<string> UpdateEditTeacher(EditTeacherInput editTeacherInput)
         {
             await _teacherService.UpdateTeacher(editTeacherInput.Adapt<TeacherDto>());
+            return "success";
         }
 
         /// <summary>
@@ -61,9 +62,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task DeleteRemoveTeacher(int id)
+        public async Task<string> DeleteRemoveTeacher(int id)
         {
             await _teacherService.DeleteTeacher(id);
+            return "success";
         }
     }
 }

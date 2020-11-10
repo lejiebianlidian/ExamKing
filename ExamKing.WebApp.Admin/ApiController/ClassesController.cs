@@ -63,9 +63,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task DeleteRemoveClasse(int id)
+        public async Task<string> DeleteRemoveClasse(int id)
         {
             await _classesService.DeleteClasses(id);
+            return "success";
         }
     }
 }

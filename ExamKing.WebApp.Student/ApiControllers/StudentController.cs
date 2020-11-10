@@ -64,9 +64,10 @@ namespace ExamKing.WebApp.Student
         /// <param name="resgisterInput"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public async Task PostRegister(ResgisterInput resgisterInput)
+        public async Task<string> PostRegister(ResgisterInput resgisterInput)
         {
             var student = await _studentService.RegisterStudent(resgisterInput.Adapt<StudentDto>());
+            return "success";
         }
 
         /// <summary>
@@ -75,9 +76,10 @@ namespace ExamKing.WebApp.Student
         /// <param name="forgetPassDto"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public async Task PostForgetPass(ForgetPassDto forgetPassDto)
+        public async Task<string> PostForgetPass(ForgetPassDto forgetPassDto)
         {
             await _studentService.ForgetPass(forgetPassDto.StuNo, forgetPassDto.IdCard, forgetPassDto.NewPass);
+            return "success";
         }
         
         /// <summary>
@@ -96,11 +98,12 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         /// <param name="editStuInput"></param>
         /// <returns></returns>
-        public async Task UpdateEditInfo(EditStudentInput editStuInput)
+        public async Task<string> UpdateEditInfo(EditStudentInput editStuInput)
         {
             var changeDto = editStuInput.Adapt<StudentDto>();
             changeDto.Id = GetUserId();
             await _studentService.UpdateStudent(changeDto);
+            return "success";
         }
     }
 }

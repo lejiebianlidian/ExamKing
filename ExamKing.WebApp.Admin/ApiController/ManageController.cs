@@ -71,9 +71,11 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="registerAdminInput"></param>
         /// <returns></returns>
-        public async Task PostRegister(RegisterAdminInput registerAdminInput)
+        public async Task<string> PostRegister(RegisterAdminInput registerAdminInput)
         {
             await _manageService.CreateAdmin(registerAdminInput.Adapt<AdminDto>());
+            
+            return "success";
         }
 
         /// <summary>
@@ -108,9 +110,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task DeleteRemoveAdmin(int id)
+        public async Task<string> DeleteRemoveAdmin(int id)
         {
             await _manageService.DeleteAdminById(id);
+            return "success";
         }
 
         /// <summary>
