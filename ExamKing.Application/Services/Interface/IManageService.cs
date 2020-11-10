@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
+using Fur.DatabaseAccessor;
 
 namespace ExamKing.Application.Services
 {
@@ -8,7 +9,14 @@ namespace ExamKing.Application.Services
     /// </summary>
     public interface IManageService
     {
-        
+        /// <summary>
+        /// 分页查询管理员
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public Task<PagedList<AdminDto>> FindAdminAllByPage(int pageIndex = 1, int pageSize = 10);
+
         /// <summary>
         /// 管理员登录
         /// </summary>

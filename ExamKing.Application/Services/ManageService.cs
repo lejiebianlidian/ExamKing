@@ -29,8 +29,22 @@ namespace ExamKing.Application.Services
         {
             _adminRepository = adminRepository;
         }
-        
-        
+
+
+        /// <summary>
+        /// 分页查询管理员
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<AdminDto>> FindAdminAllByPage(int pageIndex = 1, int pageSize = 10)
+        {
+            var pageResult = _adminRepository.AsQueryable(false)
+                .ProjectToType<AdminDto>();
+
+            return await pageResult.ToPagedListAsync(pageIndex, pageSize);
+        }
+
         /// <summary>
         /// 管理员登录
         /// </summary>

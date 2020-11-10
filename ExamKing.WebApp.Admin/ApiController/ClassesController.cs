@@ -4,6 +4,7 @@ using ExamKing.Application.Services;
 using Fur.DatabaseAccessor;
 using Fur.FriendlyException;
 using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Core;
 
 namespace ExamKing.WebApp.Admin
@@ -27,7 +28,9 @@ namespace ExamKing.WebApp.Admin
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ClassesDto>> GetAllClasses(int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<ClassesDto>> GetClassesList(
+            [FromQuery] int pageIndex = 1, 
+            [FromQuery] int pageSize = 10)
         {
             return await _classesService.FindClassesAllByPage(pageIndex, pageSize);
         }

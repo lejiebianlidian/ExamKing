@@ -3,6 +3,7 @@ using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
 using Fur.DatabaseAccessor;
 using Mapster;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ExamKing.WebApp.Admin
 {
@@ -26,7 +27,9 @@ namespace ExamKing.WebApp.Admin
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<StudentInfoDto>> GetAllDept(int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<StudentInfoDto>> GetStudentList(
+            [FromQuery] int pageIndex = 1, 
+            [FromQuery] int pageSize = 10)
         {
             var stuList = await _studentService.FindStudentAllByPage(pageIndex, pageSize);
             return stuList.Adapt<PagedList<StudentInfoDto>>();

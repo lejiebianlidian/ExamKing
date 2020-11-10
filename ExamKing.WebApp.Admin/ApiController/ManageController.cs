@@ -5,9 +5,11 @@ using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
 using Fur;
 using Fur.Authorization;
+using Fur.DatabaseAccessor;
 using Fur.DataEncryption;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace ExamKing.WebApp.Admin
@@ -87,6 +89,20 @@ namespace ExamKing.WebApp.Admin
             return admin.Adapt<AdminInfoDto>();
         }
 
+        /// <summary>
+        /// 管理员列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<AdminInfoDto>> GetAdminList(
+            [FromQuery] int pageIndex = 1, 
+            [FromQuery] int pageSize = 10)
+        {
+            var adminList = await _manageService.FindAdminAllByPage(pageIndex, pageSize);
+            return adminList.Adapt<PagedList<AdminInfoDto>>();
+        }
+        
         /// <summary>
         /// 删除管理员
         /// </summary>
