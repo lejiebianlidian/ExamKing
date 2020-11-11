@@ -143,5 +143,19 @@ namespace ExamKing.Application.Services
 
             await _studentRepository.DeleteAsync(stu);
         }
+
+        /// <summary>
+        /// 查找学生
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<StudentDto> FindStudentById(int id)
+        {
+            var stu = await _studentRepository.Where(x => x.Id == id).SingleOrDefaultAsync();
+            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
+
+            return stu.Adapt<StudentDto>();
+        }
     }
 }

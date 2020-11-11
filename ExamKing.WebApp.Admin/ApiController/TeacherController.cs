@@ -67,5 +67,16 @@ namespace ExamKing.WebApp.Admin
             await _teacherService.DeleteTeacher(id);
             return "success";
         }
+        
+        /// <summary>
+        /// 查教师
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<TeacherInfoDto> GetFindTeacher(int id)
+        {
+            var teacher = await _teacherService.FindTeacherById(id);
+            return teacher.Adapt<TeacherInfoDto>();
+        }
     }
 }

@@ -101,5 +101,22 @@ namespace ExamKing.Application.Services
             var changeClasses = await _classRepository.UpdateNowAsync(classesDto.Adapt(classes));
             return changeClasses.Entity.Adapt<ClassesDto>();
         }
+
+        /// <summary>
+        /// 查找班级
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<ClassesDto> FindClassesById(int id)
+        {
+            var classes = await _classRepository.SingleOrDefaultAsync(x => x.Id == id);
+            if (classes==null)
+            {
+                throw Oops.Oh(ClassErrorCodes.c1101);
+            }
+
+            return classes.Adapt<ClassesDto>();
+        }
     }
 }

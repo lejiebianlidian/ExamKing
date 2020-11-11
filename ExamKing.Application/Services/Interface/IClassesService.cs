@@ -45,5 +45,12 @@ namespace ExamKing.Application.Services
         /// <param name="classesDto"></param>
         /// <returns></returns>
         public Task<ClassesDto> UpdateClasses(ClassesDto classesDto);
+        
+        /// <summary>
+        /// 查找班级
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<ClassesDto> FindClassesById(int id);
     }
 }

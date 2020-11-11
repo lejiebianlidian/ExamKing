@@ -116,5 +116,24 @@ namespace ExamKing.Application.Services
 
             await _courseRepository.DeleteAsync(course);
         }
+
+        /// <summary>
+        /// 查找课程
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<CourseDto> FindCourseById(int id)
+        {
+            var course = await _courseRepository.Entities.SingleOrDefaultAsync(x => x.Id == id);
+            if (course==null)
+            {
+                throw Oops.Oh(
+                    CourseErrorCodes.c1501
+                );
+            }
+
+            return course.Adapt<CourseDto>();
+        }
     }
 }

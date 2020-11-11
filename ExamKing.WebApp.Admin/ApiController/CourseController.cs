@@ -67,5 +67,15 @@ namespace ExamKing.WebApp.Admin
             await _courseService.DeleteCourse(id);
             return "success";
         }
+        
+        /// <summary>
+        /// 查询课程
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<CourseDto> GetFindCourse(int id)
+        {
+            return await _courseService.FindCourseById(id);
+        }
     }
 }

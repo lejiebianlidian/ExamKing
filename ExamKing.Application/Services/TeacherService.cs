@@ -108,5 +108,22 @@ namespace ExamKing.Application.Services
             }
             await _teacherRepository.DeleteAsync(teacher);
         }
+
+        /// <summary>
+        /// 查询教师
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<TeacherDto> FindTeacherById(int id)
+        {
+            var teacher = await _teacherRepository.SingleOrDefaultAsync(x => x.Id == id);
+            if (teacher == null)
+            {
+                throw Oops.Oh(TeacherErrorCodes.t1402);
+            }
+
+            return teacher.Adapt<TeacherDto>();
+        }
     }
 }

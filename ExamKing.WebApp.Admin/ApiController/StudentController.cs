@@ -69,5 +69,16 @@ namespace ExamKing.WebApp.Admin
             await _studentService.DeleteStudent(id);
             return "success";
         }
+        
+        /// <summary>
+        /// 查询学生
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<StudentInfoDto> GetFindStudent(int id)
+        {
+            var stu = await _studentService.FindStudentById(id);
+            return stu.Adapt<StudentInfoDto>();
+        }
     }
 }

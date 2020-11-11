@@ -86,6 +86,12 @@ namespace ExamKing.Application.Services
             await _deptRepository.DeleteAsync(dept);
         }
 
+        /// <summary>
+        /// 更新系别
+        /// </summary>
+        /// <param name="deptDto"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<DeptDto> UpdateDept(DeptDto deptDto)
         {
             var dept = await _deptRepository.SingleOrDefaultAsync(x => x.Id == deptDto.Id);
@@ -96,6 +102,23 @@ namespace ExamKing.Application.Services
             
             var changeDept = await _deptRepository.UpdateNowAsync(deptDto.Adapt(dept));
             return changeDept.Entity.Adapt<DeptDto>();
+        }
+
+        /// <summary>
+        /// 查找系别
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<DeptDto> FindDeptById(int id)
+        {
+            var dept = await _deptRepository.SingleOrDefaultAsync(x => x.Id == id);
+            if (dept == null)
+            {
+                throw Oops.Oh(DeptErrorCodes.d1301);
+            }
+
+            return dept.Adapt<DeptDto>();
         }
     }
 }

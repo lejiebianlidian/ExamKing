@@ -79,14 +79,26 @@ namespace ExamKing.WebApp.Admin
         }
 
         /// <summary>
+        /// 管理员修改密码
+        /// </summary>
+        /// <param name="editAdminInput"></param>
+        /// <returns></returns>
+        public async Task<AdminInfoDto> UpdateChangePassword(ChangePasswordAdminInput editAdminInput)
+        {
+            var adminDto = editAdminInput.Adapt<AdminDto>();
+            adminDto.Id = GetUserId();
+            var admin = await _manageService.UpdateAdmin(adminDto);
+            return admin.Adapt<AdminInfoDto>();
+        }
+        
+        /// <summary>
         /// 更新管理员
         /// </summary>
         /// <param name="editAdminInput"></param>
         /// <returns></returns>
-        public async Task<AdminInfoDto> UpdateEditInfo(EditAdminInput editAdminInput)
+        public async Task<AdminInfoDto> UpdateEditAdmin(EditAdminInput editAdminInput)
         {
             var adminDto = editAdminInput.Adapt<AdminDto>();
-            adminDto.Id = GetUserId();
             var admin = await _manageService.UpdateAdmin(adminDto);
             return admin.Adapt<AdminInfoDto>();
         }
@@ -124,6 +136,17 @@ namespace ExamKing.WebApp.Admin
         {
             var adminId = GetUserId();
             var admin = await _manageService.FindAdminById(adminId);
+            return admin.Adapt<AdminInfoDto>();
+        }
+        
+        /// <summary>
+        /// 查询管理员
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<AdminInfoDto> GetFindAdmin(int id)
+        {
+            var admin = await _manageService.FindAdminById(id);
             return admin.Adapt<AdminInfoDto>();
         }
     }

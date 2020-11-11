@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ExamKing.WebApp.Admin
@@ -17,6 +18,7 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 性别
         /// </summary>
+        [DefaultValue("2")]
         public string Sex { get; set; }
         
         /// <summary>

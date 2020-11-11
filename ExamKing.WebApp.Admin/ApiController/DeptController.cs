@@ -70,5 +70,15 @@ namespace ExamKing.WebApp.Admin
             
             return "success";
         }
+        
+        /// <summary>
+        /// 查询系别
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<DeptDto> GetFindDept(int id)
+        {
+            return await _deptService.FindDeptById(id);
+        }
     }
 }

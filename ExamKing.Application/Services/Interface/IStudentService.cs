@@ -62,5 +62,12 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public Task DeleteStudent(int id);
+        
+        /// <summary>
+        /// 查找学生
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<StudentDto> FindStudentById(int id);
     }
 }

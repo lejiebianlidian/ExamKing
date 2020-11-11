@@ -45,5 +45,12 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public Task<DeptDto> UpdateDept(DeptDto deptDto);
         
+        /// <summary>
+        /// 查找系别
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<DeptDto> FindDeptById(int id);
+        
     }
 }

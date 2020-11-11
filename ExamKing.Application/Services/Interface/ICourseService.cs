@@ -38,5 +38,12 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public Task DeleteCourse(int id);
+        
+        /// <summary>
+        /// 查找课程
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<CourseDto> FindCourseById(int id);
     }
 }
