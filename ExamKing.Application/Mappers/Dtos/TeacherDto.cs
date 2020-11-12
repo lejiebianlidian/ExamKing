@@ -38,7 +38,7 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 系别Id
         /// </summary>
-        public int Deptld { get; set; }
+        public int DeptId { get; set; }
         
         /// <summary>
         /// 身份证号码

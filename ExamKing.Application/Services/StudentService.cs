@@ -69,7 +69,7 @@ namespace ExamKing.Application.Services
             var classes = await _studentRepository.Change<TbClass>().SingleOrDefaultAsync(x => x.Id == studentDto.ClassesId);
             if (classes == null) throw Oops.Oh(StudentErrorCodes.s1202);
             // 判断班级是否属于该系别
-            if (classes.Deptld != studentDto.DeptId) throw Oops.Oh(StudentErrorCodes.s1203);
+            if (classes.DeptId != studentDto.DeptId) throw Oops.Oh(StudentErrorCodes.s1203);
             var stduent = await _studentRepository.InsertNowAsync(studentDto.Adapt<TbStudent>());
             return stduent.Entity.Adapt<StudentDto>();
         }

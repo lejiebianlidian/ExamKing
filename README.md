@@ -1,3 +1,14 @@
+## Docker-Compose 运行
+```sh
+docker-compose up --build -d #构建并后台执行
+```
+## 数据迁移
+```sh
+cd ./ExamKing.Database.Migrations
+dotnet ef migrations add v0.0.1 --context ExamDbContext -s "../ExamKing.WebApp.Admin"
+dotnet ef database update -s "../ExamKing.WebApp.Admin"
+```
+
 ## Git 协作流程
 > Git全局配置（必须）
 

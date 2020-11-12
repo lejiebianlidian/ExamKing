@@ -11,18 +11,18 @@ namespace ExamKing.Core.Entites
     public partial class TbStuanswerdetail : IEntity, IEntityTypeBuilder<TbStuanswerdetail>
     {
         public int Id { get; set; }
-        public int Stuld { get; set; }
-        public int Examld { get; set; }
-        public int Questionld { get; set; }
+        public int StuId { get; set; }
+        public int ExamId { get; set; }
+        public int QuestionId { get; set; }
         public int QuesionTypeld { get; set; }
         public string Stuanswer { get; set; }
         public string Answer { get; set; }
         public string Isright { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbExam ExamldNavigation { get; set; }
+        public virtual TbExam examIdNavigation { get; set; }
         public virtual TbQuestiontype QuesionTypeldNavigation { get; set; }
-        public virtual TbStudent StuldNavigation { get; set; }
+        public virtual TbStudent stuIdNavigation { get; set; }
 
         public void Configure(EntityTypeBuilder<TbStuanswerdetail> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -32,11 +32,11 @@ namespace ExamKing.Core.Entites
 
                 entityBuilder.HasComment("答题明细表");
 
-                entityBuilder.HasIndex(e => e.Examld, "answerdetail_exam_id");
+                entityBuilder.HasIndex(e => e.ExamId, "answerdetail_exam_id");
 
                 entityBuilder.HasIndex(e => e.QuesionTypeld, "answerdetail_quesiotype_id");
 
-                entityBuilder.HasIndex(e => e.Stuld, "answerdetail_stu_id");
+                entityBuilder.HasIndex(e => e.StuId, "answerdetail_stu_id");
 
                 entityBuilder.HasIndex(e => e.Id, "stuanseerdetail_id")
                     .IsUnique();
@@ -61,8 +61,8 @@ namespace ExamKing.Core.Entites
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entityBuilder.Property(e => e.Examld)
-                    .HasColumnName("examld")
+                entityBuilder.Property(e => e.ExamId)
+                    .HasColumnName("examId")
                     .HasComment("试卷ID");
 
                 entityBuilder.Property(e => e.Isright)
@@ -77,8 +77,8 @@ namespace ExamKing.Core.Entites
                     .HasColumnName("quesionTypeld")
                     .HasComment("题型ID");
 
-                entityBuilder.Property(e => e.Questionld)
-                    .HasColumnName("questionld")
+                entityBuilder.Property(e => e.QuestionId)
+                    .HasColumnName("questionId")
                     .HasComment("题目ID");
 
                 entityBuilder.Property(e => e.Stuanswer)
@@ -89,13 +89,13 @@ namespace ExamKing.Core.Entites
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entityBuilder.Property(e => e.Stuld)
-                    .HasColumnName("stuld")
+                entityBuilder.Property(e => e.StuId)
+                    .HasColumnName("stuId")
                     .HasComment("学生ID");
 
-                entityBuilder.HasOne(d => d.ExamldNavigation)
+                entityBuilder.HasOne(d => d.examIdNavigation)
                     .WithMany(p => p.TbStuanswerdetails)
-                    .HasForeignKey(d => d.Examld)
+                    .HasForeignKey(d => d.ExamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("answerdetail_exam_id");
 
@@ -105,9 +105,9 @@ namespace ExamKing.Core.Entites
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("answerdetail_quesiotype_id");
 
-                entityBuilder.HasOne(d => d.StuldNavigation)
+                entityBuilder.HasOne(d => d.stuIdNavigation)
                     .WithMany(p => p.TbStuanswerdetails)
-                    .HasForeignKey(d => d.Stuld)
+                    .HasForeignKey(d => d.StuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("answerdetail_stu_id");
             }

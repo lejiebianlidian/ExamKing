@@ -10,45 +10,45 @@ namespace ExamKing.Core.Entites
 {
     public partial class TbExamclass : IEntity, IEntityTypeBuilder<TbExamclass>
     {
-        public int Examld { get; set; }
-        public int Classesld { get; set; }
+        public int ExamId { get; set; }
+        public int ClassesId { get; set; }
 
-        public virtual TbClass ClassesldNavigation { get; set; }
-        public virtual TbExam ExamldNavigation { get; set; }
+        public virtual TbClass classesIdNavigation { get; set; }
+        public virtual TbExam examIdNavigation { get; set; }
 
         public void Configure(EntityTypeBuilder<TbExamclass> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
             entityBuilder.HasKey(d => new
             {
-                d.Examld,
-                d.Classesld
+                d.ExamId,
+                d.ClassesId
             });
 
             entityBuilder.ToTable("tb_examclasses");
 
             entityBuilder.HasComment("试卷班级关联表");
 
-            entityBuilder.HasIndex(e => e.Classesld, "examclasses_classes_idx");
+            entityBuilder.HasIndex(e => e.ClassesId, "examclasses_classes_idx");
 
-            entityBuilder.HasIndex(e => e.Examld, "examclasses_exam_idx");
+            entityBuilder.HasIndex(e => e.ExamId, "examclasses_exam_idx");
 
-            entityBuilder.Property(e => e.Classesld)
-                .HasColumnName("classesld")
+            entityBuilder.Property(e => e.ClassesId)
+                .HasColumnName("classesId")
                 .HasComment("班级ID");
 
-            entityBuilder.Property(e => e.Examld)
-                .HasColumnName("examld")
+            entityBuilder.Property(e => e.ExamId)
+                .HasColumnName("examId")
                 .HasComment("试卷ID");
 
-            entityBuilder.HasOne(d => d.ClassesldNavigation)
+            entityBuilder.HasOne(d => d.classesIdNavigation)
                 .WithMany(d => d.TbExamclasses)
-                .HasForeignKey(d => d.Classesld)
+                .HasForeignKey(d => d.ClassesId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("examclasses_classes_idx");
 
-            entityBuilder.HasOne(d => d.ExamldNavigation)
+            entityBuilder.HasOne(d => d.examIdNavigation)
                 .WithMany(d => d.TbExamclasses)
-                .HasForeignKey(d => d.Examld)
+                .HasForeignKey(d => d.ExamId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("examclasses_exam_idx");
         }

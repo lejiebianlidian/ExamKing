@@ -18,8 +18,8 @@ namespace ExamKing.Application.Mappers
             config.ForType<CourseDto, TbCourse>()
                 .IgnoreNullValues(true)
                 .IgnoreIf((src, dest) => src.CourseName == "", dest => dest.CourseName)
-                .IgnoreIf((src, dest) => src.Deptld <= 0, dest => dest.Deptld)
-                .IgnoreIf((src, dest) => src.Teacherld <= 0, dest => dest.Teacherld)
+                .IgnoreIf((src, dest) => src.DeptId <= 0, dest => dest.DeptId)
+                .IgnoreIf((src, dest) => src.TeacherId <= 0, dest => dest.TeacherId)
                 .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow
                     ());
         }

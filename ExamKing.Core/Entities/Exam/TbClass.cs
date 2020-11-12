@@ -17,10 +17,10 @@ namespace ExamKing.Core.Entites
 
         public int Id { get; set; }
         public string ClassesName { get; set; }
-        public int Deptld { get; set; }
+        public int DeptId { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbDept DeptldNavigation { get; set; }
+        public virtual TbDept DeptIdNavigation { get; set; }
 
         public virtual ICollection<TbStudent> TbStudents { get; set; }
 
@@ -50,7 +50,7 @@ namespace ExamKing.Core.Entites
 
             entityBuilder.HasComment("班级表");
 
-            entityBuilder.HasIndex(e => e.Deptld, "classes_dept_id");
+            entityBuilder.HasIndex(e => e.DeptId, "classes_dept_id");
 
             entityBuilder.HasIndex(e => e.Id, "classes_id")
                 .IsUnique();
@@ -75,13 +75,13 @@ namespace ExamKing.Core.Entites
                 .HasCharSet("utf8")
                 .HasCollation("utf8_general_ci");
 
-            entityBuilder.Property(e => e.Deptld)
-                .HasColumnName("deptld")
+            entityBuilder.Property(e => e.DeptId)
+                .HasColumnName("DeptId")
                 .HasComment("系别ID");
 
-            entityBuilder.HasOne(d => d.DeptldNavigation)
+            entityBuilder.HasOne(d => d.DeptIdNavigation)
                 .WithMany(p => p.TbClasses)
-                .HasForeignKey(d => d.Deptld)
+                .HasForeignKey(d => d.DeptId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("classes_dept_id");
 
@@ -89,24 +89,24 @@ namespace ExamKing.Core.Entites
             entityBuilder.HasMany(d => d.TbCourses)
                 .WithMany(d => d.TbClasses)
                 .UsingEntity<TbCourseclass>(
-                  u => u.HasOne(c => c.CourseldNavigation).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.Courseld)
-                , u => u.HasOne(c => c.ClassesldNavigation).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.Classesld)
+                  u => u.HasOne(c => c.courseIdNavigation).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.CourseId)
+                , u => u.HasOne(c => c.classesIdNavigation).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.ClassesId)
                 , u =>
                 {
                     u.ToTable("tb_courseclasses");
-                    u.HasKey(c => new { c.Courseld, c.Classesld });
+                    u.HasKey(c => new { c.CourseId, c.ClassesId });
                 });
 
             // 多对多关系
             entityBuilder.HasMany(d => d.TbExams)
                 .WithMany(d => d.TbClasses)
                 .UsingEntity<TbExamclass>(
-                  u => u.HasOne(c => c.ExamldNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.Examld)
-                , u => u.HasOne(c => c.ClassesldNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.Classesld)
+                  u => u.HasOne(c => c.examIdNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ExamId)
+                , u => u.HasOne(c => c.classesIdNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ClassesId)
                 , u =>
                 {
                     u.ToTable("tb_examclasses");
-                    u.HasKey(c => new { c.Examld, c.Classesld });
+                    u.HasKey(c => new { c.ExamId, c.ClassesId });
                 });
         }
     }

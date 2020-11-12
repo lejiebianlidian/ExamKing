@@ -53,7 +53,7 @@ namespace ExamKing.Application.Services
         {
             // 查询系别是否存在
             var dept = await _teacherRepository.Change<TbDept>().Entities
-                .SingleOrDefaultAsync(u => u.Id == teacherDto.Deptld);
+                .SingleOrDefaultAsync(u => u.Id == teacherDto.DeptId);
             if (dept==null)
             {
                 throw Oops.Oh(DeptErrorCodes
@@ -83,7 +83,7 @@ namespace ExamKing.Application.Services
             }
             // 查询系别是否存在
             var dept = await _teacherRepository.Change<TbDept>().Entities
-                .SingleOrDefaultAsync(u => u.Id == teacher.Deptld);
+                .SingleOrDefaultAsync(u => u.Id == teacher.DeptId);
             if (dept==null)
             {
                 throw Oops.Oh(DeptErrorCodes

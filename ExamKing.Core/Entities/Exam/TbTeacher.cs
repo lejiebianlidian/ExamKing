@@ -24,11 +24,11 @@ namespace ExamKing.Core.Entites
         public string Telphone { get; set; }
         public string TeacherNo { get; set; }
         public string Password { get; set; }
-        public int Deptld { get; set; }
+        public int DeptId { get; set; }
         public string IdCard { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbDept DeptldNavigation { get; set; }
+        public virtual TbDept DeptIdNavigation { get; set; }
         public virtual ICollection<TbCourse> TbCourses { get; set; }
         public virtual ICollection<TbExam> TbExams { get; set; }
         public virtual ICollection<TbJudge> TbJudges { get; set; }
@@ -42,7 +42,7 @@ namespace ExamKing.Core.Entites
 
                 entityBuilder.HasComment("教师表");
 
-                entityBuilder.HasIndex(e => e.Deptld, "teacher_dept_id");
+                entityBuilder.HasIndex(e => e.DeptId, "teacher_dept_id");
 
                 entityBuilder.HasIndex(e => e.Id, "teacher_id")
                     .IsUnique();
@@ -59,8 +59,8 @@ namespace ExamKing.Core.Entites
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entityBuilder.Property(e => e.Deptld)
-                    .HasColumnName("deptld")
+                entityBuilder.Property(e => e.DeptId)
+                    .HasColumnName("DeptId")
                     .HasComment("系别ID");
 
                 entityBuilder.Property(e => e.IdCard)
@@ -111,9 +111,9 @@ namespace ExamKing.Core.Entites
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entityBuilder.HasOne(d => d.DeptldNavigation)
+                entityBuilder.HasOne(d => d.DeptIdNavigation)
                     .WithMany(p => p.TbTeachers)
-                    .HasForeignKey(d => d.Deptld)
+                    .HasForeignKey(d => d.DeptId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("teacher_dept_id");
             }

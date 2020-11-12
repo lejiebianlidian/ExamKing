@@ -21,11 +21,11 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 系别Id
         /// </summary>
-        public int Deptld { get; set; }
+        public int DeptId { get; set; }
 
         /// <summary>
         /// 教师Id
         /// </summary>
-        public int Teacherld { get; set; }
+        public int TeacherId { get; set; }
     }
 }

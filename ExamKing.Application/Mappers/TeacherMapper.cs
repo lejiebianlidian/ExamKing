@@ -23,7 +23,7 @@ namespace ExamKing.Application.Mappers
                 .IgnoreIf((src, dest) => src.Sex == "", dest => dest.Sex)
                 .IgnoreIf((src, dest) => src.Telphone == "", dest => dest.Telphone)
                 .IgnoreIf((src, dest) => src.IdCard == "", dest => dest.IdCard)
-                .IgnoreIf((src, dest) => src.Deptld <= 0, dest => dest.Deptld)
+                .IgnoreIf((src, dest) => src.DeptId <= 0, dest => dest.DeptId)
                 .Map(desc=>desc.Sex, src=> src.Sex)
                 .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow
                     ());

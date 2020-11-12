@@ -18,10 +18,10 @@ namespace ExamKing.Core.Entites
 
         public int Id { get; set; }
         public string ChapterName { get; set; }
-        public int Courseld { get; set; }
+        public int CourseId { get; set; }
         public string Desc { get; set; }
 
-        public virtual TbCourse CourseldNavigation { get; set; }
+        public virtual TbCourse courseIdNavigation { get; set; }
         public virtual ICollection<TbJudge> TbJudges { get; set; }
         public virtual ICollection<TbSelect> TbSelects { get; set; }
 
@@ -31,7 +31,7 @@ namespace ExamKing.Core.Entites
 
             entityBuilder.HasComment("课程章节表");
 
-            entityBuilder.HasIndex(e => e.Courseld, "chapter_course_id");
+            entityBuilder.HasIndex(e => e.CourseId, "chapter_course_id");
 
             entityBuilder.HasIndex(e => e.Id, "chapter_id")
                 .IsUnique();
@@ -48,8 +48,8 @@ namespace ExamKing.Core.Entites
                 .HasCharSet("utf8")
                 .HasCollation("utf8_general_ci");
 
-            entityBuilder.Property(e => e.Courseld)
-                .HasColumnName("courseld")
+            entityBuilder.Property(e => e.CourseId)
+                .HasColumnName("courseId")
                 .HasComment("课程ID");
 
             entityBuilder.Property(e => e.Desc)
@@ -60,9 +60,9 @@ namespace ExamKing.Core.Entites
                 .HasCharSet("utf8")
                 .HasCollation("utf8_general_ci");
 
-            entityBuilder.HasOne(d => d.CourseldNavigation)
+            entityBuilder.HasOne(d => d.courseIdNavigation)
                 .WithMany(p => p.TbChapters)
-                .HasForeignKey(d => d.Courseld)
+                .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("chapter_course_id");
         }

@@ -17,12 +17,12 @@ namespace ExamKing.WebApp.Admin
         /// 系别Id
         /// </summary>
         [Required(ErrorMessage = "请选择所属系别")]
-        public int Deptld { get; set; }
+        public int DeptId { get; set; }
         
         /// <summary>
         /// 教师Id
         /// </summary>
         [Required(ErrorMessage = "请选择所属教师")]
-        public int Teacherld { get; set; }
+        public int TeacherId { get; set; }
     }
 }

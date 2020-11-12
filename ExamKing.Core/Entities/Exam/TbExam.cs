@@ -18,8 +18,8 @@ namespace ExamKing.Core.Entites
 
         public int Id { get; set; }
         public string ExamName { get; set; }
-        public int Courseld { get; set; }
-        public int Teacherld { get; set; }
+        public int CourseId { get; set; }
+        public int TeacherId { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public string Judges { get; set; }
@@ -34,8 +34,8 @@ namespace ExamKing.Core.Entites
         public int SingleScore { get; set; }
         public int SelectScore { get; set; }
 
-        public virtual TbCourse CourseldNavigation { get; set; }
-        public virtual TbTeacher TeacherldNavigation { get; set; }
+        public virtual TbCourse courseIdNavigation { get; set; }
+        public virtual TbTeacher teacherIdNavigation { get; set; }
         public virtual ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
         public virtual ICollection<TbStuscore> TbStuscores { get; set; }
 
@@ -55,19 +55,19 @@ namespace ExamKing.Core.Entites
 
             entityBuilder.HasComment("试卷表");
 
-            entityBuilder.HasIndex(e => e.Courseld, "exam_course_id");
+            entityBuilder.HasIndex(e => e.CourseId, "exam_course_id");
 
             entityBuilder.HasIndex(e => e.Id, "exam_id")
                 .IsUnique();
 
-            entityBuilder.HasIndex(e => e.Teacherld, "exam_teacher_id");
+            entityBuilder.HasIndex(e => e.TeacherId, "exam_teacher_id");
 
             entityBuilder.Property(e => e.Id)
                 .HasColumnName("id")
                 .HasComment("ID");
 
-            entityBuilder.Property(e => e.Courseld)
-                .HasColumnName("courseld")
+            entityBuilder.Property(e => e.CourseId)
+                .HasColumnName("courseId")
                 .HasComment("课程ID");
 
             entityBuilder.Property(e => e.CreateTime)
@@ -162,19 +162,19 @@ namespace ExamKing.Core.Entites
                 .HasCharSet("utf8")
                 .HasCollation("utf8_general_ci");
 
-            entityBuilder.Property(e => e.Teacherld)
-                .HasColumnName("teacherld")
+            entityBuilder.Property(e => e.TeacherId)
+                .HasColumnName("teacherId")
                 .HasComment("教师ID");
 
-            entityBuilder.HasOne(d => d.CourseldNavigation)
+            entityBuilder.HasOne(d => d.courseIdNavigation)
                 .WithMany(p => p.TbExams)
-                .HasForeignKey(d => d.Courseld)
+                .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("exam_course_id");
 
-            entityBuilder.HasOne(d => d.TeacherldNavigation)
+            entityBuilder.HasOne(d => d.teacherIdNavigation)
                 .WithMany(p => p.TbExams)
-                .HasForeignKey(d => d.Teacherld)
+                .HasForeignKey(d => d.TeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("exam_teacher_id");
 
@@ -182,12 +182,12 @@ namespace ExamKing.Core.Entites
             entityBuilder.HasMany(d => d.TbClasses)
                 .WithMany(d => d.TbExams)
                 .UsingEntity<TbExamclass>(
-                  u => u.HasOne(c => c.ClassesldNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.Classesld)
-                , u => u.HasOne(c => c.ExamldNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.Examld)
+                  u => u.HasOne(c => c.classesIdNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ClassesId)
+                , u => u.HasOne(c => c.examIdNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ExamId)
                 , u =>
                 {
                     u.ToTable("tb_examclasses");
-                    u.HasKey(c => new { c.Examld, c.Classesld });
+                    u.HasKey(c => new { c.ExamId, c.ClassesId });
                 });
         }
     }

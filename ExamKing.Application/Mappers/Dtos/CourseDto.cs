@@ -18,12 +18,12 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 系别Id
         /// </summary>
-        public int Deptld { get; set; }
+        public int DeptId { get; set; }
         
         /// <summary>
         /// 教师Id
         /// </summary>
-        public int Teacherld { get; set; }
+        public int TeacherId { get; set; }
         
         /// <summary>
         /// 创建时间

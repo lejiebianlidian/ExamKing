@@ -17,6 +17,6 @@ namespace ExamKing.WebApp.Admin
         /// 系别Id
         /// </summary>
         [Required(ErrorMessage = "请选择系别")]
-        public int Deptld { get; set; }
+        public int DeptId { get; set; }
     }
 }

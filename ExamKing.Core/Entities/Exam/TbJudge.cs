@@ -13,15 +13,15 @@ namespace ExamKing.Core.Entites
         public int Id { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
-        public int Courseld { get; set; }
-        public int Chapterld { get; set; }
-        public int Teacherld { get; set; }
+        public int CourseId { get; set; }
+        public int ChapterId { get; set; }
+        public int TeacherId { get; set; }
         public string Ideas { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbChapter ChapterldNavigation { get; set; }
-        public virtual TbCourse CourseldNavigation { get; set; }
-        public virtual TbTeacher TeacherldNavigation { get; set; }
+        public virtual TbChapter chapterIdNavigation { get; set; }
+        public virtual TbCourse courseIdNavigation { get; set; }
+        public virtual TbTeacher teacherIdNavigation { get; set; }
 
         public void Configure(EntityTypeBuilder<TbJudge> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -29,14 +29,14 @@ namespace ExamKing.Core.Entites
 
             entityBuilder.HasComment("是非题表");
 
-            entityBuilder.HasIndex(e => e.Chapterld, "judge_chapter_id");
+            entityBuilder.HasIndex(e => e.ChapterId, "judge_chapter_id");
 
             entityBuilder.HasIndex(e => e.Id, "judge_id")
                 .IsUnique();
 
-            entityBuilder.HasIndex(e => e.Courseld, "judge_source_id");
+            entityBuilder.HasIndex(e => e.CourseId, "judge_source_id");
 
-            entityBuilder.HasIndex(e => e.Teacherld, "judge_teacher_id");
+            entityBuilder.HasIndex(e => e.TeacherId, "judge_teacher_id");
 
             entityBuilder.Property(e => e.Id)
                 .HasColumnName("id")
@@ -50,12 +50,12 @@ namespace ExamKing.Core.Entites
                 .HasCharSet("utf8")
                 .HasCollation("utf8_general_ci");
 
-            entityBuilder.Property(e => e.Chapterld)
-                .HasColumnName("chapterld")
+            entityBuilder.Property(e => e.ChapterId)
+                .HasColumnName("chapterId")
                 .HasComment("课程章节ID");
 
-            entityBuilder.Property(e => e.Courseld)
-                .HasColumnName("courseld")
+            entityBuilder.Property(e => e.CourseId)
+                .HasColumnName("courseId")
                 .HasComment("课程ID");
 
             entityBuilder.Property(e => e.CreateTime)
@@ -82,25 +82,25 @@ namespace ExamKing.Core.Entites
                 .HasCharSet("utf8")
                 .HasCollation("utf8_general_ci");
 
-            entityBuilder.Property(e => e.Teacherld)
-                .HasColumnName("teacherld")
+            entityBuilder.Property(e => e.TeacherId)
+                .HasColumnName("teacherId")
                 .HasComment("教师ID");
 
-            entityBuilder.HasOne(d => d.ChapterldNavigation)
+            entityBuilder.HasOne(d => d.chapterIdNavigation)
                 .WithMany(p => p.TbJudges)
-                .HasForeignKey(d => d.Chapterld)
+                .HasForeignKey(d => d.ChapterId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("judge_chapter_id");
 
-            entityBuilder.HasOne(d => d.CourseldNavigation)
+            entityBuilder.HasOne(d => d.courseIdNavigation)
                 .WithMany(p => p.TbJudges)
-                .HasForeignKey(d => d.Courseld)
+                .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("judge_source_id");
 
-            entityBuilder.HasOne(d => d.TeacherldNavigation)
+            entityBuilder.HasOne(d => d.teacherIdNavigation)
                 .WithMany(p => p.TbJudges)
-                .HasForeignKey(d => d.Teacherld)
+                .HasForeignKey(d => d.TeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("judge_teacher_id");
         }

@@ -48,14 +48,14 @@ namespace ExamKing.Application.Services
         {
             // 查询系别是否存在
             var dept = await _courseRepository.Change<TbDept>().Entities
-                .SingleOrDefaultAsync(x => x.Id == courseDto.Deptld);
+                .SingleOrDefaultAsync(x => x.Id == courseDto.DeptId);
             if (dept == null)
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
             }
             // 查询教师是否存在
             var teacher = await _courseRepository.Change<TbTeacher>().Entities
-                .SingleOrDefaultAsync(x => x.Id == courseDto.Teacherld);
+                .SingleOrDefaultAsync(x => x.Id == courseDto.TeacherId);
             if (teacher==null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
@@ -82,14 +82,14 @@ namespace ExamKing.Application.Services
             }
             // 查询系别是否存在
             var dept = await _courseRepository.Change<TbDept>().Entities
-                .SingleOrDefaultAsync(x => x.Id == course.Deptld);
+                .SingleOrDefaultAsync(x => x.Id == course.DeptId);
             if (dept == null)
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
             }
             // 查询教师是否存在
             var teacher = await _courseRepository.Change<TbTeacher>().Entities
-                .SingleOrDefaultAsync(x => x.Id == course.Teacherld);
+                .SingleOrDefaultAsync(x => x.Id == course.TeacherId);
             if (teacher==null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);

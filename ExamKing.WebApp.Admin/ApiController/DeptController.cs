@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
 using Fur.DatabaseAccessor;
@@ -22,7 +23,16 @@ namespace ExamKing.WebApp.Admin
         {
             _deptService = deptService;
         }
-
+        
+        /// <summary>
+        /// 查询全部系别
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<DeptDto>> GetDeptAll()
+        {
+            return await _deptService.FindDeptAll();
+        }
+        
         /// <summary>
         /// 系别列表
         /// </summary>

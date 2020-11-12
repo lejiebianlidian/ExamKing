@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExamKing.Database.Migrations.Migrations
 {
-    public partial class v100 : Migration
+    public partial class v001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     classesName = table.Column<string>(type: "varchar(50)", nullable: false, comment: "班级名称", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    deptld = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
+                    DeptId = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
                     createTime = table.Column<string>(type: "varchar(50)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8")
                 },
@@ -77,7 +77,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     table.PrimaryKey("PK_tb_classes", x => x.id);
                     table.ForeignKey(
                         name: "classes_dept_id",
-                        column: x => x.deptld,
+                        column: x => x.DeptId,
                         principalTable: "tb_dept",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -100,7 +100,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     password = table.Column<string>(type: "varchar(50)", nullable: false, comment: "密码", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    deptld = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
+                    DeptId = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
                     idCard = table.Column<string>(type: "varchar(20)", nullable: false, comment: "身份证号", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     createTime = table.Column<string>(type: "varchar(50)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
@@ -111,7 +111,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     table.PrimaryKey("PK_tb_teacher", x => x.id);
                     table.ForeignKey(
                         name: "teacher_dept_id",
-                        column: x => x.deptld,
+                        column: x => x.DeptId,
                         principalTable: "tb_dept",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -167,8 +167,8 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     courseName = table.Column<string>(type: "varchar(100)", nullable: false, comment: "课程名称", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    deptld = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
-                    teacherld = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
+                    DeptId = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
+                    teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
                     createTime = table.Column<string>(type: "varchar(50)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8")
                 },
@@ -177,13 +177,13 @@ namespace ExamKing.Database.Migrations.Migrations
                     table.PrimaryKey("PK_tb_course", x => x.id);
                     table.ForeignKey(
                         name: "course_dept_id",
-                        column: x => x.deptld,
+                        column: x => x.DeptId,
                         principalTable: "tb_dept",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "course_teacher_id",
-                        column: x => x.teacherld,
+                        column: x => x.teacherId,
                         principalTable: "tb_teacher",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -198,7 +198,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     chapterName = table.Column<string>(type: "varchar(100)", nullable: false, comment: "章节名称", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    courseld = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
+                    courseId = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
                     desc = table.Column<string>(type: "varchar(200)", nullable: false, comment: "章节描述", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8")
                 },
@@ -207,7 +207,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     table.PrimaryKey("PK_tb_chapter", x => x.id);
                     table.ForeignKey(
                         name: "chapter_course_id",
-                        column: x => x.courseld,
+                        column: x => x.courseId,
                         principalTable: "tb_course",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -218,21 +218,21 @@ namespace ExamKing.Database.Migrations.Migrations
                 name: "tb_courseclasses",
                 columns: table => new
                 {
-                    courseld = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
-                    classesld = table.Column<int>(type: "int", nullable: false, comment: "班级ID")
+                    courseId = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
+                    classesId = table.Column<int>(type: "int", nullable: false, comment: "班级ID")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_courseclasses", x => new { x.classesld, x.courseld });
+                    table.PrimaryKey("PK_tb_courseclasses", x => new { x.classesId, x.courseId });
                     table.ForeignKey(
                         name: "courseclasses_classes_idx",
-                        column: x => x.classesld,
+                        column: x => x.classesId,
                         principalTable: "tb_classes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "courseclasses_course_idx",
-                        column: x => x.courseld,
+                        column: x => x.courseId,
                         principalTable: "tb_course",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -247,8 +247,8 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     examName = table.Column<string>(type: "varchar(200)", nullable: false, comment: "试卷名称", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    courseld = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
-                    teacherld = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
+                    courseId = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
+                    teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
                     startTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "开始时间", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     endTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "结束时间", collation: "utf8_general_ci")
@@ -276,13 +276,13 @@ namespace ExamKing.Database.Migrations.Migrations
                     table.PrimaryKey("PK_tb_exam", x => x.id);
                     table.ForeignKey(
                         name: "exam_course_id",
-                        column: x => x.courseld,
+                        column: x => x.courseId,
                         principalTable: "tb_course",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "exam_teacher_id",
-                        column: x => x.teacherld,
+                        column: x => x.teacherId,
                         principalTable: "tb_teacher",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -299,9 +299,9 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     answer = table.Column<string>(type: "varchar(10)", nullable: false, comment: "答案", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    courseld = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
-                    chapterld = table.Column<int>(type: "int", nullable: false, comment: "课程章节ID"),
-                    teacherld = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
+                    courseId = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
+                    chapterId = table.Column<int>(type: "int", nullable: false, comment: "课程章节ID"),
+                    teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
                     ideas = table.Column<string>(type: "varchar(300)", nullable: false, comment: "解题思路", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     createTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
@@ -312,19 +312,19 @@ namespace ExamKing.Database.Migrations.Migrations
                     table.PrimaryKey("PK_tb_judge", x => x.id);
                     table.ForeignKey(
                         name: "judge_chapter_id",
-                        column: x => x.chapterld,
+                        column: x => x.chapterId,
                         principalTable: "tb_chapter",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "judge_source_id",
-                        column: x => x.courseld,
+                        column: x => x.courseId,
                         principalTable: "tb_course",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "judge_teacher_id",
-                        column: x => x.teacherld,
+                        column: x => x.teacherId,
                         principalTable: "tb_teacher",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -387,21 +387,21 @@ namespace ExamKing.Database.Migrations.Migrations
                 name: "tb_examclasses",
                 columns: table => new
                 {
-                    examld = table.Column<int>(type: "int", nullable: false, comment: "试卷ID"),
-                    classesld = table.Column<int>(type: "int", nullable: false, comment: "班级ID")
+                    examId = table.Column<int>(type: "int", nullable: false, comment: "试卷ID"),
+                    classesId = table.Column<int>(type: "int", nullable: false, comment: "班级ID")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_examclasses", x => new { x.examld, x.classesld });
+                    table.PrimaryKey("PK_tb_examclasses", x => new { x.examId, x.classesId });
                     table.ForeignKey(
                         name: "examclasses_classes_idx",
-                        column: x => x.classesld,
+                        column: x => x.classesId,
                         principalTable: "tb_classes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "examclasses_exam_idx",
-                        column: x => x.examld,
+                        column: x => x.examId,
                         principalTable: "tb_exam",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -414,9 +414,9 @@ namespace ExamKing.Database.Migrations.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false, comment: "ID")
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    stuld = table.Column<int>(type: "int", nullable: false, comment: "学生ID"),
-                    examld = table.Column<int>(type: "int", nullable: false, comment: "试卷ID"),
-                    questionld = table.Column<int>(type: "int", nullable: false, comment: "题目ID"),
+                    stuId = table.Column<int>(type: "int", nullable: false, comment: "学生ID"),
+                    examId = table.Column<int>(type: "int", nullable: false, comment: "试卷ID"),
+                    questionId = table.Column<int>(type: "int", nullable: false, comment: "题目ID"),
                     quesionTypeld = table.Column<int>(type: "int", nullable: false, comment: "题型ID"),
                     stuanswer = table.Column<string>(type: "varchar(100)", nullable: false, comment: "学生答案", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
@@ -432,7 +432,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     table.PrimaryKey("PK_tb_stuanswerdetail", x => x.id);
                     table.ForeignKey(
                         name: "answerdetail_exam_id",
-                        column: x => x.examld,
+                        column: x => x.examId,
                         principalTable: "tb_exam",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -444,7 +444,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "answerdetail_stu_id",
-                        column: x => x.stuld,
+                        column: x => x.stuId,
                         principalTable: "tb_student",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -494,7 +494,7 @@ namespace ExamKing.Database.Migrations.Migrations
                 values: new object[] { 1, "1603683111", "123456", "admin" });
 
             migrationBuilder.CreateIndex(
-                name: "admin_id",
+                name: "id",
                 table: "tb_admin",
                 column: "id",
                 unique: true);
@@ -502,7 +502,7 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "chapter_course_id",
                 table: "tb_chapter",
-                column: "courseld");
+                column: "courseId");
 
             migrationBuilder.CreateIndex(
                 name: "chapter_id",
@@ -513,7 +513,7 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "classes_dept_id",
                 table: "tb_classes",
-                column: "deptld");
+                column: "DeptId");
 
             migrationBuilder.CreateIndex(
                 name: "classes_id",
@@ -524,7 +524,7 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "course_dept_id",
                 table: "tb_course",
-                column: "deptld");
+                column: "DeptId");
 
             migrationBuilder.CreateIndex(
                 name: "course_id",
@@ -535,17 +535,17 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "course_teacher_id",
                 table: "tb_course",
-                column: "teacherld");
+                column: "teacherId");
 
             migrationBuilder.CreateIndex(
                 name: "courseclasses_classes_idx",
                 table: "tb_courseclasses",
-                column: "classesld");
+                column: "classesId");
 
             migrationBuilder.CreateIndex(
                 name: "courseclasses_course_idx",
                 table: "tb_courseclasses",
-                column: "courseld");
+                column: "courseId");
 
             migrationBuilder.CreateIndex(
                 name: "dept_id",
@@ -556,7 +556,7 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "exam_course_id",
                 table: "tb_exam",
-                column: "courseld");
+                column: "courseId");
 
             migrationBuilder.CreateIndex(
                 name: "exam_id",
@@ -567,22 +567,22 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "exam_teacher_id",
                 table: "tb_exam",
-                column: "teacherld");
+                column: "teacherId");
 
             migrationBuilder.CreateIndex(
                 name: "examclasses_classes_idx",
                 table: "tb_examclasses",
-                column: "classesld");
+                column: "classesId");
 
             migrationBuilder.CreateIndex(
                 name: "examclasses_exam_idx",
                 table: "tb_examclasses",
-                column: "examld");
+                column: "examId");
 
             migrationBuilder.CreateIndex(
                 name: "judge_chapter_id",
                 table: "tb_judge",
-                column: "chapterld");
+                column: "chapterId");
 
             migrationBuilder.CreateIndex(
                 name: "judge_id",
@@ -593,12 +593,12 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "judge_source_id",
                 table: "tb_judge",
-                column: "courseld");
+                column: "courseId");
 
             migrationBuilder.CreateIndex(
                 name: "judge_teacher_id",
                 table: "tb_judge",
-                column: "teacherld");
+                column: "teacherId");
 
             migrationBuilder.CreateIndex(
                 name: "questiontype_id",
@@ -630,7 +630,7 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "answerdetail_exam_id",
                 table: "tb_stuanswerdetail",
-                column: "examld");
+                column: "examId");
 
             migrationBuilder.CreateIndex(
                 name: "answerdetail_quesiotype_id",
@@ -640,7 +640,7 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "answerdetail_stu_id",
                 table: "tb_stuanswerdetail",
-                column: "stuld");
+                column: "stuId");
 
             migrationBuilder.CreateIndex(
                 name: "stuanseerdetail_id",
@@ -688,7 +688,7 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.CreateIndex(
                 name: "teacher_dept_id",
                 table: "tb_teacher",
-                column: "deptld");
+                column: "DeptId");
 
             migrationBuilder.CreateIndex(
                 name: "teacher_id",

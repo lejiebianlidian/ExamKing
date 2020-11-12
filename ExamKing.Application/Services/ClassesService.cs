@@ -61,7 +61,7 @@ namespace ExamKing.Application.Services
         public async Task<ClassesDto> InsertClasses(ClassesDto classesDto)
         {
             // 判断系别是否存在
-            var dept = await _classRepository.Change<TbDept>().AnyAsync(x => x.Id == classesDto.Deptld);
+            var dept = await _classRepository.Change<TbDept>().AnyAsync(x => x.Id == classesDto.DeptId);
             if (dept == false) throw Oops.Oh(ClassErrorCodes.c1101);
             var classes = await _classRepository.InsertNowAsync(classesDto.Adapt<TbClass>());
             return classes.Entity.Adapt<ClassesDto>();

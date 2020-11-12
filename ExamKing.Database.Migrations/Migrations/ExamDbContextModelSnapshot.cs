@@ -47,7 +47,7 @@ namespace ExamKing.Database.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Id" }, "admin_id")
+                    b.HasIndex(new[] { "Id" }, "id")
                         .IsUnique();
 
                     b.ToTable("tb_admin");
@@ -81,9 +81,9 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Courseld")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int")
-                        .HasColumnName("courseld")
+                        .HasColumnName("courseId")
                         .HasComment("课程ID");
 
                     b.Property<string>("Desc")
@@ -96,7 +96,7 @@ namespace ExamKing.Database.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Courseld" }, "chapter_course_id");
+                    b.HasIndex(new[] { "CourseId" }, "chapter_course_id");
 
                     b.HasIndex(new[] { "Id" }, "chapter_id")
                         .IsUnique();
@@ -131,14 +131,14 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Deptld")
+                    b.Property<int>("DeptId")
                         .HasColumnType("int")
-                        .HasColumnName("deptld")
+                        .HasColumnName("DeptId")
                         .HasComment("系别ID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Deptld" }, "classes_dept_id");
+                    b.HasIndex(new[] { "DeptId" }, "classes_dept_id");
 
                     b.HasIndex(new[] { "Id" }, "classes_id")
                         .IsUnique();
@@ -173,24 +173,24 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Deptld")
+                    b.Property<int>("DeptId")
                         .HasColumnType("int")
-                        .HasColumnName("deptld")
+                        .HasColumnName("DeptId")
                         .HasComment("系别ID");
 
-                    b.Property<int>("Teacherld")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int")
-                        .HasColumnName("teacherld")
+                        .HasColumnName("teacherId")
                         .HasComment("教师ID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Deptld" }, "course_dept_id");
+                    b.HasIndex(new[] { "DeptId" }, "course_dept_id");
 
                     b.HasIndex(new[] { "Id" }, "course_id")
                         .IsUnique();
 
-                    b.HasIndex(new[] { "Teacherld" }, "course_teacher_id");
+                    b.HasIndex(new[] { "TeacherId" }, "course_teacher_id");
 
                     b.ToTable("tb_course");
 
@@ -200,21 +200,21 @@ namespace ExamKing.Database.Migrations.Migrations
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbCourseclass", b =>
                 {
-                    b.Property<int>("Classesld")
+                    b.Property<int>("ClassesId")
                         .HasColumnType("int")
-                        .HasColumnName("classesld")
+                        .HasColumnName("classesId")
                         .HasComment("班级ID");
 
-                    b.Property<int>("Courseld")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int")
-                        .HasColumnName("courseld")
+                        .HasColumnName("courseId")
                         .HasComment("课程ID");
 
-                    b.HasKey("Classesld", "Courseld");
+                    b.HasKey("ClassesId", "CourseId");
 
-                    b.HasIndex(new[] { "Classesld" }, "courseclasses_classes_idx");
+                    b.HasIndex(new[] { "ClassesId" }, "courseclasses_classes_idx");
 
-                    b.HasIndex(new[] { "Courseld" }, "courseclasses_course_idx");
+                    b.HasIndex(new[] { "CourseId" }, "courseclasses_course_idx");
 
                     b.ToTable("tb_courseclasses");
 
@@ -265,9 +265,9 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasColumnName("id")
                         .HasComment("ID");
 
-                    b.Property<int>("Courseld")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int")
-                        .HasColumnName("courseld")
+                        .HasColumnName("courseId")
                         .HasComment("课程ID");
 
                     b.Property<string>("CreateTime")
@@ -367,19 +367,19 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Teacherld")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int")
-                        .HasColumnName("teacherld")
+                        .HasColumnName("teacherId")
                         .HasComment("教师ID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Courseld" }, "exam_course_id");
+                    b.HasIndex(new[] { "CourseId" }, "exam_course_id");
 
                     b.HasIndex(new[] { "Id" }, "exam_id")
                         .IsUnique();
 
-                    b.HasIndex(new[] { "Teacherld" }, "exam_teacher_id");
+                    b.HasIndex(new[] { "TeacherId" }, "exam_teacher_id");
 
                     b.ToTable("tb_exam");
 
@@ -389,21 +389,21 @@ namespace ExamKing.Database.Migrations.Migrations
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbExamclass", b =>
                 {
-                    b.Property<int>("Examld")
+                    b.Property<int>("ExamId")
                         .HasColumnType("int")
-                        .HasColumnName("examld")
+                        .HasColumnName("examId")
                         .HasComment("试卷ID");
 
-                    b.Property<int>("Classesld")
+                    b.Property<int>("ClassesId")
                         .HasColumnType("int")
-                        .HasColumnName("classesld")
+                        .HasColumnName("classesId")
                         .HasComment("班级ID");
 
-                    b.HasKey("Examld", "Classesld");
+                    b.HasKey("ExamId", "ClassesId");
 
-                    b.HasIndex(new[] { "Classesld" }, "examclasses_classes_idx");
+                    b.HasIndex(new[] { "ClassesId" }, "examclasses_classes_idx");
 
-                    b.HasIndex(new[] { "Examld" }, "examclasses_exam_idx");
+                    b.HasIndex(new[] { "ExamId" }, "examclasses_exam_idx");
 
                     b.ToTable("tb_examclasses");
 
@@ -427,14 +427,14 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Chapterld")
+                    b.Property<int>("ChapterId")
                         .HasColumnType("int")
-                        .HasColumnName("chapterld")
+                        .HasColumnName("chapterId")
                         .HasComment("课程章节ID");
 
-                    b.Property<int>("Courseld")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int")
-                        .HasColumnName("courseld")
+                        .HasColumnName("courseId")
                         .HasComment("课程ID");
 
                     b.Property<string>("CreateTime")
@@ -461,21 +461,21 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Teacherld")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int")
-                        .HasColumnName("teacherld")
+                        .HasColumnName("teacherId")
                         .HasComment("教师ID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Chapterld" }, "judge_chapter_id");
+                    b.HasIndex(new[] { "ChapterId" }, "judge_chapter_id");
 
                     b.HasIndex(new[] { "Id" }, "judge_id")
                         .IsUnique();
 
-                    b.HasIndex(new[] { "Courseld" }, "judge_source_id");
+                    b.HasIndex(new[] { "CourseId" }, "judge_source_id");
 
-                    b.HasIndex(new[] { "Teacherld" }, "judge_teacher_id");
+                    b.HasIndex(new[] { "TeacherId" }, "judge_teacher_id");
 
                     b.ToTable("tb_judge");
 
@@ -654,9 +654,9 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Examld")
+                    b.Property<int>("ExamId")
                         .HasColumnType("int")
-                        .HasColumnName("examld")
+                        .HasColumnName("examId")
                         .HasComment("试卷ID");
 
                     b.Property<string>("Isright")
@@ -672,10 +672,15 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasColumnName("quesionTypeld")
                         .HasComment("题型ID");
 
-                    b.Property<int>("Questionld")
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int")
-                        .HasColumnName("questionld")
+                        .HasColumnName("questionId")
                         .HasComment("题目ID");
+
+                    b.Property<int>("StuId")
+                        .HasColumnType("int")
+                        .HasColumnName("stuId")
+                        .HasComment("学生ID");
 
                     b.Property<string>("Stuanswer")
                         .IsRequired()
@@ -685,18 +690,13 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Stuld")
-                        .HasColumnType("int")
-                        .HasColumnName("stuld")
-                        .HasComment("学生ID");
-
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Examld" }, "answerdetail_exam_id");
+                    b.HasIndex(new[] { "ExamId" }, "answerdetail_exam_id");
 
                     b.HasIndex(new[] { "QuesionTypeld" }, "answerdetail_quesiotype_id");
 
-                    b.HasIndex(new[] { "Stuld" }, "answerdetail_stu_id");
+                    b.HasIndex(new[] { "StuId" }, "answerdetail_stu_id");
 
                     b.HasIndex(new[] { "Id" }, "stuanseerdetail_id")
                         .IsUnique();
@@ -865,9 +865,9 @@ namespace ExamKing.Database.Migrations.Migrations
                         .UseCollation("utf8_general_ci")
                         .HasCharSet("utf8");
 
-                    b.Property<int>("Deptld")
+                    b.Property<int>("DeptId")
                         .HasColumnType("int")
-                        .HasColumnName("deptld")
+                        .HasColumnName("DeptId")
                         .HasComment("系别ID");
 
                     b.Property<string>("IdCard")
@@ -920,7 +920,7 @@ namespace ExamKing.Database.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Deptld" }, "teacher_dept_id");
+                    b.HasIndex(new[] { "DeptId" }, "teacher_dept_id");
 
                     b.HasIndex(new[] { "Id" }, "teacher_id")
                         .IsUnique();
@@ -933,127 +933,127 @@ namespace ExamKing.Database.Migrations.Migrations
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbChapter", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbCourse", "CourseldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbCourse", "courseIdNavigation")
                         .WithMany("TbChapters")
-                        .HasForeignKey("Courseld")
+                        .HasForeignKey("CourseId")
                         .HasConstraintName("chapter_course_id")
                         .IsRequired();
 
-                    b.Navigation("CourseldNavigation");
+                    b.Navigation("courseIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbClass", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbDept", "DeptldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbDept", "DeptIdNavigation")
                         .WithMany("TbClasses")
-                        .HasForeignKey("Deptld")
+                        .HasForeignKey("DeptId")
                         .HasConstraintName("classes_dept_id")
                         .IsRequired();
 
-                    b.Navigation("DeptldNavigation");
+                    b.Navigation("DeptIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbCourse", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbDept", "DeptldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbDept", "DeptIdNavigation")
                         .WithMany("TbCourses")
-                        .HasForeignKey("Deptld")
+                        .HasForeignKey("DeptId")
                         .HasConstraintName("course_dept_id")
                         .IsRequired();
 
-                    b.HasOne("ExamKing.Core.Entites.TbTeacher", "TeacherldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbTeacher", "teacherIdNavigation")
                         .WithMany("TbCourses")
-                        .HasForeignKey("Teacherld")
+                        .HasForeignKey("TeacherId")
                         .HasConstraintName("course_teacher_id")
                         .IsRequired();
 
-                    b.Navigation("DeptldNavigation");
+                    b.Navigation("DeptIdNavigation");
 
-                    b.Navigation("TeacherldNavigation");
+                    b.Navigation("teacherIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbCourseclass", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbClass", "ClassesldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbClass", "classesIdNavigation")
                         .WithMany("TbCourseclasses")
-                        .HasForeignKey("Classesld")
+                        .HasForeignKey("ClassesId")
                         .HasConstraintName("courseclasses_classes_idx")
                         .IsRequired();
 
-                    b.HasOne("ExamKing.Core.Entites.TbCourse", "CourseldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbCourse", "courseIdNavigation")
                         .WithMany("TbCourseclasses")
-                        .HasForeignKey("Courseld")
+                        .HasForeignKey("CourseId")
                         .HasConstraintName("courseclasses_course_idx")
                         .IsRequired();
 
-                    b.Navigation("ClassesldNavigation");
+                    b.Navigation("classesIdNavigation");
 
-                    b.Navigation("CourseldNavigation");
+                    b.Navigation("courseIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbExam", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbCourse", "CourseldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbCourse", "courseIdNavigation")
                         .WithMany("TbExams")
-                        .HasForeignKey("Courseld")
+                        .HasForeignKey("CourseId")
                         .HasConstraintName("exam_course_id")
                         .IsRequired();
 
-                    b.HasOne("ExamKing.Core.Entites.TbTeacher", "TeacherldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbTeacher", "teacherIdNavigation")
                         .WithMany("TbExams")
-                        .HasForeignKey("Teacherld")
+                        .HasForeignKey("TeacherId")
                         .HasConstraintName("exam_teacher_id")
                         .IsRequired();
 
-                    b.Navigation("CourseldNavigation");
+                    b.Navigation("courseIdNavigation");
 
-                    b.Navigation("TeacherldNavigation");
+                    b.Navigation("teacherIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbExamclass", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbClass", "ClassesldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbClass", "classesIdNavigation")
                         .WithMany("TbExamclasses")
-                        .HasForeignKey("Classesld")
+                        .HasForeignKey("ClassesId")
                         .HasConstraintName("examclasses_classes_idx")
                         .IsRequired();
 
-                    b.HasOne("ExamKing.Core.Entites.TbExam", "ExamldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbExam", "examIdNavigation")
                         .WithMany("TbExamclasses")
-                        .HasForeignKey("Examld")
+                        .HasForeignKey("ExamId")
                         .HasConstraintName("examclasses_exam_idx")
                         .IsRequired();
 
-                    b.Navigation("ClassesldNavigation");
+                    b.Navigation("classesIdNavigation");
 
-                    b.Navigation("ExamldNavigation");
+                    b.Navigation("examIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbJudge", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbChapter", "ChapterldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbChapter", "chapterIdNavigation")
                         .WithMany("TbJudges")
-                        .HasForeignKey("Chapterld")
+                        .HasForeignKey("ChapterId")
                         .HasConstraintName("judge_chapter_id")
                         .IsRequired();
 
-                    b.HasOne("ExamKing.Core.Entites.TbCourse", "CourseldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbCourse", "courseIdNavigation")
                         .WithMany("TbJudges")
-                        .HasForeignKey("Courseld")
+                        .HasForeignKey("CourseId")
                         .HasConstraintName("judge_source_id")
                         .IsRequired();
 
-                    b.HasOne("ExamKing.Core.Entites.TbTeacher", "TeacherldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbTeacher", "teacherIdNavigation")
                         .WithMany("TbJudges")
-                        .HasForeignKey("Teacherld")
+                        .HasForeignKey("TeacherId")
                         .HasConstraintName("judge_teacher_id")
                         .IsRequired();
 
-                    b.Navigation("ChapterldNavigation");
+                    b.Navigation("chapterIdNavigation");
 
-                    b.Navigation("CourseldNavigation");
+                    b.Navigation("courseIdNavigation");
 
-                    b.Navigation("TeacherldNavigation");
+                    b.Navigation("teacherIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbSelect", b =>
@@ -1085,9 +1085,9 @@ namespace ExamKing.Database.Migrations.Migrations
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbStuanswerdetail", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbExam", "ExamldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbExam", "examIdNavigation")
                         .WithMany("TbStuanswerdetails")
-                        .HasForeignKey("Examld")
+                        .HasForeignKey("ExamId")
                         .HasConstraintName("answerdetail_exam_id")
                         .IsRequired();
 
@@ -1097,17 +1097,17 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasConstraintName("answerdetail_quesiotype_id")
                         .IsRequired();
 
-                    b.HasOne("ExamKing.Core.Entites.TbStudent", "StuldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbStudent", "stuIdNavigation")
                         .WithMany("TbStuanswerdetails")
-                        .HasForeignKey("Stuld")
+                        .HasForeignKey("StuId")
                         .HasConstraintName("answerdetail_stu_id")
                         .IsRequired();
 
-                    b.Navigation("ExamldNavigation");
+                    b.Navigation("examIdNavigation");
 
                     b.Navigation("QuesionTypeldNavigation");
 
-                    b.Navigation("StuldNavigation");
+                    b.Navigation("stuIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbStudent", b =>
@@ -1158,13 +1158,13 @@ namespace ExamKing.Database.Migrations.Migrations
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbTeacher", b =>
                 {
-                    b.HasOne("ExamKing.Core.Entites.TbDept", "DeptldNavigation")
+                    b.HasOne("ExamKing.Core.Entites.TbDept", "DeptIdNavigation")
                         .WithMany("TbTeachers")
-                        .HasForeignKey("Deptld")
+                        .HasForeignKey("DeptId")
                         .HasConstraintName("teacher_dept_id")
                         .IsRequired();
 
-                    b.Navigation("DeptldNavigation");
+                    b.Navigation("DeptIdNavigation");
                 });
 
             modelBuilder.Entity("ExamKing.Core.Entites.TbChapter", b =>
