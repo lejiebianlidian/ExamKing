@@ -28,18 +28,6 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
-        /// 查询全部班级
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<ClassesDto>> FindClassesAll()
-        {
-            var classes = _classRepository
-                .AsQueryable()
-                .ProjectToType<ClassesDto>();
-            return await classes.ToListAsync();
-        }
-
-        /// <summary>
         /// 分页查询班级
         /// </summary>
         /// <param name="pageIndex"></param>
@@ -61,8 +49,8 @@ namespace ExamKing.Application.Services
         public async Task<ClassesDto> InsertClasses(ClassesDto classesDto)
         {
             // 判断系别是否存在
-            var dept = await _classRepository.Change<TbDept>().AnyAsync(x => x.Id == classesDto.DeptId);
-            if (dept == false) throw Oops.Oh(ClassErrorCodes.c1101);
+            var dept = await _classRepository.Change<TbDept>().SingleOrDefaultAsync(x => x.Id == classesDto.DeptId);
+            if (dept == null) throw Oops.Oh(DeptErrorCodes.d1301);
             var classes = await _classRepository.InsertNowAsync(classesDto.Adapt<TbClass>());
             return classes.Entity.Adapt<ClassesDto>();
         }
@@ -110,7 +98,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<ClassesDto> FindClassesById(int id)
         {
-            var classes = await _classRepository.SingleOrDefaultAsync(x => x.Id == id);
+            var classes = await _classRepository.Include(x=>x.Dept).SingleOrDefaultAsync(x => x.Id == id);
             if (classes==null)
             {
                 throw Oops.Oh(ClassErrorCodes.c1101);

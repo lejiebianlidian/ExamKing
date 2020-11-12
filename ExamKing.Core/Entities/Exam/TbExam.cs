@@ -34,10 +34,10 @@ namespace ExamKing.Core.Entites
         public int SingleScore { get; set; }
         public int SelectScore { get; set; }
 
-        public virtual TbCourse courseIdNavigation { get; set; }
-        public virtual TbTeacher teacherIdNavigation { get; set; }
-        public virtual ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
-        public virtual ICollection<TbStuscore> TbStuscores { get; set; }
+        public TbCourse Course { get; set; }
+        public TbTeacher Teacher { get; set; }
+        public ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
+        public ICollection<TbStuscore> TbStuscores { get; set; }
 
         /// <summary>
         /// 多对多
@@ -166,13 +166,13 @@ namespace ExamKing.Core.Entites
                 .HasColumnName("teacherId")
                 .HasComment("教师ID");
 
-            entityBuilder.HasOne(d => d.courseIdNavigation)
+            entityBuilder.HasOne(d => d.Course)
                 .WithMany(p => p.TbExams)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("exam_course_id");
 
-            entityBuilder.HasOne(d => d.teacherIdNavigation)
+            entityBuilder.HasOne(d => d.Teacher)
                 .WithMany(p => p.TbExams)
                 .HasForeignKey(d => d.TeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -182,8 +182,8 @@ namespace ExamKing.Core.Entites
             entityBuilder.HasMany(d => d.TbClasses)
                 .WithMany(d => d.TbExams)
                 .UsingEntity<TbExamclass>(
-                  u => u.HasOne(c => c.classesIdNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ClassesId)
-                , u => u.HasOne(c => c.examIdNavigation).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ExamId)
+                  u => u.HasOne(c => c.Classes).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ClassesId)
+                , u => u.HasOne(c => c.Exam).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ExamId)
                 , u =>
                 {
                     u.ToTable("tb_examclasses");

@@ -13,8 +13,8 @@ namespace ExamKing.Core.Entites
         public int ExamId { get; set; }
         public int ClassesId { get; set; }
 
-        public virtual TbClass classesIdNavigation { get; set; }
-        public virtual TbExam examIdNavigation { get; set; }
+        public TbClass Classes { get; set; }
+        public TbExam Exam { get; set; }
 
         public void Configure(EntityTypeBuilder<TbExamclass> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -40,13 +40,13 @@ namespace ExamKing.Core.Entites
                 .HasColumnName("examId")
                 .HasComment("试卷ID");
 
-            entityBuilder.HasOne(d => d.classesIdNavigation)
+            entityBuilder.HasOne(d => d.Classes)
                 .WithMany(d => d.TbExamclasses)
                 .HasForeignKey(d => d.ClassesId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("examclasses_classes_idx");
 
-            entityBuilder.HasOne(d => d.examIdNavigation)
+            entityBuilder.HasOne(d => d.Exam)
                 .WithMany(d => d.TbExamclasses)
                 .HasForeignKey(d => d.ExamId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

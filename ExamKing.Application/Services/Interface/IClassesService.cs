@@ -11,11 +11,6 @@ namespace ExamKing.Application.Services
     /// </summary>
     public interface IClassesService
     {
-        /// <summary>
-        /// 查询全部班级
-        /// </summary>
-        /// <returns></returns>
-        public Task<List<ClassesDto>> FindClassesAll();
 
         /// <summary>
         /// 分页查询班级

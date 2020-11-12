@@ -36,11 +36,11 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<List<DeptDto>> FindDeptAll()
         {
-            var depts = await _deptRepository
-                .AsQueryable()
+            var depts = _deptRepository
+                .AsQueryable(false)
                 .Include(x=>x.TbClasses)
-                .ToListAsync();
-            return depts.Adapt<List<DeptDto>>();
+                .ProjectToType<DeptDto>();
+            return await depts.ToListAsync();
         }
 
         /// <summary>

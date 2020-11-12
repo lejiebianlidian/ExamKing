@@ -25,13 +25,13 @@ namespace ExamKing.Core.Entites
         public int TeacherId { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbDept DeptIdNavigation { get; set; }
-        public virtual TbTeacher teacherIdNavigation { get; set; }
-        public virtual ICollection<TbChapter> TbChapters { get; set; }
-        public virtual ICollection<TbExam> TbExams { get; set; }
-        public virtual ICollection<TbJudge> TbJudges { get; set; }
-        public virtual ICollection<TbSelect> TbSelects { get; set; }
-        public virtual ICollection<TbStuscore> TbStuscores { get; set; }
+        public TbDept Dept { get; set; }
+        public TbTeacher Teacher { get; set; }
+        public ICollection<TbChapter> TbChapters { get; set; }
+        public ICollection<TbExam> TbExams { get; set; }
+        public ICollection<TbJudge> TbJudges { get; set; }
+        public ICollection<TbSelect> TbSelects { get; set; }
+        public ICollection<TbStuscore> TbStuscores { get; set; }
 
         /// <summary>
         /// 多对多
@@ -85,13 +85,13 @@ namespace ExamKing.Core.Entites
                 .HasColumnName("teacherId")
                 .HasComment("教师ID");
 
-            entityBuilder.HasOne(d => d.DeptIdNavigation)
+            entityBuilder.HasOne(d => d.Dept)
                 .WithMany(p => p.TbCourses)
                 .HasForeignKey(d => d.DeptId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("course_dept_id");
 
-            entityBuilder.HasOne(d => d.teacherIdNavigation)
+            entityBuilder.HasOne(d => d.Teacher)
                 .WithMany(p => p.TbCourses)
                 .HasForeignKey(d => d.TeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -101,8 +101,8 @@ namespace ExamKing.Core.Entites
             entityBuilder.HasMany(d => d.TbClasses)
                 .WithMany(d => d.TbCourses)
                 .UsingEntity<TbCourseclass>(
-                  u => u.HasOne(c => c.classesIdNavigation).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.ClassesId)
-                , u => u.HasOne(c => c.courseIdNavigation).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.CourseId)
+                  u => u.HasOne(c => c.Classes).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.ClassesId)
+                , u => u.HasOne(c => c.Course).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.CourseId)
                 , u =>
                 {
                     u.ToTable("tb_courseclasses");

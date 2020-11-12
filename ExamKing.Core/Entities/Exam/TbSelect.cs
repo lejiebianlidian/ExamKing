@@ -24,9 +24,9 @@ namespace ExamKing.Core.Entites
         public string Ideas { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbChapter Chapter { get; set; }
-        public virtual TbCourse Course { get; set; }
-        public virtual TbTeacher Teacher { get; set; }
+        public TbChapter Chapter { get; set; }
+        public TbCourse Course { get; set; }
+        public TbTeacher Teacher { get; set; }
 
         public void Configure(EntityTypeBuilder<TbSelect> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {

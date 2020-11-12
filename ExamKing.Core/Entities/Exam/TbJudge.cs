@@ -19,9 +19,9 @@ namespace ExamKing.Core.Entites
         public string Ideas { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbChapter chapterIdNavigation { get; set; }
-        public virtual TbCourse courseIdNavigation { get; set; }
-        public virtual TbTeacher teacherIdNavigation { get; set; }
+        public TbChapter Chapter { get; set; }
+        public TbCourse Course { get; set; }
+        public TbTeacher Teacher { get; set; }
 
         public void Configure(EntityTypeBuilder<TbJudge> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -86,19 +86,19 @@ namespace ExamKing.Core.Entites
                 .HasColumnName("teacherId")
                 .HasComment("教师ID");
 
-            entityBuilder.HasOne(d => d.chapterIdNavigation)
+            entityBuilder.HasOne(d => d.Chapter)
                 .WithMany(p => p.TbJudges)
                 .HasForeignKey(d => d.ChapterId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("judge_chapter_id");
 
-            entityBuilder.HasOne(d => d.courseIdNavigation)
+            entityBuilder.HasOne(d => d.Course)
                 .WithMany(p => p.TbJudges)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("judge_source_id");
 
-            entityBuilder.HasOne(d => d.teacherIdNavigation)
+            entityBuilder.HasOne(d => d.Teacher)
                 .WithMany(p => p.TbJudges)
                 .HasForeignKey(d => d.TeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

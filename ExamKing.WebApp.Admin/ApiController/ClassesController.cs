@@ -51,7 +51,7 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="editClassesInput"></param>
         /// <returns></returns>
-        public async Task<ClassesDto> UpdateEditDept(EditClassesInput editClassesInput)
+        public async Task<ClassesDto> UpdateEditClasses(EditClassesInput editClassesInput)
         {
             var changeClasses = await _classesService.UpdateClasses(
                 editClassesInput.Adapt<ClassesDto>());
@@ -63,7 +63,7 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<string> DeleteRemoveClasse(int id)
+        public async Task<string> DeleteRemoveClasses(int id)
         {
             await _classesService.DeleteClasses(id);
             return "success";

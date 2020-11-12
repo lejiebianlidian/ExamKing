@@ -22,10 +22,10 @@ namespace ExamKing.Core.Entites
         public string DeptName { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual ICollection<TbClass> TbClasses { get; set; }
-        public virtual ICollection<TbCourse> TbCourses { get; set; }
-        public virtual ICollection<TbStudent> TbStudents { get; set; }
-        public virtual ICollection<TbTeacher> TbTeachers { get; set; }
+        public ICollection<TbClass> TbClasses { get; set; }
+        public ICollection<TbCourse> TbCourses { get; set; }
+        public ICollection<TbStudent> TbStudents { get; set; }
+        public ICollection<TbTeacher> TbTeachers { get; set; }
 
         public void Configure(EntityTypeBuilder<TbDept> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {

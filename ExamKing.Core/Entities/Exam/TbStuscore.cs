@@ -17,9 +17,9 @@ namespace ExamKing.Core.Entites
         public int Score { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbCourse Course { get; set; }
-        public virtual TbExam Exam { get; set; }
-        public virtual TbStudent Stu { get; set; }
+        public TbCourse Course { get; set; }
+        public TbExam Exam { get; set; }
+        public TbStudent Student { get; set; }
 
         public void Configure(EntityTypeBuilder<TbStuscore> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -78,7 +78,7 @@ namespace ExamKing.Core.Entites
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("stuscore_exam_id");
 
-                entityBuilder.HasOne(d => d.Stu)
+                entityBuilder.HasOne(d => d.Student)
                     .WithMany(p => p.TbStuscores)
                     .HasForeignKey(d => d.StuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

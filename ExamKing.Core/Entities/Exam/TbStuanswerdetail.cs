@@ -20,9 +20,9 @@ namespace ExamKing.Core.Entites
         public string Isright { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbExam examIdNavigation { get; set; }
-        public virtual TbQuestiontype QuesionTypeldNavigation { get; set; }
-        public virtual TbStudent stuIdNavigation { get; set; }
+        public TbExam Exam { get; set; }
+        public TbQuestiontype Questiontype { get; set; }
+        public TbStudent Student { get; set; }
 
         public void Configure(EntityTypeBuilder<TbStuanswerdetail> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -93,19 +93,19 @@ namespace ExamKing.Core.Entites
                     .HasColumnName("stuId")
                     .HasComment("学生ID");
 
-                entityBuilder.HasOne(d => d.examIdNavigation)
+                entityBuilder.HasOne(d => d.Exam)
                     .WithMany(p => p.TbStuanswerdetails)
                     .HasForeignKey(d => d.ExamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("answerdetail_exam_id");
 
-                entityBuilder.HasOne(d => d.QuesionTypeldNavigation)
+                entityBuilder.HasOne(d => d.Questiontype)
                     .WithMany(p => p.TbStuanswerdetails)
                     .HasForeignKey(d => d.QuesionTypeld)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("answerdetail_quesiotype_id");
 
-                entityBuilder.HasOne(d => d.stuIdNavigation)
+                entityBuilder.HasOne(d => d.Student)
                     .WithMany(p => p.TbStuanswerdetails)
                     .HasForeignKey(d => d.StuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

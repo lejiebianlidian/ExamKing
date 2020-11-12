@@ -19,15 +19,5 @@ namespace ExamKing.WebApp.Student
             _classesService = classesService;
         }
 
-        /// <summary>
-        /// 查询全部班级
-        /// </summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        public async Task<List<ClassesDto>> GetClassesAll()
-        {
-            return await _classesService.FindClassesAll();
-        }
-        
     }
 }

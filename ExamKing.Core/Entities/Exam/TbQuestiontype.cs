@@ -19,7 +19,7 @@ namespace ExamKing.Core.Entites
         public string TypeName { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
+        public ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
 
         public void Configure(EntityTypeBuilder<TbQuestiontype> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {

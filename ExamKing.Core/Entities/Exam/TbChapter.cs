@@ -21,9 +21,9 @@ namespace ExamKing.Core.Entites
         public int CourseId { get; set; }
         public string Desc { get; set; }
 
-        public virtual TbCourse courseIdNavigation { get; set; }
-        public virtual ICollection<TbJudge> TbJudges { get; set; }
-        public virtual ICollection<TbSelect> TbSelects { get; set; }
+        public TbCourse Course { get; set; }
+        public ICollection<TbJudge> TbJudges { get; set; }
+        public ICollection<TbSelect> TbSelects { get; set; }
 
         public void Configure(EntityTypeBuilder<TbChapter> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -60,7 +60,7 @@ namespace ExamKing.Core.Entites
                 .HasCharSet("utf8")
                 .HasCollation("utf8_general_ci");
 
-            entityBuilder.HasOne(d => d.courseIdNavigation)
+            entityBuilder.HasOne(d => d.Course)
                 .WithMany(p => p.TbChapters)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

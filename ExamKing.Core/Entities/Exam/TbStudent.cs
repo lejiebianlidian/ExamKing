@@ -27,10 +27,10 @@ namespace ExamKing.Core.Entites
         public string IdCard { get; set; }
         public string CreateTime { get; set; }
 
-        public virtual TbClass Classes { get; set; }
-        public virtual TbDept Dept { get; set; }
-        public virtual ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
-        public virtual ICollection<TbStuscore> TbStuscores { get; set; }
+        public TbClass Classes { get; set; }
+        public TbDept Dept { get; set; }
+        public ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
+        public ICollection<TbStuscore> TbStuscores { get; set; }
 
         public void Configure(EntityTypeBuilder<TbStudent> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
