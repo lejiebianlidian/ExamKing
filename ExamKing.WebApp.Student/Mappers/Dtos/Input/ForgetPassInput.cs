@@ -5,7 +5,7 @@ namespace ExamKing.WebApp.Student
     /// <summary>
     /// 找回密码输入
     /// </summary>
-    public class ForgetPassDto
+    public class ForgetPassInput
     {
         /// <summary>
         /// 学号

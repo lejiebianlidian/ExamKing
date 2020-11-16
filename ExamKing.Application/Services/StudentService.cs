@@ -78,32 +78,7 @@ namespace ExamKing.Application.Services
         public async Task<StudentDto> LoginStudent(string studentNo, string password)
         {
             var student = await _studentRepository
-                .Entities
-                .Select(u=>new TbStudent
-                {
-                    Id=u.Id,
-                    StuName=u.StuName,
-                    DeptId=u.DeptId,
-                    ClassesId=u.ClassesId,
-                    Sex=u.Sex,
-                    StuNo=u.StuNo,
-                    Telphone=u.Telphone,
-                    IdCard=u.IdCard,
-                    CreateTime=u.CreateTime,
-                    Classes = new TbClass
-                    {
-                        Id=u.Classes.Id,
-                        ClassesName=u.Classes.ClassesName,
-                        CreateTime=u.Classes.CreateTime,
-                        DeptId = u.Classes.DeptId,
-                        Dept = new TbDept
-                        {
-                            CreateTime=u.Classes.Dept.CreateTime,
-                            DeptName=u.Classes.Dept.DeptName
-                        }
-                    }
-                })
-                .SingleOrDefaultAsync(s => s.StuNo.Equals(studentNo) && s.Password.Equals(password));
+                .SingleOrDefaultAsync(s => s.StuNo.Equals(studentNo));
             if (student == null) throw Oops.Oh(StudentErrorCodes.s1204);
             if (!MD5Encryption.Compare(password, student.Password))
             {
@@ -143,7 +118,7 @@ namespace ExamKing.Application.Services
         public async Task<StudentDto> FindStudentById(int id)
         {
             var student = await _studentRepository
-                .Entities.AsNoTracking()
+                .Include(x=>x.Classes.Dept)
                 .Select(u=>new TbStudent
                 {
                     Id=u.Id,
@@ -207,7 +182,7 @@ namespace ExamKing.Application.Services
             // 判断身份证后6位是否正确
             if (idCard != stu.IdCard.Substring(stu.IdCard.Length-6,6)) throw Oops.Oh(StudentErrorCodes.s1206);
             // 修改密码
-            stu.Password = newPass;
+            stu.Password = MD5Encryption.Encrypt(newPass);
             var newStu = await _studentRepository.UpdateAsync(stu);
             return newStu.Entity.Adapt<StudentDto>();
         }

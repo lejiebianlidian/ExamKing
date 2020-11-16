@@ -76,9 +76,9 @@ namespace ExamKing.WebApp.Student
         /// <param name="forgetPassDto"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        public async Task<string> PostForgetPass(ForgetPassDto forgetPassDto)
+        public async Task<string> PostForgetPass(ForgetPassInput forgetPassInput)
         {
-            await _studentService.ForgetPass(forgetPassDto.StuNo, forgetPassDto.IdCard, forgetPassDto.NewPass);
+            await _studentService.ForgetPass(forgetPassInput.StuNo, forgetPassInput.IdCard, forgetPassInput.NewPass);
             return "success";
         }
         
@@ -86,11 +86,11 @@ namespace ExamKing.WebApp.Student
         /// 学生信息
         /// </summary>
         /// <returns></returns>
-        public async Task<StudentInfoDto> GetInfo()
+        public async Task<StudentOutput> GetInfo()
         {
             var userId = GetUserId();
             var studentInfo = await _studentService.FindStudentById(userId);
-            return studentInfo.Adapt<StudentInfoDto>();
+            return studentInfo.Adapt<StudentOutput>();
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
 
         /// <summary>
         /// 联系电话
