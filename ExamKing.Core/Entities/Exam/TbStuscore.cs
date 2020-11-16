@@ -67,19 +67,19 @@ namespace ExamKing.Core.Entites
                     .HasComment("学生ID");
 
                 entityBuilder.HasOne(d => d.Course)
-                    .WithMany(p => p.TbStuscores)
+                    .WithMany(p => p.Stuscores)
                     .HasForeignKey(d => d.CourseId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("stuscore_course_id");
 
                 entityBuilder.HasOne(d => d.Exam)
-                    .WithMany(p => p.TbStuscores)
+                    .WithMany(p => p.Stuscores)
                     .HasForeignKey(d => d.ExamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("stuscore_exam_id");
 
                 entityBuilder.HasOne(d => d.Student)
-                    .WithMany(p => p.TbStuscores)
+                    .WithMany(p => p.Stuscores)
                     .HasForeignKey(d => d.StuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("stuscore_stu_id");

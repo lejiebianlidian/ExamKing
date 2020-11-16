@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ExamKing.Core.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
+using ExamKing.Core.Utils;
 using Fur.DatabaseAccessor;
 using Fur.DataEncryption;
 using Fur.DependencyInjection;
@@ -37,10 +39,34 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<PagedList<StudentDto>> FindStudentAllByPage(int pageIndex = 1, int pageSize = 10)
         {
-            var pageResult = _studentRepository.AsQueryable(false)
-                .ProjectToType<StudentDto>();
+            var pageResult = await _studentRepository.Entities.AsNoTracking()
+                .Select(u=>new TbStudent
+                {
+                    Id=u.Id,
+                    StuName=u.StuName,
+                    DeptId=u.DeptId,
+                    ClassesId=u.ClassesId,
+                    Sex=u.Sex,
+                    StuNo=u.StuNo,
+                    Telphone=u.Telphone,
+                    IdCard=u.IdCard,
+                    CreateTime=u.CreateTime,
+                    Classes = new TbClass
+                    {
+                        Id=u.Classes.Id,
+                        ClassesName=u.Classes.ClassesName,
+                        CreateTime=u.Classes.CreateTime,
+                        DeptId = u.Classes.DeptId,
+                        Dept = new TbDept
+                        {
+                            CreateTime=u.Classes.Dept.CreateTime,
+                            DeptName=u.Classes.Dept.DeptName
+                        }
+                    }
+                })
+                .ToPagedListAsync(pageIndex, pageSize);
 
-            return await pageResult.ToPagedListAsync(pageIndex, pageSize);
+            return pageResult.Adapt<PagedList<StudentDto>>();
         }
 
         /// <summary>
@@ -51,7 +77,33 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<StudentDto> LoginStudent(string studentNo, string password)
         {
-            var student = await _studentRepository.SingleOrDefaultAsync(s => s.StuNo.Equals(studentNo) && s.Password.Equals(password));
+            var student = await _studentRepository
+                .Entities
+                .Select(u=>new TbStudent
+                {
+                    Id=u.Id,
+                    StuName=u.StuName,
+                    DeptId=u.DeptId,
+                    ClassesId=u.ClassesId,
+                    Sex=u.Sex,
+                    StuNo=u.StuNo,
+                    Telphone=u.Telphone,
+                    IdCard=u.IdCard,
+                    CreateTime=u.CreateTime,
+                    Classes = new TbClass
+                    {
+                        Id=u.Classes.Id,
+                        ClassesName=u.Classes.ClassesName,
+                        CreateTime=u.Classes.CreateTime,
+                        DeptId = u.Classes.DeptId,
+                        Dept = new TbDept
+                        {
+                            CreateTime=u.Classes.Dept.CreateTime,
+                            DeptName=u.Classes.Dept.DeptName
+                        }
+                    }
+                })
+                .SingleOrDefaultAsync(s => s.StuNo.Equals(studentNo) && s.Password.Equals(password));
             if (student == null) throw Oops.Oh(StudentErrorCodes.s1204);
             if (!MD5Encryption.Compare(password, student.Password))
             {
@@ -76,7 +128,9 @@ namespace ExamKing.Application.Services
             if (classes == null) throw Oops.Oh(StudentErrorCodes.s1202);
             // 判断班级是否属于该系别
             if (classes.DeptId != studentDto.DeptId) throw Oops.Oh(StudentErrorCodes.s1203);
-            var stduent = await _studentRepository.InsertNowAsync(studentDto.Adapt<TbStudent>());
+            studentDto.CreateTime = TimeUtil.GetTimeStampNow();
+            var stduent = await _studentRepository
+                .InsertNowAsync(studentDto.Adapt<TbStudent>());
             return stduent.Entity.Adapt<StudentDto>();
         }
 
@@ -86,13 +140,35 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<StudentDto> GetStudentById(int id)
+        public async Task<StudentDto> FindStudentById(int id)
         {
             var student = await _studentRepository
-                .Entities
-                .Include(x =>x.Classes)
-                .Include(x=>x.Dept)
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .Entities.AsNoTracking()
+                .Select(u=>new TbStudent
+                {
+                    Id=u.Id,
+                    StuName=u.StuName,
+                    DeptId=u.DeptId,
+                    ClassesId=u.ClassesId,
+                    Sex=u.Sex,
+                    StuNo=u.StuNo,
+                    Telphone=u.Telphone,
+                    IdCard=u.IdCard,
+                    CreateTime=u.CreateTime,
+                    Classes = new TbClass
+                    {
+                        Id=u.Classes.Id,
+                        ClassesName=u.Classes.ClassesName,
+                        CreateTime=u.Classes.CreateTime,
+                        DeptId = u.Classes.DeptId,
+                        Dept = new TbDept
+                        {
+                            CreateTime=u.Classes.Dept.CreateTime,
+                            DeptName=u.Classes.Dept.DeptName
+                        }
+                    }
+                })
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (student == null) throw Oops.Oh(StudentErrorCodes.s1204);
             return student.Adapt<StudentDto>();
         }
@@ -150,18 +226,5 @@ namespace ExamKing.Application.Services
             await _studentRepository.DeleteAsync(stu);
         }
 
-        /// <summary>
-        /// 查找学生
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public async Task<StudentDto> FindStudentById(int id)
-        {
-            var stu = await _studentRepository.Where(x => x.Id == id).SingleOrDefaultAsync();
-            if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
-
-            return stu.Adapt<StudentDto>();
-        }
     }
 }

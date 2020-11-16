@@ -12,11 +12,11 @@ namespace ExamKing.Core.Entites
     {
         public TbCourse()
         {
-            TbChapters = new HashSet<TbChapter>();
-            TbExams = new HashSet<TbExam>();
-            TbJudges = new HashSet<TbJudge>();
-            TbSelects = new HashSet<TbSelect>();
-            TbStuscores = new HashSet<TbStuscore>();
+            Chapters = new HashSet<TbChapter>();
+            Exams = new HashSet<TbExam>();
+            Judges = new HashSet<TbJudge>();
+            Selects = new HashSet<TbSelect>();
+            Stuscores = new HashSet<TbStuscore>();
         }
 
         public int Id { get; set; }
@@ -27,21 +27,21 @@ namespace ExamKing.Core.Entites
 
         public TbDept Dept { get; set; }
         public TbTeacher Teacher { get; set; }
-        public ICollection<TbChapter> TbChapters { get; set; }
-        public ICollection<TbExam> TbExams { get; set; }
-        public ICollection<TbJudge> TbJudges { get; set; }
-        public ICollection<TbSelect> TbSelects { get; set; }
-        public ICollection<TbStuscore> TbStuscores { get; set; }
+        public ICollection<TbChapter> Chapters { get; set; }
+        public ICollection<TbExam> Exams { get; set; }
+        public ICollection<TbJudge> Judges { get; set; }
+        public ICollection<TbSelect> Selects { get; set; }
+        public ICollection<TbStuscore> Stuscores { get; set; }
 
         /// <summary>
         /// 多对多
         /// </summary>
-        public ICollection<TbClass> TbClasses { get; set; }
+        public ICollection<TbClass> Classes { get; set; }
 
         /// <summary>
         /// 多对多中间表
         /// </summary>
-        public List<TbCourseclass> TbCourseclasses { get; set; }
+        public List<TbCourseclass> Courseclasses { get; set; }
 
 
         public void Configure(EntityTypeBuilder<TbCourse> entityBuilder, DbContext dbContext, Type dbContextLocator)
@@ -86,23 +86,23 @@ namespace ExamKing.Core.Entites
                 .HasComment("教师ID");
 
             entityBuilder.HasOne(d => d.Dept)
-                .WithMany(p => p.TbCourses)
+                .WithMany(p => p.Courses)
                 .HasForeignKey(d => d.DeptId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("course_dept_id");
 
             entityBuilder.HasOne(d => d.Teacher)
-                .WithMany(p => p.TbCourses)
+                .WithMany(p => p.Courses)
                 .HasForeignKey(d => d.TeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("course_teacher_id");
 
             // 多对多关系
-            entityBuilder.HasMany(d => d.TbClasses)
-                .WithMany(d => d.TbCourses)
+            entityBuilder.HasMany(d => d.Classes)
+                .WithMany(d => d.Courses)
                 .UsingEntity<TbCourseclass>(
-                  u => u.HasOne(c => c.Classes).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.ClassesId)
-                , u => u.HasOne(c => c.Course).WithMany(c => c.TbCourseclasses).HasForeignKey(c => c.CourseId)
+                  u => u.HasOne(c => c.Classes).WithMany(c => c.Courseclasses).HasForeignKey(c => c.ClassesId)
+                , u => u.HasOne(c => c.Course).WithMany(c => c.Courseclasses).HasForeignKey(c => c.CourseId)
                 , u =>
                 {
                     u.ToTable("tb_courseclasses");

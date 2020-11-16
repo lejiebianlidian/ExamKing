@@ -28,12 +28,12 @@ namespace ExamKing.WebApp.Admin
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<StudentInfoDto>> GetStudentList(
+        public async Task<PagedList<StudentClassesOutput>> GetStudentList(
             [FromQuery] int pageIndex = 1, 
             [FromQuery] int pageSize = 10)
         {
             var stuList = await _studentService.FindStudentAllByPage(pageIndex, pageSize);
-            return stuList.Adapt<PagedList<StudentInfoDto>>();
+            return stuList.Adapt<PagedList<StudentClassesOutput>>();
         }
         
         /// <summary>
@@ -41,11 +41,11 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="addStudentInput"></param>
         /// <returns></returns>
-        public async Task<StudentInfoDto> PostCreateStudent(AddStudentInput addStudentInput)
+        public async Task<StudentInfoOutput> PostCreateStudent(AddStudentInput addStudentInput)
         {
             var stu = await _studentService.RegisterStudent(addStudentInput.Adapt<StudentDto
             >());
-            return stu.Adapt<StudentInfoDto>();
+            return stu.Adapt<StudentInfoOutput>();
         }
 
         /// <summary>
@@ -76,10 +76,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<StudentInfoDto> GetFindStudent(int id)
+        public async Task<StudentClassesOutput> GetFindStudent(int id)
         {
             var stu = await _studentService.FindStudentById(id);
-            return stu.Adapt<StudentInfoDto>();
+            return stu.Adapt<StudentClassesOutput>();
         }
     }
 }

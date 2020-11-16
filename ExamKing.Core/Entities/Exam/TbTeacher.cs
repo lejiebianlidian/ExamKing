@@ -12,10 +12,10 @@ namespace ExamKing.Core.Entites
     {
         public TbTeacher()
         {
-            TbCourses = new HashSet<TbCourse>();
-            TbExams = new HashSet<TbExam>();
-            TbJudges = new HashSet<TbJudge>();
-            TbSelects = new HashSet<TbSelect>();
+            Courses = new HashSet<TbCourse>(); 
+            Exams = new HashSet<TbExam>();
+            Judges = new HashSet<TbJudge>();
+            Selects = new HashSet<TbSelect>();
         }
 
         public int Id { get; set; }
@@ -29,10 +29,10 @@ namespace ExamKing.Core.Entites
         public string CreateTime { get; set; }
 
         public TbDept Dept { get; set; }
-        public ICollection<TbCourse> TbCourses { get; set; }
-        public ICollection<TbExam> TbExams { get; set; }
-        public ICollection<TbJudge> TbJudges { get; set; }
-        public ICollection<TbSelect> TbSelects { get; set; }
+        public ICollection<TbCourse> Courses { get; set; }
+        public ICollection<TbExam> Exams { get; set; }
+        public ICollection<TbJudge> Judges { get; set; }
+        public ICollection<TbSelect> Selects { get; set; }
 
         public void Configure(EntityTypeBuilder<TbTeacher> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -112,7 +112,7 @@ namespace ExamKing.Core.Entites
                     .HasCollation("utf8_general_ci");
 
                 entityBuilder.HasOne(d => d.Dept)
-                    .WithMany(p => p.TbTeachers)
+                    .WithMany(p => p.Teachers)
                     .HasForeignKey(d => d.DeptId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("teacher_dept_id");

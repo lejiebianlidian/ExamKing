@@ -89,7 +89,7 @@ namespace ExamKing.WebApp.Student
         public async Task<StudentInfoDto> GetInfo()
         {
             var userId = GetUserId();
-            var studentInfo = await _studentService.GetStudentById(userId);
+            var studentInfo = await _studentService.FindStudentById(userId);
             return studentInfo.Adapt<StudentInfoDto>();
         }
 

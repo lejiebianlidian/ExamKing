@@ -1,39 +1,40 @@
-﻿using System;
 using System.Text.Json.Serialization;
 using ExamKing.Core.JsonConverters;
 
-namespace ExamKing.Application.Mappers
+namespace ExamKing.WebApp.Admin
 {
-    /// <summary>
-    /// 班级 DTO
-    /// </summary>
-    public class ClassesDto
+    public class CourseOutput
     {
         /// <summary>
-        /// 班级Id
+        /// 课程Id
         /// </summary>
         public int Id { get; set; }
-
+        
         /// <summary>
-        /// 班级名称
+        /// 课程名称
         /// </summary>
-        public string ClassesName { get; set; }
-
-        ///// <summary>
-        ///// 系别Id
-        ///// </summary>
+        public string CourseName { get; set; }
+        
+        /// <summary>
+        /// 系别Id
+        /// </summary>
         public int DeptId { get; set; }
-
+        
+        /// <summary>
+        /// 教师Id
+        /// </summary>
+        public int TeacherId { get; set; }
+        
         /// <summary>
         /// 创建时间
         /// </summary>
         [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
-        
+
         /// <summary>
-        /// 系别
+        /// 教师
         /// </summary>
-        public DeptDto Dept { get; set; }
+        public TeacherSubOutput Teacher { get; set; }
     }
-    
+
 }

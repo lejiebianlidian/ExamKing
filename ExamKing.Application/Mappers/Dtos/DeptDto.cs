@@ -12,7 +12,6 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 系别Id
         /// </summary>
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int Id { get; set; }
 
         /// <summary>
@@ -23,14 +22,17 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 创建时间
         /// </summary>
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
+        
+    }
+    
+    public class DeptClassesDto : DeptDto
+    {
         
         /// <summary>
         /// 关联班级
         /// </summary>
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public List<ClassesDto> Classes { get; set; }
     }
 

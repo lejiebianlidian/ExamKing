@@ -24,8 +24,7 @@ namespace ExamKing.Application.Mappers
                 .IgnoreIf((src, dest) => src.IdCard == "", dest => dest.IdCard)
                 .IgnoreIf((src, dest) => src.DeptId <= 0, dest => dest.DeptId)
                 .Map(desc => desc.Sex, src => src.Sex)
-                .Map(desc=>desc.Password,src=>MD5Encryption.Encrypt(src.Password))
-                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow());
+                .Map(desc => desc.Password, src => MD5Encryption.Encrypt(src.Password));
         }
     }
 }

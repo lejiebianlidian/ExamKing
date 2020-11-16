@@ -29,11 +29,12 @@ namespace ExamKing.WebApp.Admin
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<CourseDto>> GetCourseList(
+        public async Task<PagedList<CourseOutput>> GetCourseList(
             [FromQuery] int pageIndex = 1, 
             [FromQuery] int pageSize = 10)
         {
-            return await _courseService.FindCourseAllByPage(pageIndex, pageSize);
+            var course = await _courseService.FindCourseAllByPage(pageIndex, pageSize);
+            return course.Adapt<PagedList<CourseOutput>>();
         }
         
         /// <summary>
@@ -74,9 +75,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<CourseDto> GetFindCourse(int id)
+        public async Task<CourseOutput> GetFindCourse(int id)
         {
-            return await _courseService.FindCourseById(id);
+            var course = await _courseService.FindCourseById(id);
+            return course.Adapt<CourseOutput>();
         }
     }
 }

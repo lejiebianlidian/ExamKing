@@ -31,13 +31,6 @@ namespace ExamKing.Application.Services
         public Task<StudentDto> RegisterStudent(StudentDto studentDto);
 
         /// <summary>
-        /// 学生信息
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        public Task<StudentDto> GetStudentById(int Id);
-
-        /// <summary>
         /// 修改学生信息
         /// </summary>
         /// <param name="Id"></param>

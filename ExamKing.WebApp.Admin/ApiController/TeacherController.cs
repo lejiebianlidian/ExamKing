@@ -28,13 +28,13 @@ namespace ExamKing.WebApp.Admin
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<TeacherInfoDto>> GetTeacherList(
+        public async Task<PagedList<TeacherDeptOutput>> GetTeacherList(
             [FromQuery] int pageIndex = 1, 
             [FromQuery] int pageSize = 10)
         {
             var teacherList = await _teacherService.FindTeacherAllByPage(
                 pageIndex, pageSize);
-            return teacherList.Adapt<PagedList<TeacherInfoDto>>();
+            return teacherList.Adapt<PagedList<TeacherDeptOutput>>();
         }
         
         /// <summary>
@@ -74,10 +74,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<TeacherInfoDto> GetFindTeacher(int id)
+        public async Task<TeacherDeptOutput> GetFindTeacher(int id)
         {
             var teacher = await _teacherService.FindTeacherById(id);
-            return teacher.Adapt<TeacherInfoDto>();
+            return teacher.Adapt<TeacherDeptOutput>();
         }
     }
 }

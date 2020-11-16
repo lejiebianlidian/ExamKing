@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using ExamKing.Core.ErrorCodes;
+using ExamKing.Core.Utils;
 using Fur.DatabaseAccessor;
 using Fur.DataEncryption;
 using Fur.DependencyInjection;
@@ -79,7 +80,7 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(AdminErrorCodes.a1003);
             }
-            
+            adminDto.CreateTime = TimeUtil.GetTimeStampNow();
             var regAdmin = await _adminRepository.InsertNowAsync(adminDto.Adapt<TbAdmin>());
             return regAdmin.Entity.Adapt<AdminDto>();
         }

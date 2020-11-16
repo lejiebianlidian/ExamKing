@@ -12,8 +12,8 @@ namespace ExamKing.Core.Entites
     {
         public TbStudent()
         {
-            TbStuanswerdetails = new HashSet<TbStuanswerdetail>();
-            TbStuscores = new HashSet<TbStuscore>();
+            Stuanswerdetails = new HashSet<TbStuanswerdetail>();
+            Stuscores = new HashSet<TbStuscore>();
         }
 
         public int Id { get; set; }
@@ -29,8 +29,8 @@ namespace ExamKing.Core.Entites
 
         public TbClass Classes { get; set; }
         public TbDept Dept { get; set; }
-        public ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
-        public ICollection<TbStuscore> TbStuscores { get; set; }
+        public ICollection<TbStuanswerdetail> Stuanswerdetails { get; set; }
+        public ICollection<TbStuscore> Stuscores { get; set; }
 
         public void Configure(EntityTypeBuilder<TbStudent> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -116,13 +116,13 @@ namespace ExamKing.Core.Entites
                     .HasCollation("utf8_general_ci");
 
                 entityBuilder.HasOne(d => d.Classes)
-                    .WithMany(p => p.TbStudents)
+                    .WithMany(p => p.Students)
                     .HasForeignKey(d => d.ClassesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("student_classes_id");
 
                 entityBuilder.HasOne(d => d.Dept)
-                    .WithMany(p => p.TbStudents)
+                    .WithMany(p => p.Students)
                     .HasForeignKey(d => d.DeptId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("student_dept_id");

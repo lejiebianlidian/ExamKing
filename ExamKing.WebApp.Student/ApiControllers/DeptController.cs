@@ -24,7 +24,7 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public async Task<List<DeptDto>> GetDeptAll()
+        public async Task<List<DeptClassesDto>> GetDeptAll()
         {
             return await _deptService.FindDeptAll();
         }

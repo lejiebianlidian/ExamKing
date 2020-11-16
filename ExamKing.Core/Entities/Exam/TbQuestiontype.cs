@@ -12,14 +12,14 @@ namespace ExamKing.Core.Entites
     {
         public TbQuestiontype()
         {
-            TbStuanswerdetails = new HashSet<TbStuanswerdetail>();
+            Stuanswerdetails = new HashSet<TbStuanswerdetail>();
         }
 
         public int Id { get; set; }
         public string TypeName { get; set; }
         public string CreateTime { get; set; }
 
-        public ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
+        public ICollection<TbStuanswerdetail> Stuanswerdetails { get; set; }
 
         public void Configure(EntityTypeBuilder<TbQuestiontype> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {

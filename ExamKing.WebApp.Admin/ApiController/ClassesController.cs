@@ -29,11 +29,12 @@ namespace ExamKing.WebApp.Admin
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ClassesDto>> GetClassesList(
+        public async Task<PagedList<ClassesDeptOutput>> GetClassesList(
             [FromQuery] int pageIndex = 1, 
             [FromQuery] int pageSize = 10)
         {
-            return await _classesService.FindClassesAllByPage(pageIndex, pageSize);
+            var list = await _classesService.FindClassesAllByPage(pageIndex, pageSize);
+            return list.Adapt<PagedList<ClassesDeptOutput>>();
         }
         
         /// <summary>
@@ -52,11 +53,11 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="editClassesInput"></param>
         /// <returns></returns>
-        public async Task<ClassesDto> UpdateEditClasses(EditClassesInput editClassesInput)
+        public async Task<ClassesOutput> UpdateEditClasses(EditClassesInput editClassesInput)
         {
             var changeClasses = await _classesService.UpdateClasses(
                 editClassesInput.Adapt<ClassesDto>());
-            return changeClasses;
+            return changeClasses.Adapt<ClassesOutput>();
         }
         
         /// <summary>
@@ -75,9 +76,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ClassesDto> GetFindClasses(int id)
+        public async Task<ClassesDeptOutput> GetFindClasses(int id)
         {
-            return await _classesService.FindClassesById(id);
+            var classes = await _classesService.FindClassesById(id);
+            return classes.Adapt<ClassesDeptOutput>();
         }
     }
 }

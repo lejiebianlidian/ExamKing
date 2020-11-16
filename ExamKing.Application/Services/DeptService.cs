@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fur.DatabaseAccessor;
 using System.Threading.Tasks;
 using ExamKing.Core.Entites;
-
 using ExamKing.Application.Mappers;
 using ExamKing.Core.ErrorCodes;
+using ExamKing.Core.Utils;
 using Mapster;
 using Fur.DependencyInjection;
 using Fur.FriendlyException;
@@ -34,13 +35,25 @@ namespace ExamKing.Application.Services
         /// 查询全部系别和班级
         /// </summary>
         /// <returns></returns>
-        public async Task<List<DeptDto>> FindDeptAll()
+        public async Task<List<DeptClassesDto>> FindDeptAll()
         {
-            var depts = _deptRepository
-                .AsQueryable(false)
-                .Include(x=>x.TbClasses)
-                .ProjectToType<DeptDto>();
-            return await depts.ToListAsync();
+            var depts = await _deptRepository
+                .Entities.AsNoTracking()
+                .Select(u => new TbDept
+                {
+                    Id = u.Id,
+                    DeptName = u.DeptName,
+                    CreateTime = u.CreateTime,
+                    Classes = u.Classes.Select(c=>new TbClass
+                    {
+                        Id=c.Id,
+                        ClassesName=c.ClassesName,
+                        CreateTime=c.CreateTime,
+                    }).ToList()
+                })
+                .ToListAsync();
+            
+            return depts.Adapt<List<DeptClassesDto>>();
         }
 
         /// <summary>
@@ -49,12 +62,25 @@ namespace ExamKing.Application.Services
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<DeptDto>> FindDeptAllByPage(int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<DeptClassesDto>> FindDeptAllByPage(int pageIndex = 1, int pageSize = 10)
         {
-            var pageResult = _deptRepository.AsQueryable(false)
-                .ProjectToType<DeptDto>();
+            var pageResult = await _deptRepository
+                .Entities.AsNoTracking()
+                .Select(u => new TbDept
+                {
+                    Id = u.Id,
+                    DeptName = u.DeptName,
+                    CreateTime = u.CreateTime,
+                    Classes = u.Classes.Select(c => new TbClass
+                    {
+                        Id = c.Id,
+                        ClassesName = c.ClassesName,
+                        CreateTime = c.CreateTime,
+                    }).ToList()
+                })
+                .ToPagedListAsync(pageIndex, pageSize);
 
-            return await pageResult.ToPagedListAsync(pageIndex, pageSize);
+            return pageResult.Adapt<PagedList<DeptClassesDto>>();
         }
 
         /// <summary>
@@ -64,6 +90,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<DeptDto> InsertDept(DeptDto deptDto)
         {
+            deptDto.CreateTime = TimeUtil.GetTimeStampNow();
             var dept = await _deptRepository.InsertNowAsync(deptDto.Adapt<TbDept>());
             return dept.Entity.Adapt<DeptDto>();
         }
@@ -110,15 +137,29 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<DeptDto> FindDeptById(int id)
+        public async Task<DeptClassesDto> FindDeptById(int id)
         {
-            var dept = await _deptRepository.SingleOrDefaultAsync(x => x.Id == id);
+            var dept = await _deptRepository
+                .Entities
+                .Select(u => new TbDept
+                {
+                    Id = u.Id,
+                    DeptName = u.DeptName,
+                    CreateTime = u.CreateTime,
+                    Classes = u.Classes.Select(c => new TbClass
+                    {
+                        Id = c.Id,
+                        ClassesName = c.ClassesName,
+                        CreateTime = c.CreateTime,
+                    }).ToList()
+                })
+                .SingleOrDefaultAsync(x => x.Id == id);
             if (dept == null)
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
             }
 
-            return dept.Adapt<DeptDto>();
+            return dept.Adapt<DeptClassesDto>();
         }
     }
 }

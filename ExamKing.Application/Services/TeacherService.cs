@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using ExamKing.Core.ErrorCodes;
+using ExamKing.Core.Utils;
 using Fur.DatabaseAccessor;
 using Fur.DependencyInjection;
 using Fur.FriendlyException;
 using Mapster;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamKing.Application.Services
@@ -38,10 +40,27 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<PagedList<TeacherDto>> FindTeacherAllByPage(int pageIndex = 1, int pageSize = 10)
         {
-            var pageResult = _teacherRepository.AsQueryable(false)
-                .ProjectToType<TeacherDto>();
+            var pageResult = await _teacherRepository
+                .Entities.AsNoTracking()
+                .Select(u => new TbTeacher
+                {
+                    Id=u.Id,
+                    TeacherName=u.TeacherName,
+                    DeptId=u.DeptId,
+                    Sex=u.Sex,
+                    TeacherNo=u.TeacherNo,
+                    Telphone=u.Telphone,
+                    IdCard=u.IdCard,
+                    CreateTime=u.CreateTime,
+                    Dept = new TbDept
+                    {
+                        CreateTime=u.Dept.CreateTime,
+                        DeptName=u.Dept.DeptName
+                    }
+                })
+                .ToPagedListAsync(pageIndex, pageSize);
 
-            return await pageResult.ToPagedListAsync(pageIndex, pageSize);
+            return  pageResult.Adapt<PagedList<TeacherDto>>();
         }
 
         /// <summary>
@@ -65,6 +84,7 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(TeacherErrorCodes.t1401);
             }
+            teacherDto.CreateTime = TimeUtil.GetTimeStampNow();
             var createTeacher = await _teacherRepository.InsertNowAsync(teacherDto.Adapt<TbTeacher>());
             return createTeacher.Entity.Adapt<TeacherDto>();
         }
@@ -118,7 +138,25 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<TeacherDto> FindTeacherById(int id)
         {
-            var teacher = await _teacherRepository.SingleOrDefaultAsync(x => x.Id == id);
+            var teacher = await _teacherRepository
+                .Entities
+                .Select(u => new TbTeacher
+                {
+                    Id=u.Id,
+                    TeacherName=u.TeacherName,
+                    DeptId=u.DeptId,
+                    Sex=u.Sex,
+                    TeacherNo=u.TeacherNo,
+                    Telphone=u.Telphone,
+                    IdCard=u.IdCard,
+                    CreateTime=u.CreateTime,
+                    Dept = new TbDept
+                    {
+                        CreateTime=u.Dept.CreateTime,
+                        DeptName=u.Dept.DeptName
+                    }
+                })
+                .SingleOrDefaultAsync(x => x.Id == id);
             if (teacher == null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);

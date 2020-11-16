@@ -12,8 +12,8 @@ namespace ExamKing.Core.Entites
     {
         public TbExam()
         {
-            TbStuanswerdetails = new HashSet<TbStuanswerdetail>();
-            TbStuscores = new HashSet<TbStuscore>();
+            Stuanswerdetails = new HashSet<TbStuanswerdetail>();
+            Stuscores = new HashSet<TbStuscore>();
         }
 
         public int Id { get; set; }
@@ -36,18 +36,18 @@ namespace ExamKing.Core.Entites
 
         public TbCourse Course { get; set; }
         public TbTeacher Teacher { get; set; }
-        public ICollection<TbStuanswerdetail> TbStuanswerdetails { get; set; }
-        public ICollection<TbStuscore> TbStuscores { get; set; }
+        public ICollection<TbStuanswerdetail> Stuanswerdetails { get; set; }
+        public ICollection<TbStuscore> Stuscores { get; set; }
 
         /// <summary>
         /// 多对多
         /// </summary>
-        public ICollection<TbClass> TbClasses { get; set; }
+        public ICollection<TbClass> Classes { get; set; }
 
         /// <summary>
         /// 多对多中间表
         /// </summary>
-        public List<TbExamclass> TbExamclasses { get; set; }
+        public List<TbExamclass> Examclasses { get; set; }
 
         public void Configure(EntityTypeBuilder<TbExam> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -167,23 +167,23 @@ namespace ExamKing.Core.Entites
                 .HasComment("教师ID");
 
             entityBuilder.HasOne(d => d.Course)
-                .WithMany(p => p.TbExams)
+                .WithMany(p => p.Exams)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("exam_course_id");
 
             entityBuilder.HasOne(d => d.Teacher)
-                .WithMany(p => p.TbExams)
+                .WithMany(p => p.Exams)
                 .HasForeignKey(d => d.TeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("exam_teacher_id");
 
             //多对多关系
-            entityBuilder.HasMany(d => d.TbClasses)
-                .WithMany(d => d.TbExams)
+            entityBuilder.HasMany(d => d.Classes)
+                .WithMany(d => d.Exams)
                 .UsingEntity<TbExamclass>(
-                  u => u.HasOne(c => c.Classes).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ClassesId)
-                , u => u.HasOne(c => c.Exam).WithMany(c => c.TbExamclasses).HasForeignKey(c => c.ExamId)
+                  u => u.HasOne(c => c.Classes).WithMany(c => c.Examclasses).HasForeignKey(c => c.ClassesId)
+                , u => u.HasOne(c => c.Exam).WithMany(c => c.Examclasses).HasForeignKey(c => c.ExamId)
                 , u =>
                 {
                     u.ToTable("tb_examclasses");

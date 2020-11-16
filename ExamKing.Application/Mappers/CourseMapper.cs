@@ -17,8 +17,7 @@ namespace ExamKing.Application.Mappers
                 .IgnoreNullValues(true)
                 .IgnoreIf((src, dest) => src.CourseName == "", dest => dest.CourseName)
                 .IgnoreIf((src, dest) => src.DeptId <= 0, dest => dest.DeptId)
-                .IgnoreIf((src, dest) => src.TeacherId <= 0, dest => dest.TeacherId)
-                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow());
+                .IgnoreIf((src, dest) => src.TeacherId <= 0, dest => dest.TeacherId);
         }
     }
 }

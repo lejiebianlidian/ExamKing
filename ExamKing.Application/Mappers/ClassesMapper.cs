@@ -12,10 +12,9 @@ namespace ExamKing.Application.Mappers
         {
             config.ForType<TbClass, ClassesDto>()
                 .IgnoreNullValues(true); // 忽略空值映射
-               
+
             config.ForType<ClassesDto, TbClass>()
-                .IgnoreNullValues(true)
-                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow()); // 忽略空值映射}
+                .IgnoreNullValues(true);
         }
 
     }

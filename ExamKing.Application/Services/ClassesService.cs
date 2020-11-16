@@ -7,6 +7,7 @@ using ExamKing.Core.Entites;
 using ExamKing.Application.Mappers;
 using System.Threading.Tasks;
 using ExamKing.Core.ErrorCodes;
+using ExamKing.Core.Utils;
 using Fur.DependencyInjection;
 using Fur.FriendlyException;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,8 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<PagedList<ClassesDto>> FindClassesAllByPage(int pageIndex = 1, int pageSize = 10)
         {
-            var pageResult = await _classRepository.Entities.AsNoTracking()
+            var pageResult = await _classRepository
+                .Entities.AsNoTracking()
                 .Select(u => new TbClass
                 {
                     Id=u.Id,
@@ -64,6 +66,7 @@ namespace ExamKing.Application.Services
             // 判断系别是否存在
             var dept = await _classRepository.Change<TbDept>().SingleOrDefaultAsync(x => x.Id == classesDto.DeptId);
             if (dept == null) throw Oops.Oh(DeptErrorCodes.d1301);
+            classesDto.CreateTime = TimeUtil.GetTimeStampNow();
             var classes = await _classRepository.InsertNowAsync(classesDto.Adapt<TbClass>());
             return classes.Entity.Adapt<ClassesDto>();
         }

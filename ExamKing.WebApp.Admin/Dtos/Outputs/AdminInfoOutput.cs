@@ -1,9 +1,12 @@
+using System.Text.Json.Serialization;
+using ExamKing.Core.JsonConverters;
+
 namespace ExamKing.WebApp.Admin
 {
     /// <summary>
     /// 管理员信息
     /// </summary>
-    public class AdminInfoDto
+    public class AdminInfoOutput
     {
         /// <summary>
         /// Id
@@ -18,6 +21,7 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 创建时间
         /// </summary>
+        [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
     }
 }

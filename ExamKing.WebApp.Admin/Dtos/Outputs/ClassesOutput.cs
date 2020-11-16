@@ -1,28 +1,27 @@
 using System.Text.Json.Serialization;
+using ExamKing.Application.Mappers;
 using ExamKing.Core.JsonConverters;
 
-namespace ExamKing.Application.Mappers
+namespace ExamKing.WebApp.Admin
 {
-    /// <summary>
-    /// 管理员DTO
-    /// </summary>
-    public class AdminDto
+    public class ClassesOutput
     {
         /// <summary>
-        /// Id
+        /// 班级Id
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// 账号
+        /// 班级名称
         /// </summary>
-        public string Username { get; set; }
+        public string ClassesName { get; set; }
 
-        /// <summary>
-        /// 密码
-        /// </summary>
-        public string Password { get; set; }
-        
+        ///// <summary>
+        ///// 系别Id
+        ///// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public int DeptId { get; set; }
+
         /// <summary>
         /// 创建时间
         /// </summary>

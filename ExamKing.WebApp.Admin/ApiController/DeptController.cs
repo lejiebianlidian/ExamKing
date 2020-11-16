@@ -28,9 +28,10 @@ namespace ExamKing.WebApp.Admin
         /// 查询全部系别
         /// </summary>
         /// <returns></returns>
-        public async Task<List<DeptDto>> GetDeptAll()
+        public async Task<List<DeptOutput>> GetDeptAll()
         {
-            return await _deptService.FindDeptAll();
+            var depts= await _deptService.FindDeptAll();
+            return depts.Adapt<List<DeptOutput>>();
         }
         
         /// <summary>
@@ -39,11 +40,12 @@ namespace ExamKing.WebApp.Admin
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<DeptDto>> GetDeptList(
+        public async Task<PagedList<DeptOutput>> GetDeptList(
             [FromQuery] int pageIndex = 1, 
             [FromQuery] int pageSize = 10)
         {
-            return await _deptService.FindDeptAllByPage(pageIndex, pageSize);
+            var depts=await _deptService.FindDeptAllByPage(pageIndex, pageSize);
+            return depts.Adapt<PagedList<DeptOutput>>();
         }
         
         /// <summary>
@@ -63,10 +65,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="editDeptInput"></param>
         /// <returns></returns>
-        public async Task<DeptDto> UpdateEditDept(EditDeptInput editDeptInput)
+        public async Task<DeptOutput> UpdateEditDept(EditDeptInput editDeptInput)
         {
             var changeDept = await _deptService.UpdateDept(editDeptInput.Adapt<DeptDto>());
-            return changeDept;
+            return changeDept.Adapt<DeptOutput>();
         }
         
         /// <summary>
@@ -86,9 +88,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<DeptDto> GetFindDept(int id)
+        public async Task<DeptOutput> GetFindDept(int id)
         {
-            return await _deptService.FindDeptById(id);
+            var dept = await _deptService.FindDeptById(id);
+            return dept.Adapt<DeptOutput>();
         }
     }
 }

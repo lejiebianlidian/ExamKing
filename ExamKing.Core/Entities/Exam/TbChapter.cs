@@ -12,8 +12,8 @@ namespace ExamKing.Core.Entites
     {
         public TbChapter()
         {
-            TbJudges = new HashSet<TbJudge>();
-            TbSelects = new HashSet<TbSelect>();
+            Judges = new HashSet<TbJudge>();
+            Selects = new HashSet<TbSelect>();
         }
 
         public int Id { get; set; }
@@ -22,8 +22,8 @@ namespace ExamKing.Core.Entites
         public string Desc { get; set; }
 
         public TbCourse Course { get; set; }
-        public ICollection<TbJudge> TbJudges { get; set; }
-        public ICollection<TbSelect> TbSelects { get; set; }
+        public ICollection<TbJudge> Judges { get; set; }
+        public ICollection<TbSelect> Selects { get; set; }
 
         public void Configure(EntityTypeBuilder<TbChapter> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -61,7 +61,7 @@ namespace ExamKing.Core.Entites
                 .HasCollation("utf8_general_ci");
 
             entityBuilder.HasOne(d => d.Course)
-                .WithMany(p => p.TbChapters)
+                .WithMany(p => p.Chapters)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("chapter_course_id");

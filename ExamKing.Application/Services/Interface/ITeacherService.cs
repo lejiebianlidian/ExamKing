@@ -11,7 +11,7 @@ namespace ExamKing.Application.Services
     public interface ITeacherService
     {
         /// <summary>
-        /// 分页查询班级
+        /// 分页查询教师
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using ExamKing.Core.ErrorCodes;
+using ExamKing.Core.Utils;
 using Fur.DatabaseAccessor;
 using Fur.DependencyInjection;
 using Fur.FriendlyException;
@@ -61,6 +62,7 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
             }
+            courseDto.CreateTime = TimeUtil.GetTimeStampNow();
             var course = await _courseRepository.InsertNowAsync(courseDto.Adapt<TbCourse
             >());
             return course.Entity.Adapt<CourseDto>();
@@ -126,7 +128,10 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<CourseDto> FindCourseById(int id)
         {
-            var course = await _courseRepository.Entities.SingleOrDefaultAsync(x => x.Id == id);
+            var course = await _courseRepository
+                .Entities
+                .Include(x=>x.Teacher.Dept)
+                .SingleOrDefaultAsync(x => x.Id == id);
             if (course==null)
             {
                 throw Oops.Oh(

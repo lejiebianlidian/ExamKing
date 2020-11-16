@@ -12,20 +12,20 @@ namespace ExamKing.Core.Entites
     {
         public TbDept()
         {
-            TbClasses = new HashSet<TbClass>();
-            TbCourses = new HashSet<TbCourse>();
-            TbStudents = new HashSet<TbStudent>();
-            TbTeachers = new HashSet<TbTeacher>();
+            Classes = new HashSet<TbClass>();
+            Courses = new HashSet<TbCourse>();
+            Students = new HashSet<TbStudent>();
+            Teachers = new HashSet<TbTeacher>();
         }
 
         public int Id { get; set; }
         public string DeptName { get; set; }
         public string CreateTime { get; set; }
 
-        public ICollection<TbClass> TbClasses { get; set; }
-        public ICollection<TbCourse> TbCourses { get; set; }
-        public ICollection<TbStudent> TbStudents { get; set; }
-        public ICollection<TbTeacher> TbTeachers { get; set; }
+        public ICollection<TbClass> Classes { get; set; }
+        public ICollection<TbCourse> Courses { get; set; }
+        public ICollection<TbStudent> Students { get; set; }
+        public ICollection<TbTeacher> Teachers { get; set; }
 
         public void Configure(EntityTypeBuilder<TbDept> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {

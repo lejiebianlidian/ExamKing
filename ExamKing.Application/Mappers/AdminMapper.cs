@@ -18,8 +18,7 @@ namespace ExamKing.Application.Mappers
             config.ForType<AdminDto, TbAdmin>()
                 .IgnoreNullValues(true) // 忽略空值映射
                 .IgnoreIf((src, dest) => src.Password == "", dest => dest.Password)
-                .Map(desc => desc.Password, src => MD5Encryption.Encrypt(src.Password))
-                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow());
+                .Map(desc => desc.Password, src => MD5Encryption.Encrypt(src.Password));
 
         }
     }

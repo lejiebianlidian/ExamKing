@@ -1,12 +1,14 @@
 using System;
+using System.Text.Json.Serialization;
 using ExamKing.Application.Mappers;
+using ExamKing.Core.JsonConverters;
 
 namespace ExamKing.WebApp.Admin
 {
     /// <summary>
     /// 学生信息
     /// </summary>
-    public class StudentInfoDto
+    public class StudentInfoOutput
     {
 
         /// <summary>
@@ -22,11 +24,13 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 系别Id
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int DeptId { get; set; }
 
         /// <summary>
         /// 班级Id
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int ClassesId { get; set; }
 
         /// <summary>
@@ -52,13 +56,8 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 创建时间
         /// </summary>
+        [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
-        
-        /// <summary>
-        /// 班级
-        /// </summary>
-        public DeptDto Dept { get; set; }
 
-        
     }
 }

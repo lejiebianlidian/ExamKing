@@ -83,12 +83,12 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="editAdminInput"></param>
         /// <returns></returns>
-        public async Task<AdminInfoDto> UpdateChangePassword(ChangePasswordAdminInput editAdminInput)
+        public async Task<AdminInfoOutput> UpdateChangePassword(ChangePasswordAdminInput editAdminInput)
         {
             var adminDto = editAdminInput.Adapt<AdminDto>();
             adminDto.Id = GetUserId();
             var admin = await _manageService.UpdateAdmin(adminDto);
-            return admin.Adapt<AdminInfoDto>();
+            return admin.Adapt<AdminInfoOutput>();
         }
         
         /// <summary>
@@ -96,11 +96,11 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="editAdminInput"></param>
         /// <returns></returns>
-        public async Task<AdminInfoDto> UpdateEditAdmin(EditAdminInput editAdminInput)
+        public async Task<AdminInfoOutput> UpdateEditAdmin(EditAdminInput editAdminInput)
         {
             var adminDto = editAdminInput.Adapt<AdminDto>();
             var admin = await _manageService.UpdateAdmin(adminDto);
-            return admin.Adapt<AdminInfoDto>();
+            return admin.Adapt<AdminInfoOutput>();
         }
 
         /// <summary>
@@ -109,12 +109,12 @@ namespace ExamKing.WebApp.Admin
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<AdminInfoDto>> GetAdminList(
+        public async Task<PagedList<AdminInfoOutput>> GetAdminList(
             [FromQuery] int pageIndex = 1, 
             [FromQuery] int pageSize = 10)
         {
             var adminList = await _manageService.FindAdminAllByPage(pageIndex, pageSize);
-            return adminList.Adapt<PagedList<AdminInfoDto>>();
+            return adminList.Adapt<PagedList<AdminInfoOutput>>();
         }
         
         /// <summary>
@@ -132,11 +132,11 @@ namespace ExamKing.WebApp.Admin
         /// 获取管理员信息
         /// </summary>
         /// <returns></returns>
-        public async Task<AdminInfoDto> GetInfo()
+        public async Task<AdminInfoOutput> GetInfo()
         {
             var adminId = GetUserId();
             var admin = await _manageService.FindAdminById(adminId);
-            return admin.Adapt<AdminInfoDto>();
+            return admin.Adapt<AdminInfoOutput>();
         }
         
         /// <summary>
@@ -144,10 +144,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<AdminInfoDto> GetFindAdmin(int id)
+        public async Task<AdminInfoOutput> GetFindAdmin(int id)
         {
             var admin = await _manageService.FindAdminById(id);
-            return admin.Adapt<AdminInfoDto>();
+            return admin.Adapt<AdminInfoOutput>();
         }
     }
 }

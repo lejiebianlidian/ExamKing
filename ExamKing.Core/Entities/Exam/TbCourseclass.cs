@@ -41,13 +41,13 @@ namespace ExamKing.Core.Entites
                 .HasComment("课程ID");
 
             entityBuilder.HasOne(d => d.Classes)
-                .WithMany(d => d.TbCourseclasses)
+                .WithMany(d => d.Courseclasses)
                 .HasForeignKey(d => d.ClassesId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("courseclasses_classes_idx");
 
             entityBuilder.HasOne(d => d.Course)
-                .WithMany(d => d.TbCourseclasses)
+                .WithMany(d => d.Courseclasses)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("courseclasses_course_idx");
