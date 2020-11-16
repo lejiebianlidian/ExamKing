@@ -42,6 +42,22 @@ services:
     restart: "always"
     volumes:
       - publish:/home/publish:rw
+  teacher:
+    build:
+      context: ./
+      dockerfile: ./docker-compose/teacher/Dockerfile
+    container_name: examking_teacher
+    expose:
+      - 80
+    ports:
+      - 8073:80
+    networks:
+      - examking_net
+    depends_on:
+      - publish
+    restart: "always"
+    volumes:
+      - publish:/home/publish:rw
 
 volumes: 
   neuget:
