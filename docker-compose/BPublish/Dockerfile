@@ -12,4 +12,4 @@ COPY ./ ./
 RUN dotnet restore \ 
   && dotnet publish "./ExamKing.WebApp.Student/ExamKing.WebApp.Student.csproj" -c release -o /home/publish/student --no-restore \
   && dotnet publish "./ExamKing.WebApp.Admin/ExamKing.WebApp.Admin.csproj" -c release -o /home/publish/admin --no-restore \
-  && dotnet publish "./ExamKing.WebApp.Admin/ExamKing.WebApp.Teacher.csproj" -c release -o /home/publish/teacher --no-restore 
+  && dotnet publish "./ExamKing.WebApp.Teacher/ExamKing.WebApp.Teacher.csproj" -c release -o /home/publish/teacher --no-restore 
