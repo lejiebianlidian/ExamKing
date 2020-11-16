@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamKing.WebApp.Student", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamKing.WebApp.Admin", "ExamKing.WebApp.Admin\ExamKing.WebApp.Admin.csproj", "{9643D7B6-8145-43C7-B66F-1A5F3F1DE8AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamKing.WebApp.Teacher", "ExamKing.WebApp.Teacher\ExamKing.WebApp.Teacher.csproj", "{24788586-4825-47A3-BA93-FFC3BE854046}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{9643D7B6-8145-43C7-B66F-1A5F3F1DE8AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9643D7B6-8145-43C7-B66F-1A5F3F1DE8AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9643D7B6-8145-43C7-B66F-1A5F3F1DE8AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24788586-4825-47A3-BA93-FFC3BE854046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24788586-4825-47A3-BA93-FFC3BE854046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24788586-4825-47A3-BA93-FFC3BE854046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24788586-4825-47A3-BA93-FFC3BE854046}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

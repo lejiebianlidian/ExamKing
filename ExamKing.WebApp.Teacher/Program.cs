@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace ExamKing.WebApp.Admin
+namespace ExamKing.WebApp.Teacher
 {
     public class Program
     {
