@@ -1,7 +1,9 @@
 using System;
+using Fur.DependencyInjection;
 
 namespace ExamKing.Core.Utils
 {
+    [SkipScan]
     public class TimeUtil
     {
         /// <summary>
@@ -10,22 +12,11 @@ namespace ExamKing.Core.Utils
         /// <returns></returns>
         public static string GetTimeStampNow()
         {
-            var ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            var createTime = Convert.ToInt64(ts.TotalSeconds).ToString();
-            return createTime;
+            // var ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            // var createTime = Convert.ToInt64(ts.TotalSeconds).ToString();
+            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+            return timestamp;
         }
-        
-        /// <summary>
-        /// 获取时间戳字符串
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static int GetTimeStamp(DateTime dt)  
-        {  
-            DateTime dateStart = new DateTime(1970, 1, 1, 8, 0, 0);  
-            int timeStamp = Convert.ToInt32((dt - dateStart).TotalSeconds);  
-            return timeStamp;  
-        } 
         
         /// <summary>
         /// 时间戳转换成Datetime
@@ -34,10 +25,11 @@ namespace ExamKing.Core.Utils
         /// <returns></returns>
         public static DateTime GetDateTime(string timeStamp)
         {
-            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
-            long lTime = long.Parse(timeStamp + "0000000");
-            TimeSpan toNow = new TimeSpan(lTime);
-            return dtStart.Add(toNow);
+            timeStamp ??= "0";
+            var UninTimeStamp = long.Parse(timeStamp);
+            var DateTimeUnix = DateTimeOffset.FromUnixTimeSeconds(UninTimeStamp);
+            var dateTime = DateTimeUnix.DateTime;
+            return dateTime;
         }
         
         
@@ -46,13 +38,13 @@ namespace ExamKing.Core.Utils
         /// </summary>
         /// <param name="timeStamp"></param>
         /// <returns></returns>
-        public static DateTime GetDateTime(int timeStamp)  
-        {  
-            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));  
-            long lTime = ((long)timeStamp * 10000000);  
-            TimeSpan toNow = new TimeSpan(lTime);  
-            DateTime targetDt = dtStart.Add(toNow);  
-            return targetDt;  
+        public static DateTime GetDateTime(int timeStamp)
+        {
+            if (timeStamp == null) timeStamp = 0;
+            var UninTimeStamp = (long) timeStamp;
+            var DateTimeUnix = DateTimeOffset.FromUnixTimeSeconds(UninTimeStamp);
+            var dateTime = DateTimeUnix.DateTime;
+            return dateTime;
         }  
         
     }

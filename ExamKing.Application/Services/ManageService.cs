@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using ExamKing.Core.ErrorCodes;
 using Fur.DatabaseAccessor;
+using Fur.DataEncryption;
 using Fur.DependencyInjection;
 using Fur.FriendlyException;
 using Mapster;
@@ -55,10 +57,13 @@ namespace ExamKing.Application.Services
         {
             var admin = await _adminRepository
                 .Where(
-                    u => u.Username.Equals(adminDto.Username) 
-                         && u.Password.Equals(adminDto.Password))
+                    u => u.Username.Equals(adminDto.Username))
                 .SingleOrDefaultAsync();
-            if (admin == null) throw Oops.Oh(AdminErrorCodes.a1001);
+            if (admin == null) throw Oops.Oh(AdminErrorCodes.a1002);
+            if (!MD5Encryption.Compare(adminDto.Password, admin.Password))
+            {
+                throw Oops.Oh(AdminErrorCodes.a1001);
+            }
             return admin.Adapt<AdminDto>();
         }
 
@@ -74,6 +79,7 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(AdminErrorCodes.a1003);
             }
+            
             var regAdmin = await _adminRepository.InsertNowAsync(adminDto.Adapt<TbAdmin>());
             return regAdmin.Entity.Adapt<AdminDto>();
         }

@@ -10,13 +10,14 @@
       <DocumentationFile>bin\Release\ExamKing.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Fur" Version="1.0.0-rc.final.103" />
-        <PackageReference Include="Fur.Extras.Authentication.JwtBearer" Version="1.0.0-rc.11" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0-rc.2.20475.6">
+        <PackageReference Include="Fur" Version="1.0.2.4" />
+        <PackageReference Include="Fur.Extras.Authentication.JwtBearer" Version="1.0.0" />
+        <PackageReference Include="Fur.Extras.DependencyModel.CodeAnalysis" Version="1.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.1.20552.1" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.3.ci.20201114020548" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Entities\" />

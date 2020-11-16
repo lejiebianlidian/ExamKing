@@ -3,6 +3,7 @@ using Fur.ObjectMapper;
 using Mapster;
 using ExamKing.Core.Entites;
 using ExamKing.Core.Utils;
+using Fur.DataEncryption;
 
 namespace ExamKing.Application.Mappers
 {
@@ -16,7 +17,6 @@ namespace ExamKing.Application.Mappers
             config.ForType<TbStudent, StudentDto>()
                 .IgnoreNullValues(true) // 忽略空值映射
                 .Ignore(dest => dest.Password)
-                .Map(desc=>desc.CreateTime, src=>TimeUtil.GetDateTime(src.CreateTime).ToString("yyyy-MM-dd HH:mm:ss"))
                 .Map(desc=>desc.Sex, src=> src.Sex=="0"?"男":src.Sex=="1"?"女":"保密");
 
             // studentDto.Adapt<TbStudent>();
@@ -30,9 +30,9 @@ namespace ExamKing.Application.Mappers
                 .IgnoreIf((src, dest) => src.Telphone == "", dest => dest.Telphone)
                 .IgnoreIf((src, dest) => src.Sex == "", dest => dest.Sex)
                 .IgnoreIf((src, dest) => src.Password == "", dest => dest.Password)
-                .Map(desc=>desc.Sex, src=> src.Sex)
-                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow
-                    ());
+                .Map(desc => desc.Sex, src => src.Sex)
+                .Map(desc=>desc.Password,src=>MD5Encryption.Encrypt(src.Password))
+                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow());
         }
     }
 }

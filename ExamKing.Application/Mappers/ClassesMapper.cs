@@ -11,14 +11,12 @@ namespace ExamKing.Application.Mappers
         public void Register(TypeAdapterConfig config)
         {
             config.ForType<TbClass, ClassesDto>()
-                .IgnoreNullValues(true) // 忽略空值映射
-                .Map(desc => desc.CreateTime,
-                    src => TimeUtil.GetDateTime(src.CreateTime).ToString("yyyy-MM-dd HH:mm:ss"));
+                .IgnoreNullValues(true); // 忽略空值映射
+               
             config.ForType<ClassesDto, TbClass>()
-                .IgnoreNullValues(true) // 忽略空值映射
-                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow());
+                .IgnoreNullValues(true)
+                .Map(desc => desc.CreateTime, src => TimeUtil.GetTimeStampNow()); // 忽略空值映射}
         }
-        
-        
+
     }
 }

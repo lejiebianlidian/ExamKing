@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamKing.Core.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using Fur.DatabaseAccessor;
+using Fur.DataEncryption;
 using Fur.DependencyInjection;
 using Fur.FriendlyException;
 using Mapster;
@@ -50,7 +52,11 @@ namespace ExamKing.Application.Services
         public async Task<StudentDto> LoginStudent(string studentNo, string password)
         {
             var student = await _studentRepository.SingleOrDefaultAsync(s => s.StuNo.Equals(studentNo) && s.Password.Equals(password));
-            if (student == null) throw Oops.Oh(StudentErrorCodes.s1201);
+            if (student == null) throw Oops.Oh(StudentErrorCodes.s1204);
+            if (!MD5Encryption.Compare(password, student.Password))
+            {
+                throw Oops.Oh(StudentErrorCodes.s1201);
+            }
             return student.Adapt<StudentDto>();
         }
 

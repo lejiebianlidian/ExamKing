@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+using ExamKing.Core.JsonConverters;
+
 namespace ExamKing.Application.Mappers
 {
     /// <summary>
@@ -8,6 +11,7 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// Id
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int Id { get; set; }
 
         /// <summary>
@@ -23,6 +27,7 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 创建时间
         /// </summary>
+        [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
     }
 }

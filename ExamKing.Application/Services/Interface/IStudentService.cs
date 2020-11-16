@@ -1,8 +1,6 @@
-﻿using ExamKing.Core.Entites;
+﻿using System.Collections.Generic;
 using ExamKing.Application.Mappers;
-using Mapster;
 using System.Threading.Tasks;
-using Fur.DatabaseAccessor;
 
 namespace ExamKing.Application.Services
 {

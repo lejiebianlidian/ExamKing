@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fur.DatabaseAccessor;
 using Mapster;
 using ExamKing.Core.Entites;
@@ -35,10 +36,22 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<PagedList<ClassesDto>> FindClassesAllByPage(int pageIndex = 1, int pageSize = 10)
         {
-            var pageResult = _classRepository.Entities.AsNoTracking()
-                .ProjectToType<ClassesDto>();
+            var pageResult = await _classRepository.Entities.AsNoTracking()
+                .Select(u => new TbClass
+                {
+                    Id=u.Id,
+                    ClassesName=u.ClassesName,
+                    CreateTime=u.CreateTime,
+                    DeptId = u.DeptId,
+                    Dept = new TbDept
+                    {
+                        CreateTime=u.Dept.CreateTime,
+                        DeptName=u.Dept.DeptName
+                    }
+                })
+                .ToPagedListAsync(pageIndex, pageSize);
 
-            return await pageResult.ToPagedListAsync(pageIndex, pageSize);
+            return  pageResult.Adapt<PagedList<ClassesDto>>();
         }
 
         /// <summary>
@@ -98,7 +111,19 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<ClassesDto> FindClassesById(int id)
         {
-            var classes = await _classRepository.Include(x=>x.Dept).SingleOrDefaultAsync(x => x.Id == id);
+            var classes = await _classRepository
+                .Include(x=>x.Dept)
+                .Select(u => new TbClass
+                {
+                    Id=u.Id,
+                    ClassesName=u.ClassesName,
+                    CreateTime=u.CreateTime,
+                    DeptId = u.DeptId,
+                    Dept = new TbDept
+                    {
+                        DeptName=u.Dept.DeptName,
+                    }
+                }).SingleOrDefaultAsync(x => x.Id == id);
             if (classes==null)
             {
                 throw Oops.Oh(ClassErrorCodes.c1101);

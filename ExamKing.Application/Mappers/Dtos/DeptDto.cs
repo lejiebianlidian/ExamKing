@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using ExamKing.Core.JsonConverters;
 
 namespace ExamKing.Application.Mappers
 {
-    
     /// <summary>
     /// 系别DTO
     /// </summary>
     public class DeptDto
     {
-
         /// <summary>
         /// 系别Id
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int Id { get; set; }
 
         /// <summary>
@@ -23,41 +23,15 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 创建时间
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
         
         /// <summary>
         /// 关联班级
         /// </summary>
-        public List<DeptClassesDto> Classes { get; set; }
-        
-    }
-    
-    /// <summary>
-    /// 系别关联班级 DTO
-    /// </summary>
-    public class DeptClassesDto
-    {
-
-        /// <summary>
-        /// 班级Id
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// 班级名称
-        /// </summary>
-        public string ClassesName { get; set; }
-
-        ///// <summary>
-        ///// 系别Id
-        ///// </summary>
-        public int DeptId { get; set; }
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public string CreateTime { get; set; }
-
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public List<ClassesDto> Classes { get; set; }
     }
 
 }

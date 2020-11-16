@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Fur.DependencyInjection;
 using Fur.UnifyResult;
 
-namespace ExamKing.Core.Provider
+namespace ExamKing.Core.Providers
 {
     /// <summary>
     /// RESTful 风格返回值

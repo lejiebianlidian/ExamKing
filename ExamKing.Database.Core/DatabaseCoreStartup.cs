@@ -11,7 +11,7 @@ namespace ExamKing.Database.Core
         {
             services.AddDatabaseAccessor(options =>
             {
-                options.AddDbPool<ExamDbContext>(DbProvider.MySql);
+                options.AddDbPool<ExamDbContext>($"{DbProvider.MySql}@8.0.22");
             }, "ExamKing.Database.Migrations");
         }
     }

@@ -2,7 +2,7 @@ using Fur.UnifyResult;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using RESTfulResultProvider = ExamKing.Core.Provider.RESTfulResultProvider;
+using RESTfulResultProvider = ExamKing.Core.Providers.RESTfulResultProvider;
 
 namespace ExamKing.WebApp.Admin
 {

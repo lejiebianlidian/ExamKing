@@ -1,4 +1,6 @@
-﻿using ExamKing.Core.Entites;
+﻿using System;
+using System.Text.Json.Serialization;
+using ExamKing.Core.JsonConverters;
 
 namespace ExamKing.Application.Mappers
 {
@@ -7,10 +9,10 @@ namespace ExamKing.Application.Mappers
     /// </summary>
     public class ClassesDto
     {
-
         /// <summary>
         /// 班级Id
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int Id { get; set; }
 
         /// <summary>
@@ -21,39 +23,21 @@ namespace ExamKing.Application.Mappers
         ///// <summary>
         ///// 系别Id
         ///// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int DeptId { get; set; }
 
         /// <summary>
         /// 创建时间
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
 
         /// <summary>
         /// 系别
         /// </summary>
-        public ClassesDeptDto Dept { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public DeptDto Dept { get; set; }
     }
 
-    /// <summary>
-    /// 班级关联系别DTO
-    /// </summary>
-    public class ClassesDeptDto
-    {
-
-        /// <summary>
-        /// 系别Id
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// 系别名称
-        /// </summary>
-        public string DeptName { get; set; }
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public string CreateTime { get; set; }
-        
-    }
 }
