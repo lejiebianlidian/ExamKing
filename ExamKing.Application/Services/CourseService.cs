@@ -50,12 +50,12 @@ namespace ExamKing.Application.Services
                     {
                         TeacherName = u.Teacher.TeacherName,
                         TeacherNo = u.Teacher.TeacherNo,
-                        DeptId = u.Teacher.DeptId,
-                        Dept = new TbDept
-                        {
-                            DeptName = u.Teacher.Dept.DeptName,
-                        }
-                    }
+                    },
+                    Classes = u.Classes.Select(u=>new TbClass
+                    {
+                        Id = u.Id,
+                        ClassesName = u.ClassesName,
+                    }).ToList()
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
 
@@ -65,9 +65,10 @@ namespace ExamKing.Application.Services
         /// <summary>
         /// 创建课程
         /// </summary>
+        /// <param name="classesIds"></param>
         /// <param name="courseDto"></param>
         /// <returns></returns>
-        public async Task<CourseDto> CreateCourse(CourseDto courseDto)
+        public async Task<CourseDto> CreateCourse(int[] classesIds, CourseDto courseDto)
         {
             // 查询系别是否存在
             var dept = await _courseRepository.Change<TbDept>().Entities
@@ -76,7 +77,7 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
             }
-
+            
             // 查询教师是否存在
             var teacher = await _courseRepository.Change<TbTeacher>().Entities
                 .SingleOrDefaultAsync(x => x.Id == courseDto.TeacherId);
@@ -84,10 +85,22 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
             }
-
+            
             courseDto.CreateTime = TimeUtil.GetTimeStampNow();
-            var course = await _courseRepository.InsertNowAsync(courseDto.Adapt<TbCourse
+            var course = await _courseRepository
+                .InsertNowAsync(courseDto.Adapt<TbCourse
             >());
+            // 为课程分配班级
+            var courseClasses = new List<TbCourseclass>();
+            foreach (var item in classesIds)
+            {
+                courseClasses.Add(new TbCourseclass
+                {
+                    CourseId = course.Entity.Id,
+                    ClassesId = item
+                });
+            }
+            await _courseRepository.Change<TbCourseclass>().InsertAsync(courseClasses);
             return course.Entity.Adapt<CourseDto>();
         }
 
@@ -167,12 +180,12 @@ namespace ExamKing.Application.Services
                     {
                         TeacherName = u.Teacher.TeacherName,
                         TeacherNo = u.Teacher.TeacherNo,
-                        DeptId = u.Teacher.DeptId,
-                        Dept = new TbDept
-                        {
-                            DeptName = u.Teacher.Dept.DeptName,
-                        }
-                    }
+                    },
+                    Classes = u.Classes.Select(u=>new TbClass
+                    {
+                        Id = u.Id,
+                        ClassesName = u.ClassesName,
+                    }).ToList()
                 })
                 .SingleOrDefaultAsync(x => x.Id == id);
             if (course == null)
@@ -183,6 +196,43 @@ namespace ExamKing.Application.Services
             }
 
             return course.Adapt<CourseDto>();
+        }
+
+        /// <summary>
+        /// 根据教师查询分页课程
+        /// </summary>
+        /// <param name="teacherId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<CourseDto>> FindCourseAllByTeacherAndPage(int teacherId, int pageIndex = 1, int pageSize = 10)
+        {
+            var pageResult = await _courseRepository
+                .Entities.AsNoTracking()
+                .Where(u=>u.TeacherId == teacherId)
+                .Select(u => new TbCourse
+                {
+                    Id = u.Id,
+                    CourseName = u.CourseName,
+                    DeptId = u.DeptId,
+                    TeacherId = u.TeacherId,
+                    CreateTime = u.CreateTime
+                })
+                .ToPagedListAsync(pageIndex, pageSize);
+
+            return pageResult.Adapt<PagedList<CourseDto>>();
+        }
+
+        public async Task<bool> HasTeacher(int teacherId, int courseId)
+        {
+            var teacher = await _courseRepository
+                .FirstOrDefaultAsync(u => u.TeacherId == teacherId && u.Id == courseId);
+            if (teacher==null)
+            {
+                throw Oops.Oh(CourseErrorCodes.c1501);
+            }
+
+            return true;
         }
     }
 }

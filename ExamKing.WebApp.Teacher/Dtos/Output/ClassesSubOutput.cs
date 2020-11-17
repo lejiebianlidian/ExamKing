@@ -1,4 +1,4 @@
-namespace ExamKing.WebApp.Admin
+namespace ExamKing.WebApp.Teacher
 {
     public class ClassesSubOutput
     {

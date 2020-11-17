@@ -20,8 +20,6 @@
         </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Dtos\Input" />
-        <Folder Include="Dtos\Output" />
         <Folder Include="Views" />
         <Folder Include="Views\" />
         <Folder Include="wwwroot" />

@@ -5,7 +5,6 @@ using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
 using Fur;
 using Fur.Authorization;
-using Fur.DatabaseAccessor;
 using Fur.DataEncryption;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;

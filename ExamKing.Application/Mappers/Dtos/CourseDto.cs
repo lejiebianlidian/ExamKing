@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using ExamKing.Core.JsonConverters;
 
@@ -39,5 +40,9 @@ namespace ExamKing.Application.Mappers
         /// </summary>
         public TeacherDto Teacher { get; set; }
         
+        /// <summary>
+        /// 班级
+        /// </summary>
+        public List<ClassesDto> Classes { get; set; }
     }
 }

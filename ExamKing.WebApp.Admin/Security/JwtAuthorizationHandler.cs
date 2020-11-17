@@ -17,7 +17,7 @@ namespace ExamKing.WebApp.Admin
     {
         public override bool Pipeline(AuthorizationHandlerContext context, DefaultHttpContext httpContext)
         {
-            return true;
+            // return true;
             // 判断请求报文头中是否有 "Authorization" 报文头
             var bearerToken = httpContext.HttpContext.Request.Headers["Authorization"].ToString();
             if (string.IsNullOrEmpty(bearerToken)) return false;

@@ -13,6 +13,11 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         public string TeacherNo { get; set; }
 
+        
+    }
+
+    public class TeacherDeptSubOuput : TeacherSubOutput
+    {
         /// <summary>
         /// 系别
         /// </summary>

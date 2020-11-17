@@ -46,5 +46,12 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public Task<TeacherDto> FindTeacherById(int id);
         
+        /// <summary>
+        /// 教师登录
+        /// </summary>
+        /// <param name="teacherNo"></param>
+        /// <param name="passwoerd"></param>
+        /// <returns></returns>
+        public Task<TeacherDto> LoginTeacher(string teacherNo, string passwoerd);
     }
 }

@@ -7,6 +7,6 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 班级
         /// </summary>
-        public ClassesSubOutput Classes { get; set; }
+        public ClassesDeptOutput Classes { get; set; }
     }
 }

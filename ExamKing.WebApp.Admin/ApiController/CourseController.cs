@@ -42,9 +42,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="addCourseInput"></param>
         /// <returns></returns>
+        [UnitOfWork]
         public async Task<CourseOutput> PostCreateCourse(AddCourseInput addCourseInput)
         {
-            var course = await _courseService.CreateCourse(addCourseInput.Adapt<CourseDto>());
+            var course = await _courseService.CreateCourse(addCourseInput.ClassesIds, addCourseInput.Adapt<CourseDto>());
             return course.Adapt<CourseOutput>();
         }
 
@@ -64,6 +65,7 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [UnitOfWork]
         public async Task<string> DeleteRemoveCourse(int id)
         {
             await _courseService.DeleteCourse(id);

@@ -10,6 +10,7 @@ using Fur.DependencyInjection;
 using Fur.FriendlyException;
 using Mapster;
 using System.Linq;
+using Fur.DataEncryption;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamKing.Application.Services
@@ -160,6 +161,27 @@ namespace ExamKing.Application.Services
             if (teacher == null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
+            }
+
+            return teacher.Adapt<TeacherDto>();
+        }
+
+        /// <summary>
+        /// 教师登录
+        /// </summary>
+        /// <param name="teacherNo"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<TeacherDto> LoginTeacher(string teacherNo, string password)
+        {
+            var teacher = await _teacherRepository
+                .Entities
+                .SingleOrDefaultAsync(u => u.TeacherNo.Equals(teacherNo));
+            if (teacher == null) throw Oops.Oh(TeacherErrorCodes.t1402);
+            if (!MD5Encryption.Compare(password, teacher.Password))
+            {
+                throw Oops.Oh(TeacherErrorCodes.t1403);
             }
 
             return teacher.Adapt<TeacherDto>();

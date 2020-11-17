@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using ExamKing.Core.JsonConverters;
+using Newtonsoft.Json;
 
-namespace ExamKing.WebApp.Admin
+namespace ExamKing.WebApp.Teacher
 {
     public class CourseOutput
     {
@@ -31,16 +31,7 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
-
-        /// <summary>
-        /// 教师
-        /// </summary>
-        public TeacherSubOutput Teacher { get; set; }
         
-        /// <summary>
-        /// 班级
-        /// </summary>
-        public List<ClassesSubOutput> Classes { get; set; }
     }
 
 }

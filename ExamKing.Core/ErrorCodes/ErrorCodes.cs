@@ -65,7 +65,9 @@ namespace ExamKing.Core.ErrorCodes
         [ErrorCodeItemMetadata("教师已存在")]
         t1401,
         [ErrorCodeItemMetadata("教师不存在")]
-        t1402
+        t1402,
+        [ErrorCodeItemMetadata("工号或者密码错误")]
+        t1403
     }
     
     /// <summary>
@@ -76,5 +78,15 @@ namespace ExamKing.Core.ErrorCodes
     {
         [ErrorCodeItemMetadata("课程不存在")]
         c1501
+    }
+    
+    /// <summary>
+    /// 章节错误码
+    /// </summary>
+    [ErrorCodeType]
+    public enum ChapterErrorCodes
+    {
+        [ErrorCodeItemMetadata("章节不存在")]
+        z1601
     }
 }
