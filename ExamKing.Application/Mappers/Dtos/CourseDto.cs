@@ -38,5 +38,6 @@ namespace ExamKing.Application.Mappers
         /// 教师
         /// </summary>
         public TeacherDto Teacher { get; set; }
+        
     }
 }

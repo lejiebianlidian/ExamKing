@@ -25,15 +25,11 @@ namespace ExamKing.Application.Mappers
         [JsonConverter(typeof(CreateTimeConverter))]
         public string CreateTime { get; set; }
         
-    }
-    
-    public class DeptClassesDto : DeptDto
-    {
-        
         /// <summary>
         /// 关联班级
         /// </summary>
         public List<ClassesDto> Classes { get; set; }
+        
     }
 
 }

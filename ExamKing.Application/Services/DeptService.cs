@@ -35,7 +35,7 @@ namespace ExamKing.Application.Services
         /// 查询全部系别和班级
         /// </summary>
         /// <returns></returns>
-        public async Task<List<DeptClassesDto>> FindDeptAll()
+        public async Task<List<DeptDto>> FindDeptAll()
         {
             var depts = await _deptRepository
                 .Entities.AsNoTracking()
@@ -53,7 +53,7 @@ namespace ExamKing.Application.Services
                 })
                 .ToListAsync();
             
-            return depts.Adapt<List<DeptClassesDto>>();
+            return depts.Adapt<List<DeptDto>>();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace ExamKing.Application.Services
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<DeptClassesDto>> FindDeptAllByPage(int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<DeptDto>> FindDeptAllByPage(int pageIndex = 1, int pageSize = 10)
         {
             var pageResult = await _deptRepository
                 .Entities.AsNoTracking()
@@ -80,7 +80,7 @@ namespace ExamKing.Application.Services
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
 
-            return pageResult.Adapt<PagedList<DeptClassesDto>>();
+            return pageResult.Adapt<PagedList<DeptDto>>();
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<DeptClassesDto> FindDeptById(int id)
+        public async Task<DeptDto> FindDeptById(int id)
         {
             var dept = await _deptRepository
                 .Entities
@@ -159,7 +159,7 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(DeptErrorCodes.d1301);
             }
 
-            return dept.Adapt<DeptClassesDto>();
+            return dept.Adapt<DeptDto>();
         }
     }
 }

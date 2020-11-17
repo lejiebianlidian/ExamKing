@@ -42,10 +42,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="addCourseInput"></param>
         /// <returns></returns>
-        public async Task<CourseDto> PostCreateCourse(AddCourseInput addCourseInput)
+        public async Task<CourseOutput> PostCreateCourse(AddCourseInput addCourseInput)
         {
             var course = await _courseService.CreateCourse(addCourseInput.Adapt<CourseDto>());
-            return course;
+            return course.Adapt<CourseOutput>();
         }
 
         /// <summary>
