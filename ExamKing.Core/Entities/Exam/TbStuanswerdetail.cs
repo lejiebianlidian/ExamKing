@@ -14,15 +14,15 @@ namespace ExamKing.Core.Entites
         public int StuId { get; set; }
         public int ExamId { get; set; }
         public int QuestionId { get; set; }
-        public int QuesionTypeld { get; set; }
+        public int QuestionType { get; set; }
         public string Stuanswer { get; set; }
         public string Answer { get; set; }
         public string Isright { get; set; }
         public string CreateTime { get; set; }
 
         public TbExam Exam { get; set; }
-        public TbQuestiontype Questiontype { get; set; }
         public TbStudent Student { get; set; }
+        public TbExamquestion Examquestion { get; set; }
 
         public void Configure(EntityTypeBuilder<TbStuanswerdetail> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -34,9 +34,9 @@ namespace ExamKing.Core.Entites
 
                 entityBuilder.HasIndex(e => e.ExamId, "answerdetail_exam_id");
 
-                entityBuilder.HasIndex(e => e.QuesionTypeld, "answerdetail_quesiotype_id");
-
                 entityBuilder.HasIndex(e => e.StuId, "answerdetail_stu_id");
+                
+                entityBuilder.HasIndex(e => e.QuestionId, "answerdetail_examquestion_id");
 
                 entityBuilder.HasIndex(e => e.Id, "stuanseerdetail_id")
                     .IsUnique();
@@ -73,9 +73,9 @@ namespace ExamKing.Core.Entites
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entityBuilder.Property(e => e.QuesionTypeld)
-                    .HasColumnName("quesionTypeld")
-                    .HasComment("题型ID");
+                entityBuilder.Property(e => e.QuestionType)
+                    .HasColumnName("questionType")
+                    .HasComment("题型");
 
                 entityBuilder.Property(e => e.QuestionId)
                     .HasColumnName("questionId")
@@ -99,17 +99,17 @@ namespace ExamKing.Core.Entites
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("answerdetail_exam_id");
 
-                entityBuilder.HasOne(d => d.Questiontype)
-                    .WithMany(p => p.Stuanswerdetails)
-                    .HasForeignKey(d => d.QuesionTypeld)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("answerdetail_quesiotype_id");
-
                 entityBuilder.HasOne(d => d.Student)
                     .WithMany(p => p.Stuanswerdetails)
                     .HasForeignKey(d => d.StuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("answerdetail_stu_id");
+                
+                entityBuilder.HasOne(d => d.Examquestion)
+                    .WithMany(p => p.Stuanswerdetails)
+                    .HasForeignKey(d => d.QuestionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("answerdetail_examquestion_id");
             }
         }
     }

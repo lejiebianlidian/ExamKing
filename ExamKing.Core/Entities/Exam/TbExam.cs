@@ -14,6 +14,7 @@ namespace ExamKing.Core.Entites
         {
             Stuanswerdetails = new HashSet<TbStuanswerdetail>();
             Stuscores = new HashSet<TbStuscore>();
+            Examquestions = new HashSet<TbExamquestion>();
         }
 
         public int Id { get; set; }
@@ -22,9 +23,6 @@ namespace ExamKing.Core.Entites
         public int TeacherId { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public string Judges { get; set; }
-        public string Singles { get; set; }
-        public string Selects { get; set; }
         public int Duration { get; set; }
         public string IsEnable { get; set; }
         public string IsFinish { get; set; }
@@ -38,6 +36,7 @@ namespace ExamKing.Core.Entites
         public TbTeacher Teacher { get; set; }
         public ICollection<TbStuanswerdetail> Stuanswerdetails { get; set; }
         public ICollection<TbStuscore> Stuscores { get; set; }
+        public ICollection<TbExamquestion> Examquestions { get; set; }
 
         /// <summary>
         /// 多对多
@@ -122,37 +121,14 @@ namespace ExamKing.Core.Entites
                 .HasColumnName("judgeScore")
                 .HasComment("是非题分值");
 
-            entityBuilder.Property(e => e.Judges)
-                .IsRequired()
-                .HasColumnType("varchar(200)")
-                .HasColumnName("judges")
-                .HasComment("是非题")
-                .HasCharSet("utf8")
-                .HasCollation("utf8_general_ci");
-
             entityBuilder.Property(e => e.SelectScore)
                 .HasColumnName("selectScore")
                 .HasComment("多选题分值");
 
-            entityBuilder.Property(e => e.Selects)
-                .IsRequired()
-                .HasColumnType("varchar(200)")
-                .HasColumnName("selects")
-                .HasComment("多选题")
-                .HasCharSet("utf8")
-                .HasCollation("utf8_general_ci");
 
             entityBuilder.Property(e => e.SingleScore)
                 .HasColumnName("singleScore")
                 .HasComment("单选题分值");
-
-            entityBuilder.Property(e => e.Singles)
-                .IsRequired()
-                .HasColumnType("varchar(200)")
-                .HasColumnName("singles")
-                .HasComment("单选题")
-                .HasCharSet("utf8")
-                .HasCollation("utf8_general_ci");
 
             entityBuilder.Property(e => e.StartTime)
                 .IsRequired()
