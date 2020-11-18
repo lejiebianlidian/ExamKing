@@ -29,7 +29,7 @@ namespace ExamKing.Core.Utils
             var UninTimeStamp = long.Parse(timeStamp);
             var DateTimeUnix = DateTimeOffset.FromUnixTimeSeconds(UninTimeStamp);
             var dateTime = DateTimeUnix.DateTime;
-            return dateTime;
+            return dateTime.ToLocalTime();
         }
         
         
@@ -44,7 +44,7 @@ namespace ExamKing.Core.Utils
             var UninTimeStamp = (long) timeStamp;
             var DateTimeUnix = DateTimeOffset.FromUnixTimeSeconds(UninTimeStamp);
             var dateTime = DateTimeUnix.DateTime;
-            return dateTime;
+            return dateTime.ToLocalTime();
         }  
         
     }

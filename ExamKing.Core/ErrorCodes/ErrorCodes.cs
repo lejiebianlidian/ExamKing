@@ -89,4 +89,24 @@ namespace ExamKing.Core.ErrorCodes
         [ErrorCodeItemMetadata("章节不存在")]
         z1601
     }
+    
+    /// <summary>
+    /// 选择题错误码
+    /// </summary>
+    [ErrorCodeType]
+    public enum SelectErrorCodes
+    {
+        [ErrorCodeItemMetadata("选择题不存在")]
+        x1701
+    }
+    
+    /// <summary>
+    /// 是非题错误码
+    /// </summary>
+    [ErrorCodeType]
+    public enum JudgeErrorCodes
+    {
+        [ErrorCodeItemMetadata("是非题不存在")]
+        s1801
+    }
 }
