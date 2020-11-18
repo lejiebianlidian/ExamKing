@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ExamKing.Core.JsonConverters;
 using Newtonsoft.Json;
@@ -29,8 +30,7 @@ namespace ExamKing.WebApp.Teacher
         /// <summary>
         /// 创建时间
         /// </summary>
-        [JsonConverter(typeof(CreateTimeConverter))]
-        public string CreateTime { get; set; }
+        public DateTimeOffset CreateTime { get; set; }
         
     }
 

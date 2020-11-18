@@ -86,7 +86,7 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(TeacherErrorCodes.t1402);
             }
             
-            courseDto.CreateTime = TimeUtil.GetTimeStampNow();
+            // courseDto.CreateTime = TimeUtil.GetTimeStampNow();
             var course = await _courseRepository
                 .InsertNowAsync(courseDto.Adapt<TbCourse
             >());

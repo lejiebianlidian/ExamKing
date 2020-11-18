@@ -67,7 +67,7 @@ namespace ExamKing.Application.Services
             var dept = await _classRepository.Change<TbDept>()
                 .SingleOrDefaultAsync(x => x.Id == classesDto.DeptId);
             if (dept == null) throw Oops.Oh(DeptErrorCodes.d1301);
-            classesDto.CreateTime = TimeUtil.GetTimeStampNow();
+            // classesDto.CreateTime = TimeUtil.GetTimeStampNow();
             var classes = await _classRepository.InsertNowAsync(classesDto.Adapt<TbClass>());
             return classes.Entity.Adapt<ClassesDto>();
         }

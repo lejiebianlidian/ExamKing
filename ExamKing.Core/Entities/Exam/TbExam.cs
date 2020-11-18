@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Fur.DatabaseAccessor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -21,12 +22,13 @@ namespace ExamKing.Core.Entites
         public string ExamName { get; set; }
         public int CourseId { get; set; }
         public int TeacherId { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset EndTime { get; set; }
         public int Duration { get; set; }
         public string IsEnable { get; set; }
         public string IsFinish { get; set; }
-        public string CreateTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTimeOffset CreateTime { get; set; }
         public int ExamScore { get; set; }
         public int JudgeScore { get; set; }
         public int SingleScore { get; set; }
@@ -70,12 +72,8 @@ namespace ExamKing.Core.Entites
                 .HasComment("课程ID");
 
             entityBuilder.Property(e => e.CreateTime)
-                .IsRequired()
-                .HasColumnType("varchar(30)")
                 .HasColumnName("createTime")
-                .HasComment("创建时间")
-                .HasCharSet("utf8")
-                .HasCollation("utf8_general_ci");
+                .HasComment("创建时间");
 
             entityBuilder.Property(e => e.Duration)
                 .HasColumnName("duration")
@@ -83,11 +81,8 @@ namespace ExamKing.Core.Entites
 
             entityBuilder.Property(e => e.EndTime)
                 .IsRequired()
-                .HasColumnType("varchar(30)")
                 .HasColumnName("endTime")
-                .HasComment("结束时间")
-                .HasCharSet("utf8")
-                .HasCollation("utf8_general_ci");
+                .HasComment("结束时间");
 
             entityBuilder.Property(e => e.ExamName)
                 .IsRequired()
@@ -132,11 +127,8 @@ namespace ExamKing.Core.Entites
 
             entityBuilder.Property(e => e.StartTime)
                 .IsRequired()
-                .HasColumnType("varchar(30)")
                 .HasColumnName("startTime")
-                .HasComment("开始时间")
-                .HasCharSet("utf8")
-                .HasCollation("utf8_general_ci");
+                .HasComment("开始时间");
 
             entityBuilder.Property(e => e.TeacherId)
                 .HasColumnName("teacherId")

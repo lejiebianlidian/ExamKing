@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using ExamKing.Core.Utils;
 using Fur.DatabaseAccessor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,7 +15,8 @@ namespace ExamKing.Core.Entites
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string CreateTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTimeOffset CreateTime { get; set; }
 
         public void Configure(EntityTypeBuilder<TbAdmin> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {
@@ -29,10 +32,8 @@ namespace ExamKing.Core.Entites
                 .HasComment("ID");
 
             entityBuilder.Property(e => e.CreateTime)
-                .HasColumnType("varchar(50)")
                 .HasColumnName("createTime")
-                .HasCharSet("utf8mb4")
-                .HasCollation("utf8mb4_unicode_ci");
+                .HasComment("创建时间");
 
             entityBuilder.Property(e => e.Password)
                 .HasColumnType("varchar(50)")
@@ -62,7 +63,7 @@ namespace ExamKing.Core.Entites
             {
                 new TbAdmin
                 {
-                    Id=1,Username="admin",Password="123456",CreateTime="1603683111"
+                    Id=1,Username="admin",Password="123456",CreateTime = DateTimeOffset.Parse("2020-11-18 21:15:38").ToLocalTime()
                 }
             };
         }

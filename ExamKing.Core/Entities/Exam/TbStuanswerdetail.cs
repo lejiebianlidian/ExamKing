@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Fur.DatabaseAccessor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,7 +19,8 @@ namespace ExamKing.Core.Entites
         public string Stuanswer { get; set; }
         public string Answer { get; set; }
         public string Isright { get; set; }
-        public string CreateTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTimeOffset CreateTime { get; set; }
 
         public TbExam Exam { get; set; }
         public TbStudent Student { get; set; }
@@ -54,12 +56,8 @@ namespace ExamKing.Core.Entites
                     .HasCollation("utf8_general_ci");
 
                 entityBuilder.Property(e => e.CreateTime)
-                    .IsRequired()
-                    .HasColumnType("varchar(30)")
                     .HasColumnName("createTime")
-                    .HasComment("创建时间")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
+                    .HasComment("创建时间");
 
                 entityBuilder.Property(e => e.ExamId)
                     .HasColumnName("examId")

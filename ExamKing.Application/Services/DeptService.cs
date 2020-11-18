@@ -90,7 +90,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<DeptDto> InsertDept(DeptDto deptDto)
         {
-            deptDto.CreateTime = TimeUtil.GetTimeStampNow();
+            // deptDto.CreateTime = TimeUtil.GetTimeStampNow();
             var dept = await _deptRepository.InsertNowAsync(deptDto.Adapt<TbDept>());
             return dept.Entity.Adapt<DeptDto>();
         }

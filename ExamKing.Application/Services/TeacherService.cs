@@ -85,7 +85,7 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(TeacherErrorCodes.t1401);
             }
-            teacherDto.CreateTime = TimeUtil.GetTimeStampNow();
+            // teacherDto.CreateTime = TimeUtil.GetTimeStampNow();
             var createTeacher = await _teacherRepository.InsertNowAsync(teacherDto.Adapt<TbTeacher>());
             return createTeacher.Entity.Adapt<TeacherDto>();
         }

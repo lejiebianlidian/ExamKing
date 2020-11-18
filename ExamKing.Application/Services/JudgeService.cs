@@ -36,7 +36,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<JudgeDto> CreateJudge(JudgeDto judgeDto)
         {
-            judgeDto.CreateTime = TimeUtil.GetTimeStampNow();
+            // judgeDto.CreateTime = TimeUtil.GetTimeStampNow();
             var judgeInsert = await _judgeRepository
                 .InsertNowAsync(judgeDto.Adapt<TbJudge>());
 
@@ -81,7 +81,7 @@ namespace ExamKing.Application.Services
         }
         
         /// <summary>
-        /// 根据教师查询是非题 分页
+        /// 根据教师查询是非题分页
         /// </summary>
         /// <param name="teacherId"></param>
         /// <param name="pageIndex"></param>
@@ -158,5 +158,6 @@ namespace ExamKing.Application.Services
 
             return judgeEntity.Adapt<JudgeDto>();
         }
+        
     }
 }

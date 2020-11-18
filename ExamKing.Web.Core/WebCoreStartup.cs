@@ -12,7 +12,10 @@ namespace ExamKing.Web.Core
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddInject();
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson()
+                .AddInject();
             
         }
 

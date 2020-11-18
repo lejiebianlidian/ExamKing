@@ -1,80 +1,55 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text.Json.Serialization;
-using ExamKing.Core.Entites;
-using ExamKing.Core.JsonConverters;
-using Fur.JsonConverters;
+using System.ComponentModel.DataAnnotations;
 
-namespace ExamKing.Application.Mappers
+namespace ExamKing.WebApp.Teacher
 {
     /// <summary>
-    /// 试卷DTO
+    /// 手动组卷输入
     /// </summary>
-    public class ExamDto
+    public class AddExamInput
     {
-        private string _isEnable = "0";
-
-        /// <summary>
-        /// 试卷ID
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// 试卷名称
         /// </summary>
+        [Required(ErrorMessage = "请输入试卷名称")]
         public string ExamName { get; set; }
 
         /// <summary>
         /// 课程ID
         /// </summary>
+        [Required(ErrorMessage = "请选择所属课程")]
         public int CourseId { get; set; }
 
         /// <summary>
         /// 教师ID
         /// </summary>
+        [Required(ErrorMessage = "请选择所属教师")]
         public int TeacherId { get; set; }
 
         /// <summary>
         /// 开始时间
         /// </summary>
+        [Required(ErrorMessage = "请选择开始考试时间")]
         public DateTimeOffset StartTime { get; set; }
 
         /// <summary>
         /// 结束时间
         /// </summary>
+        [Required(ErrorMessage = "请选择结束考试试卷")]
         public DateTimeOffset EndTime { get; set; }
 
         /// <summary>
         /// 考试时长
         /// </summary>
+        [Required(ErrorMessage = "请选择结束考试试卷")]
         public int Duration { get; set; }
 
         /// <summary>
         /// 启用状态
         /// </summary>
-        [DefaultValue("0")]
-        public string IsEnable
-        {
-            get => _isEnable;
-            set => _isEnable = value;
-        }
-
-        /// <summary>
-        /// 结束状态
-        /// </summary>
-        [DefaultValue("0")]
-        public string IsFinish
-        {
-            get => _isEnable;
-            set => _isEnable = value;
-        }
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public DateTimeOffset CreateTime { get; set; }
+        [Required(ErrorMessage = "请选择启用状态")]
+        public string IsEnable { get; set; }
 
         /// <summary>
         /// 试卷总分数
@@ -95,17 +70,37 @@ namespace ExamKing.Application.Mappers
         /// 多选题分数
         /// </summary>
         public int SelectScore { get; set; }
-
-        /// <summary>
-        /// 课程
-        /// </summary>
-        public CourseDto Course { get; set; }
-
-        /// <summary>
-        /// 试卷题目
-        /// </summary>
-        public ICollection<ExamquestionDto> Examquestions { get; set; }
         
+        /// <summary>
+        /// 多选题
+        /// </summary>
+        public List<QuestionInput> Selects { get; set; }
         
+        /// <summary>
+        /// 单选题
+        /// </summary>
+        public List<QuestionInput> Singles { get; set; }
+        
+        /// <summary>
+        /// 是非题
+        /// </summary>
+        public List<QuestionInput> Judges { get; set; }
+    }
+
+    /// <summary>
+    /// 试卷题目输入
+    /// </summary>
+    public class QuestionInput
+    {
+        
+        /// <summary>
+        /// 题库ID
+        /// </summary>
+        public int QuestionId { get; set; }
+        
+        /// <summary>
+        /// 分数
+        /// </summary>
+        public int Score { get; set; }
     }
 }

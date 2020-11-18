@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExamKing.Database.Migrations.Migrations
@@ -17,8 +18,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     password = table.Column<string>(type: "varchar(50)", nullable: true, comment: "密码", collation: "utf8mb4_unicode_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    createTime = table.Column<string>(type: "varchar(50)", nullable: true, collation: "utf8mb4_unicode_ci")
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
                 },
                 constraints: table =>
                 {
@@ -34,31 +34,13 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     deptName = table.Column<string>(type: "varchar(50)", nullable: false, comment: "系别名称", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<string>(type: "varchar(50)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tb_dept", x => x.id);
                 },
                 comment: "系别表");
-
-            migrationBuilder.CreateTable(
-                name: "tb_questiontype",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false, comment: "ID")
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    typeName = table.Column<string>(type: "varchar(30)", nullable: false, comment: "题型名称", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_questiontype", x => x.id);
-                },
-                comment: "题型实体");
 
             migrationBuilder.CreateTable(
                 name: "tb_classes",
@@ -69,8 +51,8 @@ namespace ExamKing.Database.Migrations.Migrations
                     classesName = table.Column<string>(type: "varchar(50)", nullable: false, comment: "班级名称", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     DeptId = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
-                    createTime = table.Column<string>(type: "varchar(50)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -103,8 +85,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     DeptId = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
                     idCard = table.Column<string>(type: "varchar(20)", nullable: false, comment: "身份证号", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<string>(type: "varchar(50)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
                 },
                 constraints: table =>
                 {
@@ -138,8 +119,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     idCard = table.Column<string>(type: "varchar(30)", nullable: false, comment: "身份证号码", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<string>(type: "varchar(50)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
                 },
                 constraints: table =>
                 {
@@ -169,8 +149,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     DeptId = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
                     teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
-                    createTime = table.Column<string>(type: "varchar(50)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
                 },
                 constraints: table =>
                 {
@@ -249,23 +228,14 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     courseId = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
                     teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
-                    startTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "开始时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
-                    endTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "结束时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
-                    judges = table.Column<string>(type: "varchar(200)", nullable: false, comment: "是非题", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
-                    singles = table.Column<string>(type: "varchar(200)", nullable: false, comment: "单选题", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
-                    selects = table.Column<string>(type: "varchar(200)", nullable: false, comment: "多选题", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
+                    startTime = table.Column<DateTime>(type: "datetime(6)", nullable: false, comment: "开始时间"),
+                    endTime = table.Column<DateTime>(type: "datetime(6)", nullable: false, comment: "结束时间"),
                     duration = table.Column<int>(type: "int", nullable: false, comment: "考试时长"),
                     isEnable = table.Column<string>(type: "varchar(10)", nullable: false, comment: "启用状态", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     isFinish = table.Column<string>(type: "varchar(10)", nullable: false, comment: "结束状态", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间"),
                     examScore = table.Column<int>(type: "int", nullable: false, comment: "试卷总分"),
                     judgeScore = table.Column<int>(type: "int", nullable: false, comment: "是非题分值"),
                     singleScore = table.Column<int>(type: "int", nullable: false, comment: "单选题分值"),
@@ -304,8 +274,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
                     ideas = table.Column<string>(type: "varchar(300)", nullable: false, comment: "解题思路", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
                 },
                 constraints: table =>
                 {
@@ -356,8 +325,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     ideas = table.Column<string>(type: "varchar(300)", nullable: false, comment: "解题思路", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
                 },
                 constraints: table =>
                 {
@@ -409,47 +377,28 @@ namespace ExamKing.Database.Migrations.Migrations
                 comment: "试卷班级关联表");
 
             migrationBuilder.CreateTable(
-                name: "tb_stuanswerdetail",
+                name: "tb_examquestion",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false, comment: "ID")
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    stuId = table.Column<int>(type: "int", nullable: false, comment: "学生ID"),
+                    questionType = table.Column<string>(type: "varchar(30)", nullable: false, comment: "题型", collation: "utf8_general_ci")
+                        .Annotation("MySql:CharSet", "utf8"),
                     examId = table.Column<int>(type: "int", nullable: false, comment: "试卷ID"),
                     questionId = table.Column<int>(type: "int", nullable: false, comment: "题目ID"),
-                    quesionTypeld = table.Column<int>(type: "int", nullable: false, comment: "题型ID"),
-                    stuanswer = table.Column<string>(type: "varchar(100)", nullable: false, comment: "学生答案", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
-                    answer = table.Column<string>(type: "varchar(100)", nullable: false, comment: "正确答案", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
-                    isright = table.Column<string>(type: "varchar(10)", nullable: false, comment: "是否正确", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    score = table.Column<int>(type: "int", nullable: false, comment: "分数")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_stuanswerdetail", x => x.id);
+                    table.PrimaryKey("PK_tb_examquestion", x => x.id);
                     table.ForeignKey(
-                        name: "answerdetail_exam_id",
+                        name: "examquestion_exam_id",
                         column: x => x.examId,
                         principalTable: "tb_exam",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "answerdetail_quesiotype_id",
-                        column: x => x.quesionTypeld,
-                        principalTable: "tb_questiontype",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "answerdetail_stu_id",
-                        column: x => x.stuId,
-                        principalTable: "tb_student",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
                 },
-                comment: "答题明细表");
+                comment: "试卷题目关联表");
 
             migrationBuilder.CreateTable(
                 name: "tb_stuscore",
@@ -461,8 +410,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     courseId = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
                     examId = table.Column<int>(type: "int", nullable: false, comment: "考试ID"),
                     score = table.Column<int>(type: "int", nullable: false, comment: "分数"),
-                    createTime = table.Column<string>(type: "varchar(30)", nullable: false, comment: "创建时间", collation: "utf8_general_ci")
-                        .Annotation("MySql:CharSet", "utf8")
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
                 },
                 constraints: table =>
                 {
@@ -488,10 +436,52 @@ namespace ExamKing.Database.Migrations.Migrations
                 },
                 comment: "学生成绩表");
 
+            migrationBuilder.CreateTable(
+                name: "tb_stuanswerdetail",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false, comment: "ID")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    stuId = table.Column<int>(type: "int", nullable: false, comment: "学生ID"),
+                    examId = table.Column<int>(type: "int", nullable: false, comment: "试卷ID"),
+                    questionId = table.Column<int>(type: "int", nullable: false, comment: "题目ID"),
+                    questionType = table.Column<int>(type: "int", nullable: false, comment: "题型"),
+                    stuanswer = table.Column<string>(type: "varchar(100)", nullable: false, comment: "学生答案", collation: "utf8_general_ci")
+                        .Annotation("MySql:CharSet", "utf8"),
+                    answer = table.Column<string>(type: "varchar(100)", nullable: false, comment: "正确答案", collation: "utf8_general_ci")
+                        .Annotation("MySql:CharSet", "utf8"),
+                    isright = table.Column<string>(type: "varchar(10)", nullable: false, comment: "是否正确", collation: "utf8_general_ci")
+                        .Annotation("MySql:CharSet", "utf8"),
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_stuanswerdetail", x => x.id);
+                    table.ForeignKey(
+                        name: "answerdetail_exam_id",
+                        column: x => x.examId,
+                        principalTable: "tb_exam",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "answerdetail_examquestion_id",
+                        column: x => x.questionId,
+                        principalTable: "tb_examquestion",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "answerdetail_stu_id",
+                        column: x => x.stuId,
+                        principalTable: "tb_student",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                },
+                comment: "答题明细表");
+
             migrationBuilder.InsertData(
                 table: "tb_admin",
                 columns: new[] { "id", "createTime", "password", "username" },
-                values: new object[] { 1, "1603683111", "123456", "admin" });
+                values: new object[] { 1, new DateTimeOffset(new DateTime(2020, 11, 18, 21, 15, 38, 0, DateTimeKind.Unspecified), new TimeSpan(0, 8, 0, 0, 0)), "123456", "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "id",
@@ -580,6 +570,17 @@ namespace ExamKing.Database.Migrations.Migrations
                 column: "examId");
 
             migrationBuilder.CreateIndex(
+                name: "examquestion_id",
+                table: "tb_examquestion",
+                column: "id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tb_examquestion_examId",
+                table: "tb_examquestion",
+                column: "examId");
+
+            migrationBuilder.CreateIndex(
                 name: "judge_chapter_id",
                 table: "tb_judge",
                 column: "chapterId");
@@ -599,12 +600,6 @@ namespace ExamKing.Database.Migrations.Migrations
                 name: "judge_teacher_id",
                 table: "tb_judge",
                 column: "teacherId");
-
-            migrationBuilder.CreateIndex(
-                name: "questiontype_id",
-                table: "tb_questiontype",
-                column: "id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "select_chapter_id",
@@ -633,9 +628,9 @@ namespace ExamKing.Database.Migrations.Migrations
                 column: "examId");
 
             migrationBuilder.CreateIndex(
-                name: "answerdetail_quesiotype_id",
+                name: "answerdetail_examquestion_id",
                 table: "tb_stuanswerdetail",
-                column: "quesionTypeld");
+                column: "questionId");
 
             migrationBuilder.CreateIndex(
                 name: "answerdetail_stu_id",
@@ -724,19 +719,19 @@ namespace ExamKing.Database.Migrations.Migrations
                 name: "tb_chapter");
 
             migrationBuilder.DropTable(
-                name: "tb_questiontype");
-
-            migrationBuilder.DropTable(
-                name: "tb_exam");
+                name: "tb_examquestion");
 
             migrationBuilder.DropTable(
                 name: "tb_student");
 
             migrationBuilder.DropTable(
-                name: "tb_course");
+                name: "tb_exam");
 
             migrationBuilder.DropTable(
                 name: "tb_classes");
+
+            migrationBuilder.DropTable(
+                name: "tb_course");
 
             migrationBuilder.DropTable(
                 name: "tb_teacher");

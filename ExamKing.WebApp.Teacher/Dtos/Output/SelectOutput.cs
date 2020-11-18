@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json.Serialization;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.JsonConverters;
@@ -72,8 +73,7 @@ namespace ExamKing.WebApp.Teacher
         /// <summary>
         /// 创建时间
         /// </summary>
-        [JsonConverter(typeof(CreateTimeConverter))]
-        public string CreateTime { get; set; }
+        public DateTimeOffset CreateTime { get; set; }
 
     }
 }

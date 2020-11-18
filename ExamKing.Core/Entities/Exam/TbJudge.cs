@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Fur.DatabaseAccessor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -17,7 +18,8 @@ namespace ExamKing.Core.Entites
         public int ChapterId { get; set; }
         public int TeacherId { get; set; }
         public string Ideas { get; set; }
-        public string CreateTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTimeOffset CreateTime { get; set; }
 
         public TbChapter Chapter { get; set; }
         public TbCourse Course { get; set; }
@@ -59,12 +61,8 @@ namespace ExamKing.Core.Entites
                 .HasComment("课程ID");
 
             entityBuilder.Property(e => e.CreateTime)
-                .IsRequired()
-                .HasColumnType("varchar(30)")
                 .HasColumnName("createTime")
-                .HasComment("创建时间")
-                .HasCharSet("utf8")
-                .HasCollation("utf8_general_ci");
+                .HasComment("创建时间");
 
             entityBuilder.Property(e => e.Ideas)
                 .IsRequired()

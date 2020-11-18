@@ -109,4 +109,14 @@ namespace ExamKing.Core.ErrorCodes
         [ErrorCodeItemMetadata("是非题不存在")]
         s1801
     }
+    
+    /// <summary>
+    /// 试卷错误码
+    /// </summary>
+    [ErrorCodeType]
+    public enum ExamErrorCodes
+    {
+        [ErrorCodeItemMetadata("试卷不存在")]
+        s1901
+    }
 }

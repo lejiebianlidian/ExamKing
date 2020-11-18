@@ -1,20 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text.Json.Serialization;
-using ExamKing.Core.Entites;
 using ExamKing.Core.JsonConverters;
-using Fur.JsonConverters;
 
-namespace ExamKing.Application.Mappers
+namespace ExamKing.WebApp.Teacher
 {
     /// <summary>
-    /// 试卷DTO
+    /// 试卷输出
     /// </summary>
-    public class ExamDto
+    public class ExamOutput
     {
-        private string _isEnable = "0";
-
         /// <summary>
         /// 试卷ID
         /// </summary>
@@ -38,12 +32,14 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 开始时间
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        [JsonConverter(typeof(CreateTimeConverter))]
+        public string StartTime { get; set; }
 
         /// <summary>
         /// 结束时间
         /// </summary>
-        public DateTimeOffset EndTime { get; set; }
+        [JsonConverter(typeof(CreateTimeConverter))]
+        public string EndTime { get; set; }
 
         /// <summary>
         /// 考试时长
@@ -53,27 +49,16 @@ namespace ExamKing.Application.Mappers
         /// <summary>
         /// 启用状态
         /// </summary>
-        [DefaultValue("0")]
-        public string IsEnable
-        {
-            get => _isEnable;
-            set => _isEnable = value;
-        }
+        public string IsEnable { get; set; }
 
         /// <summary>
         /// 结束状态
         /// </summary>
-        [DefaultValue("0")]
-        public string IsFinish
-        {
-            get => _isEnable;
-            set => _isEnable = value;
-        }
+        public string IsFinish { get; set; }
 
         /// <summary>
         /// 创建时间
         /// </summary>
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public DateTimeOffset CreateTime { get; set; }
 
         /// <summary>
@@ -96,16 +81,5 @@ namespace ExamKing.Application.Mappers
         /// </summary>
         public int SelectScore { get; set; }
 
-        /// <summary>
-        /// 课程
-        /// </summary>
-        public CourseDto Course { get; set; }
-
-        /// <summary>
-        /// 试卷题目
-        /// </summary>
-        public ICollection<ExamquestionDto> Examquestions { get; set; }
-        
-        
     }
 }

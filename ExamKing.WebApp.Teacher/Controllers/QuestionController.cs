@@ -61,15 +61,15 @@ namespace ExamKing.WebApp.Teacher
         /// <summary>
         /// 选择题列表
         /// </summary>
-        /// <param name="teacherId"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public async Task<PagedList<SelectCourseChapterOutput>> GetSelectList(
-            [FromQuery] int teacherId,
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
+
+            var teacherId = GetUserId();
             var selectList = await _selectService
                 .FindSelectAllByTeacherAndPage(teacherId, pageIndex, pageSize);
             return selectList.Adapt<PagedList<SelectCourseChapterOutput>>();
@@ -123,15 +123,14 @@ namespace ExamKing.WebApp.Teacher
         /// <summary>
         /// 是非题列表
         /// </summary>
-        /// <param name="teacherId"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public async Task<PagedList<JudgeCourseChapterOutput>> GetJudgeList(
-            [FromQuery] int teacherId,
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
+            var teacherId = GetUserId();
             var judgeList = await _judgeService
                 .FindJudgeAllByTeacherAndPage(teacherId, pageIndex, pageSize);
             return judgeList.Adapt<PagedList<JudgeCourseChapterOutput>>();

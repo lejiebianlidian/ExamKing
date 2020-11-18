@@ -80,7 +80,7 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(AdminErrorCodes.a1003);
             }
-            adminDto.CreateTime = TimeUtil.GetTimeStampNow();
+            // adminDto.CreateTime = TimeUtil.GetTimeStampNow();
             var regAdmin = await _adminRepository.InsertNowAsync(adminDto.Adapt<TbAdmin>());
             return regAdmin.Entity.Adapt<AdminDto>();
         }

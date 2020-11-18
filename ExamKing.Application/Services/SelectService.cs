@@ -36,7 +36,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<SelectDto> CreateSelect(SelectDto selectDto)
         {
-            selectDto.CreateTime = TimeUtil.GetTimeStampNow();
+            // selectDto.CreateTime = TimeUtil.GetTimeStampNow();
             var selectInsert = await _selectRepository
                 .InsertNowAsync(selectDto.Adapt<TbSelect>());
 

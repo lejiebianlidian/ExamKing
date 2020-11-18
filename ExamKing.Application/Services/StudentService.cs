@@ -103,7 +103,7 @@ namespace ExamKing.Application.Services
             if (classes == null) throw Oops.Oh(StudentErrorCodes.s1202);
             // 判断班级是否属于该系别
             if (classes.DeptId != studentDto.DeptId) throw Oops.Oh(StudentErrorCodes.s1203);
-            studentDto.CreateTime = TimeUtil.GetTimeStampNow();
+            // studentDto.CreateTime = TimeUtil.GetTimeStampNow();
             var stduent = await _studentRepository
                 .InsertNowAsync(studentDto.Adapt<TbStudent>());
             return stduent.Entity.Adapt<StudentDto>();

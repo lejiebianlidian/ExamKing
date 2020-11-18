@@ -16,7 +16,7 @@ namespace ExamKing.Core.Entites
         }
 
         public int Id { get; set; }
-        public string QuestType { get; set; }
+        public string QuestionType { get; set; }
         public int ExamId { get; set; }
         public int QuestionId { get; set; }
         public int Score { get; set; }
@@ -39,7 +39,7 @@ namespace ExamKing.Core.Entites
                 .HasColumnName("id")
                 .HasComment("ID");
             
-            entityBuilder.Property(e => e.QuestType)
+            entityBuilder.Property(e => e.QuestionType)
                 .IsRequired()
                 .HasColumnName("questionType")
                 .HasComment("题型")

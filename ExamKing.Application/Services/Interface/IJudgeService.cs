@@ -45,6 +45,8 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<JudgeDto> FindJudgeById(int id);
+        
+        
     }
 
 }
