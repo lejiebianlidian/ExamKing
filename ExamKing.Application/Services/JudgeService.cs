@@ -57,10 +57,11 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(JudgeErrorCodes.s1801);
             }
 
-            var judgeUpdate = await _judgeRepository
-                .UpdateNowAsync(judgeDto.Adapt(judgeEntity));
+            var judgeUpdate = judgeDto.Adapt(judgeEntity);
+            await judgeUpdate
+                .UpdateExcludeAsync(u=>u.CreateTime);
 
-            return judgeUpdate.Entity.Adapt<JudgeDto>();
+            return judgeUpdate.Adapt<JudgeDto>();
         }
 
         /// <summary>

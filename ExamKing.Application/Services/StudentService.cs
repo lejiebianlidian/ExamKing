@@ -163,8 +163,8 @@ namespace ExamKing.Application.Services
                 .FirstOrDefaultAsync(x => x.Id == studentDto.Id);            
             if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
             var newStu= studentDto.Adapt(stu);
-            var changeInfo = await _studentRepository.UpdateAsync(stu);
-            return changeInfo.Adapt<StudentDto>();
+            var changeInfo = await newStu.UpdateExcludeAsync(u => u.CreateTime);
+            return newStu.Adapt<StudentDto>();
         }
 
         /// <summary>

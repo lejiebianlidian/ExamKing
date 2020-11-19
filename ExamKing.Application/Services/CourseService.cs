@@ -136,9 +136,10 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(TeacherErrorCodes.t1402);
             }
 
-            var changeCourse = await _courseRepository
-                .UpdateNowAsync(courseDto.Adapt(course));
-            return changeCourse.Entity.Adapt<CourseDto>();
+            var changeCourse = courseDto.Adapt(course);
+            await changeCourse
+                .UpdateExcludeAsync(u=>u.CreateTime);
+            return changeCourse.Adapt<CourseDto>();
         }
 
         /// <summary>

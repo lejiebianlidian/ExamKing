@@ -99,7 +99,7 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(AdminErrorCodes.a1002);
             }
             var newAdminEntity = adminDto.Adapt(admin);
-            var newAdmin = await _adminRepository.UpdateAsync(newAdminEntity);
+            var newAdmin = await newAdminEntity.UpdateExcludeAsync(u=>u.CreateTime);
             return newAdminEntity.Adapt<AdminDto>();
         }
 

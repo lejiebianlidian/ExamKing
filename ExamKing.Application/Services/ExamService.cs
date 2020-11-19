@@ -72,11 +72,11 @@ namespace ExamKing.Application.Services
                 );
 
             // 更新试卷
-            var exam = await _examRepository
-                .UpdateAsync(examDto.Adapt(oldExam));
-            var examEntity = exam.Entity;
+            var exam = examDto.Adapt(oldExam);
+            await exam
+                .UpdateExcludeAsync(u=>u.CreateTime);
 
-            return examEntity.Adapt<ExamDto>();
+            return exam.Adapt<ExamDto>();
         }
 
         /// <summary>

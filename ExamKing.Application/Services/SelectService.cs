@@ -57,10 +57,11 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(SelectErrorCodes.x1701);
             }
 
-            var selectUpdate = await _selectRepository
-                .UpdateNowAsync(selectDto.Adapt(selectEntity));
+            var selectUpdate = selectDto.Adapt(selectEntity);
+            await selectUpdate
+                .UpdateExcludeAsync(u=>u.CreateTime);
 
-            return selectUpdate.Entity.Adapt<SelectDto>();
+            return selectUpdate.Adapt<SelectDto>();
         }
 
         /// <summary>

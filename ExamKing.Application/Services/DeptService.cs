@@ -126,9 +126,9 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
             }
-            
-            var changeDept = await _deptRepository.UpdateNowAsync(deptDto.Adapt(dept));
-            return changeDept.Entity.Adapt<DeptDto>();
+            var changeDept = deptDto.Adapt(dept);
+             await changeDept.UpdateExcludeAsync(u=>u.CreateTime);
+            return changeDept.Adapt<DeptDto>();
         }
 
         /// <summary>

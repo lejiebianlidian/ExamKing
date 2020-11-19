@@ -111,8 +111,10 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(DeptErrorCodes
                     .d1301);
             }
-            var changeTeacher = await _teacherRepository.UpdateNowAsync(teacherDto.Adapt(teacher));
-            return changeTeacher.Entity.Adapt<TeacherDto>();
+
+            var changeTeacher = teacherDto.Adapt(teacher);
+            await changeTeacher.UpdateExcludeAsync(u=>u.CreateTime);
+            return changeTeacher.Adapt<TeacherDto>();
         }
 
         /// <summary>

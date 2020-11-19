@@ -105,9 +105,10 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(ClassErrorCodes.c1101);
             }
 
-            var changeClasses = await _classRepository
-                .UpdateNowAsync(classesDto.Adapt(classes));
-            return changeClasses.Entity.Adapt<ClassesDto>();
+            var changeClasses = classesDto.Adapt(classes);
+            await changeClasses
+                .UpdateExcludeAsync(u => u.CreateTime);
+            return changeClasses.Adapt<ClassesDto>();
         }
 
         /// <summary>
