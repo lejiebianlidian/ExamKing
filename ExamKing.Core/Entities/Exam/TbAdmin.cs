@@ -63,7 +63,7 @@ namespace ExamKing.Core.Entites
             {
                 new TbAdmin
                 {
-                    Id=1,Username="admin",Password="123456",CreateTime = DateTimeOffset.Parse("2020-11-18 21:15:38").ToLocalTime()
+                    Id=1,Username="admin",Password="e10adc3949ba59abbe56e057f20f883e",CreateTime = DateTimeOffset.Parse("2020-11-18 21:15:38").ToLocalTime()
                 }
             };
         }
