@@ -19,6 +19,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     password = table.Column<string>(type: "varchar(50)", nullable: true, comment: "密码", collation: "utf8mb4_unicode_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -35,6 +36,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     deptName = table.Column<string>(type: "varchar(50)", nullable: false, comment: "系别名称", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -86,6 +88,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     idCard = table.Column<string>(type: "varchar(20)", nullable: false, comment: "身份证号", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -120,6 +123,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     idCard = table.Column<string>(type: "varchar(30)", nullable: false, comment: "身份证号码", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -150,6 +154,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     DeptId = table.Column<int>(type: "int", nullable: false, comment: "系别ID"),
                     teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -228,14 +233,15 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     courseId = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
                     teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
-                    startTime = table.Column<DateTime>(type: "datetime(6)", nullable: false, comment: "开始时间"),
-                    endTime = table.Column<DateTime>(type: "datetime(6)", nullable: false, comment: "结束时间"),
+                    startTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "开始时间"),
+                    endTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "结束时间"),
                     duration = table.Column<int>(type: "int", nullable: false, comment: "考试时长"),
                     isEnable = table.Column<string>(type: "varchar(10)", nullable: false, comment: "启用状态", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     isFinish = table.Column<string>(type: "varchar(10)", nullable: false, comment: "结束状态", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
-                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间"),
+                    createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     examScore = table.Column<int>(type: "int", nullable: false, comment: "试卷总分"),
                     judgeScore = table.Column<int>(type: "int", nullable: false, comment: "是非题分值"),
                     singleScore = table.Column<int>(type: "int", nullable: false, comment: "单选题分值"),
@@ -275,6 +281,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     ideas = table.Column<string>(type: "varchar(300)", nullable: false, comment: "解题思路", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -326,6 +333,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     ideas = table.Column<string>(type: "varchar(300)", nullable: false, comment: "解题思路", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -411,6 +419,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     examId = table.Column<int>(type: "int", nullable: false, comment: "考试ID"),
                     score = table.Column<int>(type: "int", nullable: false, comment: "分数"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -453,6 +462,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     isright = table.Column<string>(type: "varchar(10)", nullable: false, comment: "是否正确", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     createTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "创建时间")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -481,7 +491,7 @@ namespace ExamKing.Database.Migrations.Migrations
             migrationBuilder.InsertData(
                 table: "tb_admin",
                 columns: new[] { "id", "createTime", "password", "username" },
-                values: new object[] { 1, new DateTimeOffset(new DateTime(2020, 11, 18, 21, 15, 38, 0, DateTimeKind.Unspecified), new TimeSpan(0, 8, 0, 0, 0)), "123456", "admin" });
+                values: new object[] { 1, new DateTimeOffset(new DateTime(2020, 11, 18, 21, 15, 38, 0, DateTimeKind.Unspecified), new TimeSpan(0, 8, 0, 0, 0)), "e10adc3949ba59abbe56e057f20f883e", "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "id",

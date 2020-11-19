@@ -26,6 +26,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("ID");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -60,7 +61,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         {
                             Id = 1,
                             CreateTime = new DateTimeOffset(new DateTime(2020, 11, 18, 21, 15, 38, 0, DateTimeKind.Unspecified), new TimeSpan(0, 8, 0, 0, 0)),
-                            Password = "123456",
+                            Password = "e10adc3949ba59abbe56e057f20f883e",
                             Username = "admin"
                         });
                 });
@@ -164,6 +165,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasCharSet("utf8");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -226,6 +228,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("ID");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -263,6 +266,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("课程ID");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -272,7 +276,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasColumnName("duration")
                         .HasComment("考试时长");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTimeOffset>("EndTime")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("endTime")
                         .HasComment("结束时间");
@@ -321,7 +325,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasColumnName("singleScore")
                         .HasComment("单选题分值");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTimeOffset>("StartTime")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("startTime")
                         .HasComment("开始时间");
@@ -441,6 +445,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("课程ID");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -510,6 +515,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("课程ID");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -609,6 +615,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasCharSet("utf8");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -680,6 +687,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("班级ID");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -766,6 +774,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("课程ID");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
@@ -811,6 +820,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("ID");
 
                     b.Property<DateTimeOffset>("CreateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("createTime")
                         .HasComment("创建时间");
