@@ -23,7 +23,10 @@ namespace ExamKing.Application.Mappers
                 .IgnoreIf((src, dest) => src.Telphone == "", dest => dest.Telphone)
                 .IgnoreIf((src, dest) => src.IdCard == "", dest => dest.IdCard)
                 .IgnoreIf((src, dest) => src.DeptId <= 0, dest => dest.DeptId)
-                .Map(desc => desc.Sex, src => src.Sex)
+                .Map(desc => desc.Sex,
+                    src => src.Sex == "男" ? "0" :
+                        src.Sex == "女" ? "1" :
+                        src.Sex == "保密" ? "2" : (src.Sex == "保密" || src.Sex == "男" || src.Sex == "女") ? "2" : src.Sex)
                 .Map(desc => desc.Password, src => MD5Encryption.Encrypt(src.Password));
         }
     }
