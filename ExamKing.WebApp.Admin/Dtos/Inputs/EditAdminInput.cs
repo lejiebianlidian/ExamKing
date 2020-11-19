@@ -4,6 +4,7 @@ namespace ExamKing.WebApp.Admin
 {
     public class EditAdminInput
     {
+        private string _password = "";
         /// <summary>
         /// Id
         /// </summary>
@@ -19,6 +20,10 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password { get; set; }
+        public string Password
+        {
+            get => _password;
+            set => _password = value;
+        }
     }
 }

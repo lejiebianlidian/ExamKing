@@ -8,7 +8,7 @@ namespace ExamKing.WebApp.Admin
     /// </summary>
     public class EditStudentInput
     {
-
+        private string _password = "";
         /// <summary>
         /// 学生ID
         /// </summary>
@@ -33,7 +33,11 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 密码
         /// </summary>
-        public string? Password { get; set; }
+        public string Password
+        {
+            get => _password;
+            set => _password = value;
+        }
         
         /// <summary>
         /// 身份证号码
