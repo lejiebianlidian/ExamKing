@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  publish:
+  exmaking_publish:
     build:
       context: ./
       dockerfile: ./docker/BPublish/Dockerfile
@@ -10,7 +10,7 @@ services:
       - ./:/home/examking:rw
       - neuget:/var/negut:rw
       - publish:/home/publish:rw
-  student:
+  exmaking_student:
     build:
       context: ./
       dockerfile: ./docker/student/Dockerfile
@@ -26,7 +26,7 @@ services:
     restart: "always"
     volumes:
       - publish:/home/publish:rw
-  admin:
+  exmaking_admin:
     build:
       context: ./
       dockerfile: ./docker/admin/Dockerfile
@@ -42,7 +42,7 @@ services:
     restart: "always"
     volumes:
       - publish:/home/publish:rw
-  teacher:
+  exmaking_teacher:
     build:
       context: ./
       dockerfile: ./docker/teacher/Dockerfile
