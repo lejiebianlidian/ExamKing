@@ -22,7 +22,7 @@ services:
     networks: 
       - examking_net  
     depends_on:
-      - publish
+      - exmaking_publish
     restart: "always"
     volumes:
       - publish:/home/publish:rw
@@ -38,7 +38,7 @@ services:
     networks: 
       - examking_net
     depends_on:
-      - publish
+      - exmaking_publish
     restart: "always"
     volumes:
       - publish:/home/publish:rw
@@ -54,7 +54,7 @@ services:
     networks:
       - examking_net
     depends_on:
-      - publish
+      - exmaking_publish
     restart: "always"
     volumes:
       - publish:/home/publish:rw
