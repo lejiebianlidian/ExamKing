@@ -80,5 +80,16 @@ namespace ExamKing.WebApp.Teacher
             await _teacherService.UpdateTeacher(teacher);
             return "success";
         }
+
+        /// <summary>
+        /// 获取教师信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<TeacherOutput> GetInfo()
+        {
+            var teacherId = GetUserId();
+            var teacher = await _teacherService.FindTeacherById(teacherId);
+            return teacher.Adapt<TeacherOutput>();
+        }
     }
 }
