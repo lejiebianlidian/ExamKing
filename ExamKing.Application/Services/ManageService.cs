@@ -59,7 +59,7 @@ namespace ExamKing.Application.Services
             var admin = await _adminRepository
                 .Where(
                     u => u.Username.Equals(adminDto.Username))
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
             if (admin == null) throw Oops.Oh(AdminErrorCodes.a1002);
             if (!MD5Encryption.Compare(adminDto.Password, admin.Password))
             {
@@ -75,7 +75,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<AdminDto> CreateAdmin(AdminDto adminDto)
         {
-            var admin = await _adminRepository.Entities.SingleOrDefaultAsync(u => u.Username.Equals(adminDto.Username));
+            var admin = await _adminRepository.Entities.FirstOrDefaultAsync(u => u.Username.Equals(adminDto.Username));
             if (admin != null)
             {
                 throw Oops.Oh(AdminErrorCodes.a1003);
@@ -93,7 +93,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<AdminDto> UpdateAdmin(AdminDto adminDto)
         {
-            var admin = await _adminRepository.Entities.SingleOrDefaultAsync(u => u.Id == adminDto.Id);
+            var admin = await _adminRepository.Entities.FirstOrDefaultAsync(u => u.Id == adminDto.Id);
             if (admin == null)
             {
                 throw Oops.Oh(AdminErrorCodes.a1002);
@@ -111,7 +111,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task DeleteAdminById(int id)
         {
-            var admin = await _adminRepository.SingleOrDefaultAsync(x => x.Id == id);
+            var admin = await _adminRepository.FirstOrDefaultAsync(x => x.Id == id);
             if (admin == null)
             {
                 throw Oops.Oh(AdminErrorCodes.a1002);
@@ -127,7 +127,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<AdminDto> FindAdminById(int id)
         {
-            var admin = await _adminRepository.SingleOrDefaultAsync(x => x.Id == id);
+            var admin = await _adminRepository.FirstOrDefaultAsync(x => x.Id == id);
             if (admin == null)
             {
                 throw Oops.Oh(AdminErrorCodes.a1002);

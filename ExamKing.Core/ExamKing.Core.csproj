@@ -23,5 +23,6 @@
     <ItemGroup>
         <Folder Include="Entities\" />
         <Folder Include="Entities\Exam\" />
+        <Folder Include="JsonConverters" />
     </ItemGroup>
 </Project>

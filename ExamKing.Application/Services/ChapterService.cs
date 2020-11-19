@@ -55,12 +55,12 @@ namespace ExamKing.Application.Services
         {
             // 判断课程是否存在
             var course = await _chapterRepository.Change<TbCourse>()
-                .SingleOrDefaultAsync(u => u.Id == chapterDto.CourseId);
+                .FirstOrDefaultAsync(u => u.Id == chapterDto.CourseId);
             if (course==null)
             {
                 throw Oops.Oh(CourseErrorCodes.c1501);
             }
-            var chapter = await _chapterRepository.SingleOrDefaultAsync(u => u.Id == chapterDto
+            var chapter = await _chapterRepository.FirstOrDefaultAsync(u => u.Id == chapterDto
                 .Id);
             if (chapter == null)
             {
@@ -81,7 +81,7 @@ namespace ExamKing.Application.Services
         public async Task DeleteChapter(int chapterId)
         {
             var chapter = await _chapterRepository
-                .SingleOrDefaultAsync(x => x.Id == chapterId);
+                .FirstOrDefaultAsync(x => x.Id == chapterId);
             if (chapter == null)
             {
                 throw Oops.Oh(ChapterErrorCodes.z1601);

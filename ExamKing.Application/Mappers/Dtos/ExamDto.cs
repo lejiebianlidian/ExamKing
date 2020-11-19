@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using ExamKing.Core.Entites;
-using ExamKing.Core.JsonConverters;
+
 using Fur.JsonConverters;
 
 namespace ExamKing.Application.Mappers

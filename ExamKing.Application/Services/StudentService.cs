@@ -78,7 +78,7 @@ namespace ExamKing.Application.Services
         public async Task<StudentDto> LoginStudent(string studentNo, string password)
         {
             var student = await _studentRepository
-                .SingleOrDefaultAsync(s => s.StuNo.Equals(studentNo));
+                .FirstOrDefaultAsync(s => s.StuNo.Equals(studentNo));
             if (student == null) throw Oops.Oh(StudentErrorCodes.s1204);
             if (!MD5Encryption.Compare(password, student.Password))
             {
@@ -96,10 +96,10 @@ namespace ExamKing.Application.Services
         public async Task<StudentDto> RegisterStudent(StudentDto studentDto)
         {
             // 判断学号是否已经注册
-            var stu = await _studentRepository.Where(x => x.StuNo == studentDto.StuNo).SingleOrDefaultAsync();
+            var stu = await _studentRepository.Where(x => x.StuNo == studentDto.StuNo).FirstOrDefaultAsync();
             if (stu != null) throw Oops.Oh(StudentErrorCodes.s1205);
             // 判断班级是否存在
-            var classes = await _studentRepository.Change<TbClass>().SingleOrDefaultAsync(x => x.Id == studentDto.ClassesId);
+            var classes = await _studentRepository.Change<TbClass>().FirstOrDefaultAsync(x => x.Id == studentDto.ClassesId);
             if (classes == null) throw Oops.Oh(StudentErrorCodes.s1202);
             // 判断班级是否属于该系别
             if (classes.DeptId != studentDto.DeptId) throw Oops.Oh(StudentErrorCodes.s1203);
@@ -160,7 +160,7 @@ namespace ExamKing.Application.Services
                 .Entities
                 .Include(x=>x.Classes)
                 .Include(x=>x.Dept)
-                .SingleOrDefaultAsync(x => x.Id == studentDto.Id);            
+                .FirstOrDefaultAsync(x => x.Id == studentDto.Id);            
             if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
             var newStu= studentDto.Adapt(stu);
             var changeInfo = await _studentRepository.UpdateAsync(stu);
@@ -177,7 +177,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<StudentDto> ForgetPass(string stuNo, string idCard, string newPass)
         {
-            var stu = await _studentRepository.Where(x => x.StuNo == stuNo).SingleOrDefaultAsync();
+            var stu = await _studentRepository.Where(x => x.StuNo == stuNo).FirstOrDefaultAsync();
             if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
             // 判断身份证后6位是否正确
             if (idCard != stu.IdCard.Substring(stu.IdCard.Length-6,6)) throw Oops.Oh(StudentErrorCodes.s1206);
@@ -195,7 +195,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task DeleteStudent(int id)
         {
-            var stu = await _studentRepository.Where(x => x.Id == id).SingleOrDefaultAsync();
+            var stu = await _studentRepository.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
 
             await _studentRepository.DeleteAsync(stu);

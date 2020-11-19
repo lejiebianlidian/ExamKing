@@ -51,7 +51,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<SelectDto> UpdateSelect(SelectDto selectDto)
         {
-            var selectEntity = await _selectRepository.SingleOrDefaultAsync(u => u.Id == selectDto.Id);
+            var selectEntity = await _selectRepository.FirstOrDefaultAsync(u => u.Id == selectDto.Id);
             if (selectEntity==null)
             {
                 throw Oops.Oh(SelectErrorCodes.x1701);
@@ -71,7 +71,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task DeleteSelect(int id)
         {
-            var selectEntity = await _selectRepository.SingleOrDefaultAsync(u => u.Id == id);
+            var selectEntity = await _selectRepository.FirstOrDefaultAsync(u => u.Id == id);
             if (selectEntity==null)
             {
                 throw Oops.Oh(SelectErrorCodes.x1701);

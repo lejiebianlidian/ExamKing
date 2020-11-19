@@ -72,7 +72,7 @@ namespace ExamKing.Application.Services
         {
             // 查询系别是否存在
             var dept = await _courseRepository.Change<TbDept>().Entities
-                .SingleOrDefaultAsync(x => x.Id == courseDto.DeptId);
+                .FirstOrDefaultAsync(x => x.Id == courseDto.DeptId);
             if (dept == null)
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
@@ -80,7 +80,7 @@ namespace ExamKing.Application.Services
             
             // 查询教师是否存在
             var teacher = await _courseRepository.Change<TbTeacher>().Entities
-                .SingleOrDefaultAsync(x => x.Id == courseDto.TeacherId);
+                .FirstOrDefaultAsync(x => x.Id == courseDto.TeacherId);
             if (teacher == null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
@@ -112,7 +112,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<CourseDto> UpdateCourse(CourseDto courseDto)
         {
-            var course = await _courseRepository.Entities.SingleOrDefaultAsync(x => x.Id == courseDto.Id);
+            var course = await _courseRepository.Entities.FirstOrDefaultAsync(x => x.Id == courseDto.Id);
             if (course == null)
             {
                 throw Oops.Oh(
@@ -122,7 +122,7 @@ namespace ExamKing.Application.Services
 
             // 查询系别是否存在
             var dept = await _courseRepository.Change<TbDept>().Entities
-                .SingleOrDefaultAsync(x => x.Id == course.DeptId);
+                .FirstOrDefaultAsync(x => x.Id == course.DeptId);
             if (dept == null)
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
@@ -130,7 +130,7 @@ namespace ExamKing.Application.Services
 
             // 查询教师是否存在
             var teacher = await _courseRepository.Change<TbTeacher>().Entities
-                .SingleOrDefaultAsync(x => x.Id == course.TeacherId);
+                .FirstOrDefaultAsync(x => x.Id == course.TeacherId);
             if (teacher == null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
@@ -149,7 +149,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task DeleteCourse(int id)
         {
-            var course = await _courseRepository.Entities.SingleOrDefaultAsync(x => x.Id == id);
+            var course = await _courseRepository.Entities.FirstOrDefaultAsync(x => x.Id == id);
             if (course == null)
             {
                 throw Oops.Oh(
@@ -188,7 +188,7 @@ namespace ExamKing.Application.Services
                         ClassesName = u.ClassesName,
                     }).ToList()
                 })
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (course == null)
             {
                 throw Oops.Oh(

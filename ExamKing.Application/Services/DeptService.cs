@@ -103,7 +103,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task DeleteDept(int id)
         {
-            var dept = await _deptRepository.SingleOrDefaultAsync(x => x.Id == id);
+            var dept = await _deptRepository.FirstOrDefaultAsync(x => x.Id == id);
 
             if (dept == null)
             {
@@ -121,7 +121,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<DeptDto> UpdateDept(DeptDto deptDto)
         {
-            var dept = await _deptRepository.SingleOrDefaultAsync(x => x.Id == deptDto.Id);
+            var dept = await _deptRepository.FirstOrDefaultAsync(x => x.Id == deptDto.Id);
             if (dept == null)
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
@@ -153,7 +153,7 @@ namespace ExamKing.Application.Services
                         CreateTime = c.CreateTime,
                     }).ToList()
                 })
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (dept == null)
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);

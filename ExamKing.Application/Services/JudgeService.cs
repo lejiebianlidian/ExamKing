@@ -51,7 +51,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<JudgeDto> UpdateJudge(JudgeDto judgeDto)
         {
-            var judgeEntity = await _judgeRepository.SingleOrDefaultAsync(u => u.Id == judgeDto.Id);
+            var judgeEntity = await _judgeRepository.FirstOrDefaultAsync(u => u.Id == judgeDto.Id);
             if (judgeEntity==null)
             {
                 throw Oops.Oh(JudgeErrorCodes.s1801);
@@ -71,7 +71,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task DeleteJudge(int id)
         {
-            var judgeEntity = await _judgeRepository.SingleOrDefaultAsync(u => u.Id == id);
+            var judgeEntity = await _judgeRepository.FirstOrDefaultAsync(u => u.Id == id);
             if (judgeEntity==null)
             {
                 throw Oops.Oh(JudgeErrorCodes.s1801);

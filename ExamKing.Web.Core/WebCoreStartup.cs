@@ -14,8 +14,8 @@ namespace ExamKing.Web.Core
         {
             services
                 .AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddInject();
+                .AddInject()
+                .AddDateTimeJsonConverter("yyyy-MM-dd HH:mm:ss");
             
         }
 
@@ -42,7 +42,6 @@ namespace ExamKing.Web.Core
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
         }
     }
 }

@@ -74,13 +74,13 @@ namespace ExamKing.Application.Services
         {
             // 查询系别是否存在
             var dept = await _teacherRepository.Change<TbDept>().Entities
-                .SingleOrDefaultAsync(u => u.Id == teacherDto.DeptId);
+                .FirstOrDefaultAsync(u => u.Id == teacherDto.DeptId);
             if (dept==null)
             {
                 throw Oops.Oh(DeptErrorCodes
                     .d1301);
             }
-            var teacher = await _teacherRepository.Entities.SingleOrDefaultAsync(u => u.TeacherNo.Equals(teacherDto.TeacherNo));
+            var teacher = await _teacherRepository.Entities.FirstOrDefaultAsync(u => u.TeacherNo.Equals(teacherDto.TeacherNo));
             if (teacher != null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1401);
@@ -98,14 +98,14 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<TeacherDto> UpdateTeacher(TeacherDto teacherDto)
         {
-            var teacher = await _teacherRepository.Entities.SingleOrDefaultAsync(u => u.Id == teacherDto.Id);
+            var teacher = await _teacherRepository.Entities.FirstOrDefaultAsync(u => u.Id == teacherDto.Id);
             if (teacher == null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
             }
             // 查询系别是否存在
             var dept = await _teacherRepository.Change<TbDept>().Entities
-                .SingleOrDefaultAsync(u => u.Id == teacher.DeptId);
+                .FirstOrDefaultAsync(u => u.Id == teacher.DeptId);
             if (dept==null)
             {
                 throw Oops.Oh(DeptErrorCodes
@@ -123,7 +123,7 @@ namespace ExamKing.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task DeleteTeacher(int id)
         {
-            var teacher = await _teacherRepository.SingleOrDefaultAsync(x => x.Id == id);
+            var teacher = await _teacherRepository.FirstOrDefaultAsync(x => x.Id == id);
             if (teacher == null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
@@ -157,7 +157,7 @@ namespace ExamKing.Application.Services
                         DeptName=u.Dept.DeptName
                     }
                 })
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (teacher == null)
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
@@ -176,8 +176,7 @@ namespace ExamKing.Application.Services
         public async Task<TeacherDto> LoginTeacher(string teacherNo, string password)
         {
             var teacher = await _teacherRepository
-                .Entities
-                .SingleOrDefaultAsync(u => u.TeacherNo.Equals(teacherNo));
+                .FirstOrDefaultAsync(u => u.TeacherNo.Equals(teacherNo));
             if (teacher == null) throw Oops.Oh(TeacherErrorCodes.t1402);
             if (!MD5Encryption.Compare(password, teacher.Password))
             {

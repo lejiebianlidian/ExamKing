@@ -1,6 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
-using ExamKing.Core.JsonConverters;
+
 
 namespace ExamKing.WebApp.Teacher
 {
@@ -32,14 +32,12 @@ namespace ExamKing.WebApp.Teacher
         /// <summary>
         /// 开始时间
         /// </summary>
-        [JsonConverter(typeof(CreateTimeConverter))]
-        public string StartTime { get; set; }
+        public DateTimeOffset StartTime { get; set; }
 
         /// <summary>
         /// 结束时间
         /// </summary>
-        [JsonConverter(typeof(CreateTimeConverter))]
-        public string EndTime { get; set; }
+        public DateTimeOffset EndTime { get; set; }
 
         /// <summary>
         /// 考试时长

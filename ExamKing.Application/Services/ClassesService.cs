@@ -65,7 +65,7 @@ namespace ExamKing.Application.Services
         {
             // 判断系别是否存在
             var dept = await _classRepository.Change<TbDept>()
-                .SingleOrDefaultAsync(x => x.Id == classesDto.DeptId);
+                .FirstOrDefaultAsync(x => x.Id == classesDto.DeptId);
             if (dept == null) throw Oops.Oh(DeptErrorCodes.d1301);
             // classesDto.CreateTime = TimeUtil.GetTimeStampNow();
             var classes = await _classRepository.InsertNowAsync(classesDto.Adapt<TbClass>());
@@ -81,7 +81,7 @@ namespace ExamKing.Application.Services
         public async Task DeleteClasses(int id)
         {
             var classes = await _classRepository
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (classes==null)
             {
                 throw Oops.Oh(ClassErrorCodes.c1101);
@@ -99,7 +99,7 @@ namespace ExamKing.Application.Services
         public async Task<ClassesDto> UpdateClasses(ClassesDto classesDto)
         {
             var classes = await _classRepository
-                .SingleOrDefaultAsync(x => x.Id == classesDto.Id);
+                .FirstOrDefaultAsync(x => x.Id == classesDto.Id);
             if (classes==null)
             {
                 throw Oops.Oh(ClassErrorCodes.c1101);
@@ -130,7 +130,7 @@ namespace ExamKing.Application.Services
                     {
                         DeptName=u.Dept.DeptName,
                     }
-                }).SingleOrDefaultAsync(x => x.Id == id);
+                }).FirstOrDefaultAsync(x => x.Id == id);
             if (classes==null)
             {
                 throw Oops.Oh(ClassErrorCodes.c1101);
