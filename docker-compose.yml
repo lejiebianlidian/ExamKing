@@ -7,7 +7,6 @@ services:
       dockerfile: ./docker/BPublish/Dockerfile
     container_name: examking_publish
     volumes:
-      - ./:/home/examking:rw
       - neuget:/var/negut:rw
       - publish:/home/publish:rw
   exmaking_student:
