@@ -54,9 +54,10 @@ namespace ExamKing.WebApp.Admin
         /// </summary>
         /// <param name="editCourseInput"></param>
         /// <returns></returns>
+        [UnitOfWork]
         public async Task<string> UpdateEditCourse(EditCourseInput editCourseInput)
         {
-            await _courseService.UpdateCourse(editCourseInput.Adapt<CourseDto>());
+            await _courseService.UpdateCourse(editCourseInput.ClassesIds, editCourseInput.Adapt<CourseDto>());
             return "success";
         }
         

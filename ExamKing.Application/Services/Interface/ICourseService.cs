@@ -33,7 +33,7 @@ namespace ExamKing.Application.Services
         /// </summary>
         /// <param name="courseDto"></param>
         /// <returns></returns>
-        public Task<CourseDto> UpdateCourse(CourseDto courseDto);
+        public Task<CourseDto> UpdateCourse(int[] classesIds,CourseDto courseDto);
 
         /// <summary>
         /// 删除课程

@@ -55,6 +55,11 @@ namespace ExamKing.Application.Services
                     {
                         Id = u.Id,
                         ClassesName = u.ClassesName,
+                        Dept = new TbDept
+                        {
+                            Id = u.Dept.Id,
+                            DeptName = u.Dept.DeptName,
+                        }
                     }).ToList()
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
@@ -107,12 +112,15 @@ namespace ExamKing.Application.Services
         /// <summary>
         /// 更新课程
         /// </summary>
+        /// <param name="classesIds"></param>
         /// <param name="courseDto"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<CourseDto> UpdateCourse(CourseDto courseDto)
+        public async Task<CourseDto> UpdateCourse(int[] classesIds, CourseDto courseDto)
         {
-            var course = await _courseRepository.Entities.FirstOrDefaultAsync(x => x.Id == courseDto.Id);
+            var course = await _courseRepository
+                .Entities
+                .FirstOrDefaultAsync(x => x.Id == courseDto.Id);
             if (course == null)
             {
                 throw Oops.Oh(
@@ -135,7 +143,25 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(TeacherErrorCodes.t1402);
             }
-
+            //删除关联表
+            await _courseRepository
+                .Change<TbCourseclass>()
+                .DeleteAsync(
+                    _courseRepository
+                        .Change<TbCourseclass>()
+                        .Where(u => u.CourseId == course.Id, false).ToList()
+                );
+            // 重新为课程分配班级
+            var courseClasses = new List<TbCourseclass>();
+            foreach (var item in classesIds)
+            {
+                courseClasses.Add(new TbCourseclass
+                {
+                    CourseId = course.Id,
+                    ClassesId = item
+                });
+            }
+            await _courseRepository.Change<TbCourseclass>().InsertAsync(courseClasses);
             var changeCourse = courseDto.Adapt(course);
             await changeCourse
                 .UpdateExcludeAsync(u=>u.CreateTime);
@@ -157,7 +183,14 @@ namespace ExamKing.Application.Services
                     CourseErrorCodes.c1501
                 );
             }
-
+            //删除关联表
+            await _courseRepository
+                .Change<TbCourseclass>()
+                .DeleteAsync(
+                    _courseRepository
+                        .Change<TbCourseclass>()
+                        .Where(u => u.CourseId == id, false).ToList()
+                );
             await _courseRepository.DeleteAsync(course);
         }
 
@@ -187,6 +220,11 @@ namespace ExamKing.Application.Services
                     {
                         Id = u.Id,
                         ClassesName = u.ClassesName,
+                        Dept = new TbDept
+                        {
+                            Id = u.Dept.Id,
+                            DeptName = u.Dept.DeptName,
+                        }
                     }).ToList()
                 })
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -218,7 +256,7 @@ namespace ExamKing.Application.Services
                     CourseName = u.CourseName,
                     DeptId = u.DeptId,
                     TeacherId = u.TeacherId,
-                    CreateTime = u.CreateTime
+                    CreateTime = u.CreateTime,
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
 

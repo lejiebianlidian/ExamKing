@@ -19,6 +19,12 @@ namespace ExamKing.WebApp.Admin
         public string CourseName { get; set; }
 
         /// <summary>
+        /// 班级Id
+        /// </summary>
+        [Required(ErrorMessage = "请选择所属班级")]
+        public int[] ClassesIds { get; set; }
+        
+        /// <summary>
         /// 系别Id
         /// </summary>
         public int DeptId { get; set; }

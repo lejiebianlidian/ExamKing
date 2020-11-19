@@ -40,7 +40,7 @@ namespace ExamKing.WebApp.Admin
         /// <summary>
         /// 班级
         /// </summary>
-        public List<ClassesSubOutput> Classes { get; set; }
+        public List<ClassesDeptOutput> Classes { get; set; }
     }
 
 }
