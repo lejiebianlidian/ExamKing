@@ -4,7 +4,7 @@ services:
   publish:
     build:
       context: ./
-      dockerfile: ./docker-compose/BPublish/Dockerfile
+      dockerfile: ./docker/BPublish/Dockerfile
     container_name: examking_publish
     volumes:
       - ./:/home/examking:rw
@@ -13,7 +13,7 @@ services:
   student:
     build:
       context: ./
-      dockerfile: ./docker-compose/student/Dockerfile
+      dockerfile: ./docker/student/Dockerfile
     container_name: examking_student
     expose:
       - 80
@@ -29,7 +29,7 @@ services:
   admin:
     build:
       context: ./
-      dockerfile: ./docker-compose/admin/Dockerfile
+      dockerfile: ./docker/admin/Dockerfile
     container_name: examking_admin
     expose:
       - 80
@@ -45,7 +45,7 @@ services:
   teacher:
     build:
       context: ./
-      dockerfile: ./docker-compose/teacher/Dockerfile
+      dockerfile: ./docker/teacher/Dockerfile
     container_name: examking_teacher
     expose:
       - 80
