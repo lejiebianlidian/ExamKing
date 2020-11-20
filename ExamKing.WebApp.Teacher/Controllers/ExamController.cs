@@ -146,51 +146,36 @@ namespace ExamKing.WebApp.Teacher
         /// 查询考试是非题列表
         /// </summary>
         /// <param name="id">考试id</param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamquestionOutput>> GetJudges(
-            [FromQuery] int id,
-            [FromQuery] int pageIndex = 1,
-            [FromQuery] int pageSize = 10)
+        public async Task<List<ExamquestionOutput>> GetJudges(int id)
         {
-            var judges = await _questionService.FindJudgeByExamAndPage(id, pageIndex, pageSize);
+            var judges = await _questionService.FindJudgeByExam(id);
 
-            return judges.Adapt<PagedList<ExamquestionOutput>>();
+            return judges.Adapt<List<ExamquestionOutput>>();
         }
         
         /// <summary>
         /// 查询考试多选题列表
         /// </summary>
         /// <param name="id">考试id</param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamquestionOutput>> GetSelects(
-            [FromQuery] int id,
-            [FromQuery] int pageIndex = 1,
-            [FromQuery] int pageSize = 10)
+        public async Task<List<ExamquestionOutput>> GetSelects(int id)
         {
-            var judges = await _questionService.FindSelectByExamAndPage(id, pageIndex, pageSize);
+            var judges = await _questionService.FindSelectByExam(id);
 
-            return judges.Adapt<PagedList<ExamquestionOutput>>();
+            return judges.Adapt<List<ExamquestionOutput>>();
         }
         
         /// <summary>
         /// 查询考试单选题列表
         /// </summary>
         /// <param name="id">考试id</param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamquestionOutput>> GetSingles(
-            [FromQuery] int id,
-            [FromQuery] int pageIndex = 1,
-            [FromQuery] int pageSize = 10)
+        public async Task<List<ExamquestionOutput>> GetSingles(int id)
         {
-            var judges = await _questionService.FindSingleByExamAndPage(id, pageIndex, pageSize);
+            var judges = await _questionService.FindSingleByExam(id);
 
-            return judges.Adapt<PagedList<ExamquestionOutput>>();
+            return judges.Adapt<List<ExamquestionOutput>>();
         }
 
         /// <summary>
