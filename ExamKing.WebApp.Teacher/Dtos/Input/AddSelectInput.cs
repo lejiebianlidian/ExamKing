@@ -36,11 +36,6 @@ namespace ExamKing.WebApp.Teacher
         [Required(ErrorMessage = "请选择所属课程章节")]
         public int ChapterId { get; set; }
         /// <summary>
-        /// 教师ID
-        /// </summary>
-        [Required(ErrorMessage = "请选择所属教师")]
-        public int TeacherId { get; set; }
-        /// <summary>
         /// 选项A
         /// </summary>
         public string OptionA { get; set; }

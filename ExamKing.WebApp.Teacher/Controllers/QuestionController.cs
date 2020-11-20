@@ -32,7 +32,9 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<SelectOutput> InsertAddSelect(AddSelectInput addSelectInput)
         {
-            var selectInsert = await _selectService.CreateSelect(addSelectInput.Adapt<SelectDto>());
+            var selectDto = addSelectInput.Adapt<SelectDto>();
+            selectDto.TeacherId = GetUserId();
+            var selectInsert = await _selectService.CreateSelect(selectDto);
             return selectInsert.Adapt<SelectOutput>();
         }
 
@@ -43,7 +45,9 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<SelectOutput> UpdateEditSelect(EditSelectInput editSelectInput)
         {
-            var selectUpdate = await _selectService.UpdateSelect(editSelectInput.Adapt<SelectDto>());
+            var edit = editSelectInput.Adapt<SelectDto>();
+            edit.TeacherId = GetUserId();
+            var selectUpdate = await _selectService.UpdateSelect(edit);
             return selectUpdate.Adapt<SelectOutput>();
         }
 
@@ -61,17 +65,19 @@ namespace ExamKing.WebApp.Teacher
         /// <summary>
         /// 选择题列表
         /// </summary>
+        /// <param name="isSingle">是否单选</param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public async Task<PagedList<SelectCourseChapterOutput>> GetSelectList(
+            [FromQuery] bool isSingle = false,
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
 
             var teacherId = GetUserId();
             var selectList = await _selectService
-                .FindSelectAllByTeacherAndPage(teacherId, pageIndex, pageSize);
+                .FindSelectAllByTeacherAndPage(teacherId, isSingle,pageIndex, pageSize);
             return selectList.Adapt<PagedList<SelectCourseChapterOutput>>();
         }
 
@@ -94,7 +100,9 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<JudgeOutput> InsertAddJudge(AddJudgeInput addJudgeInput)
         {
-            var judgeInsert = await _judgeService.CreateJudge(addJudgeInput.Adapt<JudgeDto>());
+            var addJudgeDto = addJudgeInput.Adapt<JudgeDto>();
+            addJudgeDto.TeacherId = GetUserId();
+            var judgeInsert = await _judgeService.CreateJudge(addJudgeDto);
             return judgeInsert.Adapt<JudgeOutput>();
         }
 
@@ -105,7 +113,9 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<JudgeOutput> UpdateEditJudge(EditJudgeInput editJudgeInput)
         {
-            var judgeUpdate = await _judgeService.UpdateJudge(editJudgeInput.Adapt<JudgeDto>());
+            var edit = editJudgeInput.Adapt<JudgeDto>();
+            edit.TeacherId = GetUserId();
+            var judgeUpdate = await _judgeService.UpdateJudge(edit);
             return judgeUpdate.Adapt<JudgeOutput>();
         }
 

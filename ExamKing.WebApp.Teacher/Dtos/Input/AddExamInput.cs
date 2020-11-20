@@ -22,12 +22,6 @@ namespace ExamKing.WebApp.Teacher
         public int CourseId { get; set; }
 
         /// <summary>
-        /// 教师ID
-        /// </summary>
-        [Required(ErrorMessage = "请选择所属教师")]
-        public int TeacherId { get; set; }
-
-        /// <summary>
         /// 开始时间
         /// </summary>
         [Required(ErrorMessage = "请选择开始考试时间")]

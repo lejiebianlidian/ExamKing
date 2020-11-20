@@ -37,8 +37,9 @@ namespace ExamKing.Application.Services
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public Task<PagedList<SelectDto>> FindSelectAllByTeacherAndPage(int teacherId, int pageIndex = 1,
+        public Task<PagedList<SelectDto>> FindSelectAllByTeacherAndPage(int teacherId, bool isSingle, int pageIndex = 1,
             int pageSize = 10);
+
 
         /// <summary>
         /// 根据id查询选择题

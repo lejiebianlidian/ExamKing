@@ -80,20 +80,23 @@ namespace ExamKing.Application.Services
 
             await _selectRepository.DeleteAsync(selectEntity);
         }
-        
+
         /// <summary>
         /// 根据教师查询选择题分页
         /// </summary>
+        /// <param name="isSingle"></param>
         /// <param name="teacherId"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<SelectDto>> FindSelectAllByTeacherAndPage(int teacherId, int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<SelectDto>> FindSelectAllByTeacherAndPage(int teacherId,bool isSingle, int pageIndex = 1, int pageSize = 10)
         {
+            // 1 单选 0 多选
+            var _isSingle = isSingle ? "1" : "0"; 
             var pageResult = await _selectRepository
                 .Entities
                 .AsNoTracking()
-                .Where(u=>u.TeacherId==teacherId)
+                .Where(u=>u.TeacherId==teacherId && u.IsSingle.Equals(_isSingle))
                 .Select(u => new TbSelect
                 {
                     Id = u.Id,

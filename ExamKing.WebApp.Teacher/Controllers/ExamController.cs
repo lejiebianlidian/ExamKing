@@ -38,6 +38,7 @@ namespace ExamKing.WebApp.Teacher
         public async Task<ExamOutput> InsertAddExam(AddExamInput addExamInput)
         {
             var addExamDto = addExamInput.Adapt<ExamDto>();
+            addExamDto.TeacherId = GetUserId();
             var questions = new List<ExamquestionDto>();
             foreach (var item in addExamInput.Selects)
             {
@@ -75,6 +76,7 @@ namespace ExamKing.WebApp.Teacher
         public async Task<ExamOutput> UpdateEditExam(EditExamInput editExamInput)
         {
             var addExamDto = editExamInput.Adapt<ExamDto>();
+            addExamDto.TeacherId = GetUserId();
             var questions = new List<ExamquestionDto>();
             foreach (var item in editExamInput.Selects)
             {
