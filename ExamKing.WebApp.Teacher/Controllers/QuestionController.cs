@@ -87,7 +87,7 @@ namespace ExamKing.WebApp.Teacher
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public async Task<PagedList<SelectCourseChapterOutput>> GetSelectOrSingleList(
-            [FromQuery] bool isSingle = false,
+            [FromQuery] bool isSingle = false, 
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
