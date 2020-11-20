@@ -149,7 +149,7 @@ namespace ExamKing.WebApp.Teacher
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamquestionOutput>> GetJudes(
+        public async Task<PagedList<ExamquestionOutput>> GetJudges(
             [FromQuery] int id,
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
