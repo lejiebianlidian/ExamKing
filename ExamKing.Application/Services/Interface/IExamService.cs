@@ -52,6 +52,13 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<ExamDto> FindExamById(int id);
+
         
+        /// <summary>
+        /// 启用试卷
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<ExamDto> EnableExamById(int id);
     }
 }

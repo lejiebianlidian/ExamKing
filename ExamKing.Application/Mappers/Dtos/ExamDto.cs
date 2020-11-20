@@ -14,7 +14,7 @@ namespace ExamKing.Application.Mappers
     public class ExamDto
     {
         private string _isEnable = "0";
-
+        private string _isFinsh = "0";
         /// <summary>
         /// 试卷ID
         /// </summary>
@@ -66,8 +66,8 @@ namespace ExamKing.Application.Mappers
         [DefaultValue("0")]
         public string IsFinish
         {
-            get => _isEnable;
-            set => _isEnable = value;
+            get => _isFinsh;
+            set => _isFinsh = value;
         }
 
         /// <summary>

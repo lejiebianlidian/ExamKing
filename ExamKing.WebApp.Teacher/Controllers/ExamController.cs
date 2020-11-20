@@ -192,5 +192,16 @@ namespace ExamKing.WebApp.Teacher
 
             return judges.Adapt<PagedList<ExamquestionOutput>>();
         }
+
+        /// <summary>
+        /// 启用试卷
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<string> UpdateEnableExam(int id)
+        {
+            await _examService.EnableExamById(id);
+            return "success";
+        }
     }
 }

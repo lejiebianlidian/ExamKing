@@ -195,6 +195,25 @@ namespace ExamKing.Application.Services
 
             return exam.Adapt<ExamDto>();
         }
-        
+
+        /// <summary>
+        /// 启用试卷
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<ExamDto> EnableExamById(int id)
+        {
+            var exam = await _examRepository
+                .FirstOrDefaultAsync(u => u.Id == id);
+            if (exam == null)
+            {
+                throw Oops.Oh(ExamErrorCodes.s1901);
+            }
+
+            exam.IsEnable = "1";
+            await exam.UpdateExcludeAsync(u => u.CreateTime);
+            return exam.Adapt<ExamDto>();
+        }
     }
 }
