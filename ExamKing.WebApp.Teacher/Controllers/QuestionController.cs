@@ -65,11 +65,28 @@ namespace ExamKing.WebApp.Teacher
         /// <summary>
         /// 选择题列表
         /// </summary>
-        /// <param name="isSingle">是否单选</param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public async Task<PagedList<SelectCourseChapterOutput>> GetSelectList(
+            [FromQuery] int pageIndex = 1,
+            [FromQuery] int pageSize = 10)
+        {
+
+            var teacherId = GetUserId();
+            var selectList = await _selectService
+                .FindSelectAllByTeacherAndPage(teacherId,pageIndex, pageSize);
+            return selectList.Adapt<PagedList<SelectCourseChapterOutput>>();
+        }
+        
+        /// <summary>
+        /// 单选题或多选题列表
+        /// </summary>
+        /// <param name="isSingle">是否单选</param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<SelectCourseChapterOutput>> GetSelectOrSingleList(
             [FromQuery] bool isSingle = false,
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
@@ -77,7 +94,7 @@ namespace ExamKing.WebApp.Teacher
 
             var teacherId = GetUserId();
             var selectList = await _selectService
-                .FindSelectAllByTeacherAndPage(teacherId, isSingle,pageIndex, pageSize);
+                .FindSelectAllByTeacherAndPage(teacherId,isSingle,pageIndex, pageSize);
             return selectList.Adapt<PagedList<SelectCourseChapterOutput>>();
         }
 

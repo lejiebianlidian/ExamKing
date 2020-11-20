@@ -129,6 +129,51 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
+        /// 根据教师查询选择题分页
+        /// </summary>
+        /// <param name="teacherId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<SelectDto>> FindSelectAllByTeacherAndPage(int teacherId,int pageIndex = 1, int pageSize = 10)
+        {
+            // 1 单选 0 多选
+            var pageResult = await _selectRepository
+                .Entities
+                .AsNoTracking()
+                .Where(u=>u.TeacherId==teacherId)
+                .Select(u => new TbSelect
+                {
+                    Id = u.Id,
+                    Question = u.Question,
+                    Answer = u.Answer,
+                    IsSingle = u.IsSingle,
+                    CourseId = u.CourseId,
+                    ChapterId = u.ChapterId,
+                    TeacherId = u.TeacherId,
+                    OptionA = u.OptionA,
+                    OptionB = u.OptionB,
+                    OptionC = u.OptionC,
+                    OptionD = u.OptionD,
+                    Ideas = u.Ideas,
+                    CreateTime = u.CreateTime,
+                    Chapter = new TbChapter
+                    {
+                        Id = u.Chapter.Id,
+                        ChapterName = u.Chapter.ChapterName,
+                    },
+                    Course = new TbCourse
+                    {
+                        Id = u.Course.Id,
+                        CourseName = u.Course.CourseName
+                    },
+                })
+                .ToPagedListAsync(pageIndex, pageSize);
+
+            return pageResult.Adapt<PagedList<SelectDto>>();
+        }
+
+        /// <summary>
         /// 根据id查询选择题
         /// </summary>
         /// <param name="id"></param>
