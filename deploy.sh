@@ -19,6 +19,8 @@ start(){
   echo "======== 正在构建docer-compose ========"
   docker-compose up --build -d
   echo "==== 完成 docker-compose 构建与运行 ===="
+  # 垃圾回收
+  docker image prune -f
 }
 
 stop(){

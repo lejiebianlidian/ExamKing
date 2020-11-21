@@ -10,7 +10,9 @@ services:
     ports:
       - 8071:80
     networks: 
-      - eknet  
+      eknet:
+        aliases:
+          - student_server
     restart: "always"
     volumes:
       - neuget:/var/negut:rw
@@ -23,7 +25,9 @@ services:
     ports:
       - 8072:80
     networks: 
-      - eknet
+      eknet:
+        aliases:
+          - admin_server
     restart: "always"
     volumes:
       - neuget:/var/negut:rw
@@ -36,7 +40,9 @@ services:
     ports:
       - 8073:80
     networks:
-      - eknet
+      eknet:
+        aliases:
+          - teacher_server
     restart: "always"
     volumes:
       - neuget:/var/negut:rw
