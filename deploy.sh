@@ -37,7 +37,7 @@ restart(){
 }
 
 usage(){
-    echo "Usage: sh deploy.sh [start|stop|restart|version]"
+    echo "Usage: ./deploy.sh [start|stop|restart|version]"
     exit 1
 }
 
