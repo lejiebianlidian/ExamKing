@@ -13,7 +13,7 @@ echo "======== 正在停止docer-compose ========"
 services=("student_server" "admin_server" "teacher_server")
 for i in ${services[@]}  
 do  
-docker ps | grep "${i}" | awk '{print $1}' | xargs docker stop && docker images | grep "${i}" | awk '{print $1":"$2}' | xargs docker rmi -f
+docker ps | grep "${i}" | awk '{print $1}' | xargs docker stop && docker ps -a | grep "${i}" | awk '{print $1}' | xargs docker rm && docker images | grep "${i}" | awk '{print $1":"$2}' | xargs docker rmi -f
 done
 
 echo "======== 正在构建docer-compose ========"
