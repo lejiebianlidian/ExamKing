@@ -1,67 +1,49 @@
 version: '3.4'
 
 services:
-  exmaking_publish:
-    build:
-      context: ./
-      dockerfile: ./docker/BPublish/Dockerfile
-    container_name: examking_publish
-    volumes:
-      - neuget:/var/negut:rw
-      - publish:/home/publish:rw
-  exmaking_student:
+  student:
     build:
       context: ./
       dockerfile: ./docker/student/Dockerfile
-    container_name: examking_student
-    expose:
-      - 80
+    image: student_server:${GITHASH}
+    container_name: student
     ports:
       - 8071:80
     networks: 
-      - examking_net  
-    depends_on:
-      - exmaking_publish
+      - eknet  
     restart: "always"
     volumes:
-      - publish:/home/publish:rw
-  exmaking_admin:
+      - neuget:/var/negut:rw
+  admin:
     build:
       context: ./
       dockerfile: ./docker/admin/Dockerfile
-    container_name: examking_admin
-    expose:
-      - 80
+    image: admin_server:${GITHASH}
+    container_name: admin
     ports:
       - 8072:80
     networks: 
-      - examking_net
-    depends_on:
-      - exmaking_publish
+      - eknet
     restart: "always"
     volumes:
-      - publish:/home/publish:rw
-  exmaking_teacher:
-    build:
+      - neuget:/var/negut:rw
+  teacher:
+    build: 
       context: ./
       dockerfile: ./docker/teacher/Dockerfile
-    container_name: examking_teacher
-    expose:
-      - 80
+    image: teacher_server:${GITHASH}
+    container_name: teacher
     ports:
       - 8073:80
     networks:
-      - examking_net
-    depends_on:
-      - exmaking_publish
+      - eknet
     restart: "always"
     volumes:
-      - publish:/home/publish:rw
+      - neuget:/var/negut:rw
 
 volumes: 
   neuget:
-  publish:
 
 networks: # 创建新的网络类型
-  examking_net:
+  eknet:
     driver: bridge  # 网络方式：桥接或集群
