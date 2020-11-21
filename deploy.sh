@@ -8,7 +8,7 @@ GITCOMMITHASH=`git rev-parse --short HEAD`
 export GITHASH=${GITCOMMITHASH}
 
 # 容器服务
-service=("student_server" "admin_server" "teacher_server")
+services=("student_server" "admin_server" "teacher_server")
 
 version(){
   echo "=======项目名称:${COMPOSE_PROJECT_NAME}  版本号：${GITHASH}========"
