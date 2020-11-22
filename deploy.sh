@@ -12,7 +12,7 @@ else
 fi
 
 # 容器服务
-services=("student_server" "admin_server" "teacher_server")
+services=("ek_student_server" "ek_admin_server" "ek_teacher_server")
 
 version(){
   tips "项目名称:${COMPOSE_PROJECT_NAME}  版本号：${VERSIONTAG}"

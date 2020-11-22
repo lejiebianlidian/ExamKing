@@ -5,7 +5,7 @@ services:
     build:
       context: ../
       dockerfile: ./docker/student/Dockerfile
-    image: student_server:${VERSIONTAG}
+    image: ek_student_server:${VERSIONTAG}
     container_name: student
     ports:
       - 8071:80
@@ -20,7 +20,7 @@ services:
     build:
       context: ../
       dockerfile: ./docker/admin/Dockerfile
-    image: admin_server:${VERSIONTAG}
+    image: ek_admin_server:${VERSIONTAG}
     container_name: admin
     ports:
       - 8072:80
@@ -35,7 +35,7 @@ services:
     build: 
       context: ../
       dockerfile: ./docker/teacher/Dockerfile
-    image: teacher_server:${VERSIONTAG}
+    image: ek_teacher_server:${VERSIONTAG}
     container_name: teacher
     ports:
       - 8073:80
