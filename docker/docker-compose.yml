@@ -3,9 +3,9 @@ version: '3.4'
 services:
   student:
     build:
-      context: ./
+      context: ../
       dockerfile: ./docker/student/Dockerfile
-    image: student_server:${GITHASH}
+    image: student_server:${VERSIONTAG}
     container_name: student
     ports:
       - 8071:80
@@ -18,9 +18,9 @@ services:
       - neuget:/var/negut:rw
   admin:
     build:
-      context: ./
+      context: ../
       dockerfile: ./docker/admin/Dockerfile
-    image: admin_server:${GITHASH}
+    image: admin_server:${VERSIONTAG}
     container_name: admin
     ports:
       - 8072:80
@@ -33,9 +33,9 @@ services:
       - neuget:/var/negut:rw
   teacher:
     build: 
-      context: ./
+      context: ../
       dockerfile: ./docker/teacher/Dockerfile
-    image: teacher_server:${GITHASH}
+    image: teacher_server:${VERSIONTAG}
     container_name: teacher
     ports:
       - 8073:80
