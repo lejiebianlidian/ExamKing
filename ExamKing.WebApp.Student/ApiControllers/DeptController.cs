@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ExamKing.Application.Services;
 using ExamKing.Application.Mappers;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ExamKing.WebApp.Student
@@ -24,9 +25,10 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public async Task<List<DeptDto>> GetDeptAll()
+        public async Task<List<DeptClassesOutput>> GetDeptAll()
         {
-            return await _deptService.FindDeptAll();
+            var depts = await _deptService.FindDeptAll();
+            return depts.Adapt<List<DeptClassesOutput>>();
         }
     }
 }

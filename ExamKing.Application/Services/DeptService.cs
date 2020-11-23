@@ -176,7 +176,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<PagedList<DeptDto>> FindDeptByTeacherAndPage(int teacherId, int pageIndex = 1, int pageSize = 10)
         {
-            var teachers = await _teacherRepository
+            var teacher = await _teacherRepository
                 .Entities.AsNoTracking()
                 .Where(u => u.Id == teacherId)
                 .Select(u=>new TbTeacher{Id = u.Id})
@@ -184,7 +184,7 @@ namespace ExamKing.Application.Services
             
             var pageResult = await _deptRepository
                 .Entities.AsNoTracking()
-                .Where(u=>Equals(u.Id, teachers.Id))
+                .Where(u=>Equals(u.Id, teacher.DeptId))
                 .Select(u => new TbDept
                 {
                     Id = u.Id,
