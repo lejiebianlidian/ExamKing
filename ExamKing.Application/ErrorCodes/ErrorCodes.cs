@@ -1,6 +1,6 @@
 ﻿using Furion.FriendlyException;
 
-namespace ExamKing.Core.ErrorCodes
+namespace ExamKing.Application.ErrorCodes
 {
     /// <summary>
     /// 管理员错误码

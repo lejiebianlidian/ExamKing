@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
-using ExamKing.Core.ErrorCodes;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;

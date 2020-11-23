@@ -6,7 +6,7 @@ using Mapster;
 using ExamKing.Core.Entites;
 using ExamKing.Application.Mappers;
 using System.Threading.Tasks;
-using ExamKing.Core.ErrorCodes;
+using ExamKing.Application.ErrorCodes;
 using ExamKing.Core.Utils;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;

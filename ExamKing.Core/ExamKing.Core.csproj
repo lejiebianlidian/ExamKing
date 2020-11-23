@@ -10,9 +10,8 @@
       <DocumentationFile>bin\Release\ExamKing.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Furion" Version="1.1.0" />
+        <PackageReference Include="Furion" Version="1.1.1" />
         <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="1.1.0" />
-        <PackageReference Include="Furion.Extras.DependencyModel.CodeAnalysis" Version="1.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
@@ -22,6 +21,5 @@
     <ItemGroup>
         <Folder Include="Entities\" />
         <Folder Include="Entities\Exam\" />
-        <Folder Include="JsonConverters" />
     </ItemGroup>
 </Project>

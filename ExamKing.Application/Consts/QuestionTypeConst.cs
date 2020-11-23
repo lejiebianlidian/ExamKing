@@ -1,6 +1,6 @@
 using Furion.DependencyInjection;
 
-namespace ExamKing.Core.Consts
+namespace ExamKing.Application.Consts
 {
     /// <summary>
     /// 题型常量

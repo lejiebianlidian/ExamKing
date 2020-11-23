@@ -1,4 +1,4 @@
-namespace ExamKing.Core.Consts
+namespace ExamKing.Application.Consts
 {
     /// <summary>
     /// 时间格式化常量

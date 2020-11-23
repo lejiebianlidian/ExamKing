@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
-using ExamKing.Core.ErrorCodes;
 using ExamKing.Core.Utils;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
 using Mapster;
 using System.Linq;
+using ExamKing.Application.ErrorCodes;
 using Furion.DataEncryption;
 using Microsoft.EntityFrameworkCore;
 
