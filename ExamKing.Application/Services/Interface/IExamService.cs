@@ -60,5 +60,26 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<ExamDto> EnableExamById(int id);
+        
+        /// <summary>
+        /// 关闭试卷
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<ExamDto> DisableExamById(int id);
+        
+        /// <summary>
+        /// 开始考试
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<ExamDto> StartExamById(int id);
+        
+        /// <summary>
+        /// 结束考试
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<ExamDto> FinshExamById(int id);
     }
 }
