@@ -35,8 +35,8 @@ namespace ExamKing.WebApp.Teacher
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
-            var teacherId = GetUserId();
-            var course = await _courseService.FindCourseAllByTeacherAndPage(teacherId, pageIndex, pageSize);
+            var teacher = await GetTeacher();
+            var course = await _courseService.FindCourseAllByTeacherAndPage(teacher.Id, pageIndex, pageSize);
             return course.Adapt<PagedList<CourseOutput>>();
         }
 
@@ -64,8 +64,9 @@ namespace ExamKing.WebApp.Teacher
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
+            var teacher = await GetTeacher();
             // 判断该课程是否属于此教师
-            await _courseService.HasTeacher(GetUserId(), courseId);
+            await _courseService.HasTeacher(teacher.Id, courseId);
             
             var chapters = await _chapterService.FindChapterAllByCourseIdPage(courseId, pageIndex, pageSize);
             return chapters.Adapt<PagedList<ChapterOutput>>();

@@ -84,8 +84,9 @@ namespace ExamKing.WebApp.Admin
         /// <returns></returns>
         public async Task<AdminInfoOutput> UpdateChangePassword(ChangePasswordAdminInput editAdminInput)
         {
+            var adminEntity = await GetAdmin();
             var adminDto = editAdminInput.Adapt<AdminDto>();
-            adminDto.Id = GetUserId();
+            adminDto.Id = adminEntity.Id;
             var admin = await _manageService.UpdateAdmin(adminDto);
             return admin.Adapt<AdminInfoOutput>();
         }
@@ -133,8 +134,7 @@ namespace ExamKing.WebApp.Admin
         /// <returns></returns>
         public async Task<AdminInfoOutput> GetInfo()
         {
-            var adminId = GetUserId();
-            var admin = await _manageService.FindAdminById(adminId);
+            var admin = await GetAdmin();
             return admin.Adapt<AdminInfoOutput>();
         }
         

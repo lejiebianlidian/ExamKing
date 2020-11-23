@@ -32,8 +32,9 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<SelectOutput> InsertAddSelect(AddSelectInput addSelectInput)
         {
+            var teacher = await GetTeacher();
             var selectDto = addSelectInput.Adapt<SelectDto>();
-            selectDto.TeacherId = GetUserId();
+            selectDto.TeacherId = teacher.Id;
             var selectInsert = await _selectService.CreateSelect(selectDto);
             return selectInsert.Adapt<SelectOutput>();
         }
@@ -45,8 +46,9 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<SelectOutput> UpdateEditSelect(EditSelectInput editSelectInput)
         {
+            var teacher = await GetTeacher();
             var edit = editSelectInput.Adapt<SelectDto>();
-            edit.TeacherId = GetUserId();
+            edit.TeacherId = teacher.Id;
             var selectUpdate = await _selectService.UpdateSelect(edit);
             return selectUpdate.Adapt<SelectOutput>();
         }
@@ -72,8 +74,8 @@ namespace ExamKing.WebApp.Teacher
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
-
-            var teacherId = GetUserId();
+            var teacher = await GetTeacher();
+            var teacherId = teacher.Id;
             var selectList = await _selectService
                 .FindSelectAllByTeacherAndPage(teacherId,pageIndex, pageSize);
             return selectList.Adapt<PagedList<SelectCourseChapterOutput>>();
@@ -91,8 +93,8 @@ namespace ExamKing.WebApp.Teacher
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
-
-            var teacherId = GetUserId();
+            var teacher = await GetTeacher();
+            var teacherId = teacher.Id;
             var selectList = await _selectService
                 .FindSelectAllByTeacherAndPage(teacherId,isSingle,pageIndex, pageSize);
             return selectList.Adapt<PagedList<SelectCourseChapterOutput>>();
@@ -117,8 +119,9 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<JudgeOutput> InsertAddJudge(AddJudgeInput addJudgeInput)
         {
+            var teacher = await GetTeacher();
             var addJudgeDto = addJudgeInput.Adapt<JudgeDto>();
-            addJudgeDto.TeacherId = GetUserId();
+            addJudgeDto.TeacherId = teacher.Id;
             var judgeInsert = await _judgeService.CreateJudge(addJudgeDto);
             return judgeInsert.Adapt<JudgeOutput>();
         }
@@ -130,8 +133,9 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<JudgeOutput> UpdateEditJudge(EditJudgeInput editJudgeInput)
         {
+            var teacher = await GetTeacher();
             var edit = editJudgeInput.Adapt<JudgeDto>();
-            edit.TeacherId = GetUserId();
+            edit.TeacherId = teacher.Id;
             var judgeUpdate = await _judgeService.UpdateJudge(edit);
             return judgeUpdate.Adapt<JudgeOutput>();
         }
@@ -157,7 +161,8 @@ namespace ExamKing.WebApp.Teacher
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
-            var teacherId = GetUserId();
+            var teacher = await GetTeacher();
+            var teacherId = teacher.Id;
             var judgeList = await _judgeService
                 .FindJudgeAllByTeacherAndPage(teacherId, pageIndex, pageSize);
             return judgeList.Adapt<PagedList<JudgeCourseChapterOutput>>();

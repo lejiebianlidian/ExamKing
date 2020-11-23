@@ -284,13 +284,13 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
-        /// 根据班级查询全部考试列表
+        /// 根据班级查询正在考试列表
         /// </summary>
         /// <param name="classesId"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamDto>> FindExamAllByClassesAndPage(
+        public async Task<PagedList<ExamDto>> FindExamOnlineByClassesAndPage(
             int classesId, int pageIndex = 1, int pageSize = 10)
         {
             // 查询班级课程
@@ -303,6 +303,7 @@ namespace ExamKing.Application.Services
             var pageResult = await _examRepository
                 .Entities.AsNoTracking()
                 .Where(u => u.Examclasses == classes.Examclasses)
+                .Where(u => u.IsEnable == "1" && u.IsFinish == "0")
                 .Select(u => new TbExam
                 {
                     Id = u.Id,

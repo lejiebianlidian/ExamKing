@@ -1,4 +1,7 @@
-﻿using Fur;
+﻿using System.Threading.Tasks;
+using ExamKing.Application.Mappers;
+using ExamKing.Application.Services;
+using Fur;
 using Fur.DynamicApiController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -27,13 +30,15 @@ namespace ExamKing.WebApp.Admin
         }
 
         /// <summary>
-        /// 获取管理员Id
+        /// 获取管理员实体
         /// </summary>
         /// <returns></returns>
-        protected int GetUserId()
+        protected async Task<AdminDto> GetAdmin()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
-            return authorizationManager.GetUserId<int>();
+            var id = authorizationManager.GetUserId<int>();
+            var adminService = App.GetService<IManageService>();
+            return await adminService.FindAdminById(id);
         }
     }
 }

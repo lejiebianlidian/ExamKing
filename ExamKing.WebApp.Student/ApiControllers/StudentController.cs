@@ -88,8 +88,8 @@ namespace ExamKing.WebApp.Student
         /// <returns></returns>
         public async Task<StudentOutput> GetInfo()
         {
-            var userId = GetUserId();
-            var studentInfo = await _studentService.FindStudentById(userId);
+            var student = await GetStudent();
+            var studentInfo = await _studentService.FindStudentById(student.Id);
             return studentInfo.Adapt<StudentOutput>();
         }
 
@@ -100,8 +100,9 @@ namespace ExamKing.WebApp.Student
         /// <returns></returns>
         public async Task<string> UpdateEditInfo(EditStudentInput editStuInput)
         {
+            var student = await GetStudent();
             var changeDto = editStuInput.Adapt<StudentDto>();
-            changeDto.Id = GetUserId();
+            changeDto.Id = student.Id;
             await _studentService.UpdateStudent(changeDto);
             return "success";
         }

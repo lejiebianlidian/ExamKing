@@ -1,4 +1,7 @@
-﻿using Fur;
+﻿using System.Threading.Tasks;
+using ExamKing.Application.Mappers;
+using ExamKing.Application.Services;
+using Fur;
 using Fur.DynamicApiController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -28,13 +31,15 @@ namespace ExamKing.WebApp.Student
         }
 
         /// <summary>
-        /// 获取学生Id
+        /// 获取学生实体
         /// </summary>
         /// <returns></returns>
-        protected int GetUserId()
+        protected async Task<StudentDto> GetStudent()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
-            return authorizationManager.GetUserId<int>();
+            var studentId = authorizationManager.GetUserId<int>();
+            var studentService = App.GetService<IStudentService>();
+            return await studentService.FindStudentById(studentId);
         }
     }
 }

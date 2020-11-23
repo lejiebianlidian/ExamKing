@@ -71,9 +71,10 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<string> PostChangePass([FromForm] string password)
         {
+            var teacherEntity = await GetTeacher();
             var teacher = new TeacherDto
             {
-                Id = GetUserId(),
+                Id = teacherEntity.Id,
                 Password = password
             };
 
@@ -87,8 +88,8 @@ namespace ExamKing.WebApp.Teacher
         /// <returns></returns>
         public async Task<TeacherOutput> GetInfo()
         {
-            var teacherId = GetUserId();
-            var teacher = await _teacherService.FindTeacherById(teacherId);
+            var teacherEntity = await GetTeacher();
+            var teacher = await _teacherService.FindTeacherById(teacherEntity.Id);
             return teacher.Adapt<TeacherOutput>();
         }
     }

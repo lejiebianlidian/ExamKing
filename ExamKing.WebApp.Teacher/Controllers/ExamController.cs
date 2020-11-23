@@ -37,8 +37,9 @@ namespace ExamKing.WebApp.Teacher
         [UnitOfWork]
         public async Task<ExamOutput> InsertAddExam(AddExamInput addExamInput)
         {
+            var teacher = await GetTeacher();
             var addExamDto = addExamInput.Adapt<ExamDto>();
-            addExamDto.TeacherId = GetUserId();
+            addExamDto.TeacherId = teacher.Id;
             var questions = new List<ExamquestionDto>();
             foreach (var item in addExamInput.Selects)
             {
@@ -75,8 +76,9 @@ namespace ExamKing.WebApp.Teacher
         [UnitOfWork]
         public async Task<ExamOutput> UpdateEditExam(EditExamInput editExamInput)
         {
+            var teacher = await GetTeacher();
             var addExamDto = editExamInput.Adapt<ExamDto>();
-            addExamDto.TeacherId = GetUserId();
+            addExamDto.TeacherId = teacher.Id;
             var questions = new List<ExamquestionDto>();
             foreach (var item in editExamInput.Selects)
             {
@@ -126,7 +128,8 @@ namespace ExamKing.WebApp.Teacher
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10)
         {
-            var teacherId = GetUserId();
+            var teacher = await GetTeacher();
+            var teacherId = teacher.Id;
             var exams = await _examService.FindExamAllByTeacherAndPage(teacherId, pageIndex, pageSize);
             return exams.Adapt<PagedList<ExamCourseOutput>>();
         }

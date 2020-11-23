@@ -83,10 +83,10 @@ namespace ExamKing.Application.Services
         public Task<ExamDto> FinshExamById(int id);
         
         /// <summary>
-        /// 根据班级查询考试列表
+        /// 根据班级查询正在考试列表
         /// </summary>
         /// <param name="classesId">班级ID</param>
         /// <returns></returns>
-        public Task<PagedList<ExamDto>> FindExamAllByClassesAndPage(int classesId, int pageIndex = 1, int pageSize = 10);
+        public Task<PagedList<ExamDto>> FindExamOnlineByClassesAndPage(int classesId, int pageIndex = 1, int pageSize = 10);
     }
 }

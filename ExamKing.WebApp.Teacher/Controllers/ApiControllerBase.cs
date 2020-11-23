@@ -1,4 +1,7 @@
-﻿using ExamKing.WebApp.Teacher;
+﻿using System.Threading.Tasks;
+using ExamKing.Application.Mappers;
+using ExamKing.Application.Services;
+using ExamKing.WebApp.Teacher;
 using Fur;
 using Fur.DynamicApiController;
 using Microsoft.AspNetCore.Authorization;
@@ -28,13 +31,15 @@ namespace ExamKing.WebApp.Teacher
         }
 
         /// <summary>
-        /// 获取管理员Id
+        /// 获取教师实体
         /// </summary>
         /// <returns></returns>
-        protected int GetUserId()
+        protected async Task<TeacherDto> GetTeacher()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
-            return authorizationManager.GetUserId<int>();
+            var id = authorizationManager.GetUserId<int>();
+            var teacherService = App.GetService<ITeacherService>();
+            return await teacherService.FindTeacherById(id);
         }
     }
 }

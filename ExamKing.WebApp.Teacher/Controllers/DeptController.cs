@@ -31,8 +31,9 @@ namespace ExamKing.WebApp.Teacher
             [FromQuery] int pageIndex = 1, 
             [FromQuery] int pageSize = 10)
         {
-            var teacherId = GetUserId();
-            var depts=await _deptService.FindDeptByTeacherAndPage(teacherId, pageIndex, pageSize);
+            
+            var teacher = await GetTeacher();
+            var depts=await _deptService.FindDeptByTeacherAndPage(teacher.Id, pageIndex, pageSize);
             return depts.Adapt<PagedList<DeptOutput>>();
         }
         

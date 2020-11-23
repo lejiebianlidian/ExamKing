@@ -22,8 +22,8 @@ namespace ExamKing.WebApp.Student
         /// <returns></returns>
         public async Task<int> GetWrongAnswerCount()
         {
-            var studentId = GetUserId();
-            return await _stuanswerdetailService.GetWrongAnswerByStudent(studentId);
+            var student = await GetStudent();
+            return await _stuanswerdetailService.GetWrongAnswerByStudent(student.Id);
         }
 
         /// <summary>
@@ -32,8 +32,8 @@ namespace ExamKing.WebApp.Student
         /// <returns></returns>
         public async Task<int> GetWrongAnswerTodayCount()
         {
-            var studentId = GetUserId();
-            return await _stuanswerdetailService.GetWrongAnswerTodayByStudent(studentId);
+            var student = await GetStudent();
+            return await _stuanswerdetailService.GetWrongAnswerTodayByStudent(student.Id);
         }
         
         
