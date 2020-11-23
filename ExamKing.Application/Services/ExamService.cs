@@ -297,20 +297,23 @@ namespace ExamKing.Application.Services
             await exam.UpdateExcludeAsync(u => u.CreateTime);
             return exam.Adapt<ExamDto>();
         }
-
+        
         /// <summary>
-        /// 根据班级查询正在考试列表
+        /// 根据班级查询最新考试列表
         /// </summary>
         /// <param name="classesId"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamDto>> FindExamOnlineByClassesAndPage(
+        public async Task<PagedList<ExamDto>> FindExamNewByClassesAndPage(
             int classesId, int pageIndex = 1, int pageSize = 10)
         {
             var pageResult = await _examRepository.Change<TbExamclass>()
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId)
+                .Where(u => u.Exam.IsFinish == "0")
+                .OrderBy(u=>u.Exam.IsFinish)
+                .ThenByDescending(u=>u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -341,6 +344,59 @@ namespace ExamKing.Application.Services
 
             return pageResult.Adapt<PagedList<ExamDto>>();
         }
+        
+        /// <summary>
+        /// 根据班级查询正在考试列表
+        /// </summary>
+        /// <param name="classesId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<ExamDto>> FindExamOnlineByClassesAndPage(
+            int classesId, int pageIndex = 1, int pageSize = 10)
+        {
+            var pageResult = await _examRepository.Change<TbExamclass>()
+                .Entities.AsNoTracking()
+                .Where(u => u.Classes.Id == classesId)
+                .Where(u => u.Exam.IsEnable == "1" && u.Exam.IsFinish == "0")
+                .OrderByDescending(u=>u.Exam.StartTime)
+                .Select(u => new TbExam
+                {
+                    Id = u.Exam.Id,
+                    ExamName = u.Exam.ExamName,
+                    CourseId = u.Exam.CourseId,
+                    TeacherId = u.Exam.TeacherId,
+                    StartTime = u.Exam.StartTime,
+                    EndTime = u.Exam.EndTime,
+                    Duration = u.Exam.Duration,
+                    IsEnable = u.Exam.IsEnable,
+                    IsFinish = u.Exam.IsFinish,
+                    CreateTime = u.Exam.CreateTime,
+                    ExamScore = u.Exam.ExamScore,
+                    JudgeScore = u.Exam.JudgeScore,
+                    SingleScore = u.Exam.SingleScore,
+                    SelectScore = u.Exam.SelectScore,
+                    Course = new TbCourse
+                    {
+                        Id = u.Exam.Course.Id,
+                        CourseName = u.Exam.Course.CourseName,
+                    },
+                    Teacher = new TbTeacher
+                    {
+                        Id = u.Exam.Teacher.Id,
+                        TeacherName = u.Exam.Teacher.TeacherName,
+                    },
+                    Examquestions = u.Exam.Examquestions.Select(x => new TbExamquestion
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                        QuestionId = x.QuestionId,
+                        Score = x.Score,
+                    }).ToList()
+                }).ToPagedListAsync(pageIndex, pageSize);
+
+            return pageResult.Adapt<PagedList<ExamDto>>();
+        }
 
         /// <summary>
         /// 根据班级查询未考试列表
@@ -356,6 +412,7 @@ namespace ExamKing.Application.Services
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId)
                 .Where(u => u.Exam.IsEnable == "0" && u.Exam.IsFinish == "0")
+                .OrderByDescending(u=>u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -408,58 +465,7 @@ namespace ExamKing.Application.Services
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId)
                 .Where(u => u.Exam.IsEnable == "1" && u.Exam.IsFinish == "1")
-                .Select(u => new TbExam
-                {
-                    Id = u.Exam.Id,
-                    ExamName = u.Exam.ExamName,
-                    CourseId = u.Exam.CourseId,
-                    TeacherId = u.Exam.TeacherId,
-                    StartTime = u.Exam.StartTime,
-                    EndTime = u.Exam.EndTime,
-                    Duration = u.Exam.Duration,
-                    IsEnable = u.Exam.IsEnable,
-                    IsFinish = u.Exam.IsFinish,
-                    CreateTime = u.Exam.CreateTime,
-                    ExamScore = u.Exam.ExamScore,
-                    JudgeScore = u.Exam.JudgeScore,
-                    SingleScore = u.Exam.SingleScore,
-                    SelectScore = u.Exam.SelectScore,
-                    Course = new TbCourse
-                    {
-                        Id = u.Exam.Course.Id,
-                        CourseName = u.Exam.Course.CourseName,
-                    },
-                    Teacher = new TbTeacher
-                    {
-                        Id = u.Exam.Teacher.Id,
-                        TeacherName = u.Exam.Teacher.TeacherName,
-                    },
-                    Examquestions = u.Exam.Examquestions.Select(x => new TbExamquestion
-                    {
-                        Id = x.Id,
-                        QuestionType = x.QuestionType,
-                        QuestionId = x.QuestionId,
-                        Score = x.Score,
-                    }).ToList()
-                }).ToPagedListAsync(pageIndex, pageSize);
-
-            return pageResult.Adapt<PagedList<ExamDto>>();
-        }
-
-        /// <summary>
-        /// 根据班级查询已缺考列表
-        /// </summary>
-        /// <param name="classesId"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        public async Task<PagedList<ExamDto>> FindExamNoneByClassesAndPage(int classesId, int pageIndex = 1,
-            int pageSize = 10)
-        {
-            var pageResult = await _examRepository.Change<TbExamclass>()
-                .Entities.AsNoTracking()
-                .Where(u => u.Classes.Id == classesId)
-                .Where(u => u.Exam.IsEnable == "1" && u.Exam.IsFinish == "1")
+                .OrderByDescending(u=>u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -512,6 +518,7 @@ namespace ExamKing.Application.Services
             var pageResult = await _examRepository.Change<TbExamclass>()
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId && u.Exam.ExamName.Contains(keyword))
+                .OrderByDescending(u=>u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,

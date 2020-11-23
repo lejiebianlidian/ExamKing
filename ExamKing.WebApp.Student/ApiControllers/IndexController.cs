@@ -74,5 +74,16 @@ namespace ExamKing.WebApp.Student
 
             return exams.Adapt<PagedList<ExamQuestionOutput>>();
         } 
+        
+        /// <summary>
+        /// 查询最新考试列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<PagedList<ExamOutput>> GetExamNewList()
+        {
+            var student = await GetStudent();
+            var exams = await _examService.FindExamNewByClassesAndPage(student.ClassesId);
+            return exams.Adapt<PagedList<ExamOutput>>();
+        }
     }
 }
