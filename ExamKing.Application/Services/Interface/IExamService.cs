@@ -88,6 +88,27 @@ namespace ExamKing.Application.Services
         /// <param name="classesId">班级ID</param>
         /// <returns></returns>
         public Task<PagedList<ExamDto>> FindExamOnlineByClassesAndPage(int classesId, int pageIndex = 1, int pageSize = 10);
+        
+        /// <summary>
+        /// 根据班级查询未考试列表
+        /// </summary>
+        /// <param name="classesId">班级ID</param>
+        /// <returns></returns>
+        public Task<PagedList<ExamDto>> FindExamWaitByClassesAndPage(int classesId, int pageIndex = 1, int pageSize = 10);
+        
+        /// <summary>
+        /// 根据班级查询已考试列表
+        /// </summary>
+        /// <param name="classesId">班级ID</param>
+        /// <returns></returns>
+        public Task<PagedList<ExamDto>> FindExamFinshByClassesAndPage(int classesId, int pageIndex = 1, int pageSize = 10);
+        
+        /// <summary>
+        /// 根据班级查询已缺考列表
+        /// </summary>
+        /// <param name="classesId">班级ID</param>
+        /// <returns></returns>
+        public Task<PagedList<ExamDto>> FindExamNoneByClassesAndPage(int classesId, int pageIndex = 1, int pageSize = 10);
 
         /// <summary>
         /// 学生关键词搜索考试分页接口

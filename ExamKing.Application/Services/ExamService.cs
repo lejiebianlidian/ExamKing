@@ -12,7 +12,6 @@ using Fur.DependencyInjection;
 using Fur.FriendlyException;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using StackExchange.Profiling.Internal;
 
 namespace ExamKing.Application.Services
 {
@@ -104,6 +103,14 @@ namespace ExamKing.Application.Services
                 .DeleteAsync(
                     _examRepository
                         .Change<TbExamquestion>()
+                        .Where(u => u.ExamId == id, false).ToList()
+                );
+            // 删除试卷班级关联
+            await _examRepository
+                .Change<TbExamclass>()
+                .DeleteAsync(
+                    _examRepository
+                        .Change<TbExamclass>()
                         .Where(u => u.ExamId == id, false).ToList()
                 );
             await _examRepository.DeleteAsync(exam);
@@ -303,7 +310,7 @@ namespace ExamKing.Application.Services
         {
             var pageResult = await _examRepository.Change<TbExamclass>()
                 .Entities.AsNoTracking()
-                .Where(u=>u.Classes.Id==classesId)
+                .Where(u => u.Classes.Id == classesId)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -336,19 +343,19 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
-        /// 根据关键词搜索考试分页
+        /// 根据班级查询未考试列表
         /// </summary>
-        /// <param name="classesId">学生ID</param>
-        /// <param name="keyword">搜索关键词</param>
+        /// <param name="classesId"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamDto>> FindExamByKeywordAndStudentAndPage(int classesId, string keyword,
-            int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<ExamDto>> FindExamWaitByClassesAndPage(int classesId, int pageIndex = 1,
+            int pageSize = 10)
         {
             var pageResult = await _examRepository.Change<TbExamclass>()
                 .Entities.AsNoTracking()
-                .Where(u=>u.Classes.Id==classesId && u.Exam.ExamName.Contains(keyword))
+                .Where(u => u.Classes.Id == classesId)
+                .Where(u => u.Exam.IsEnable == "0" && u.Exam.IsFinish == "0")
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -375,6 +382,169 @@ namespace ExamKing.Application.Services
                         Id = u.Exam.Teacher.Id,
                         TeacherName = u.Exam.Teacher.TeacherName,
                     },
+                    Examquestions = u.Exam.Examquestions.Select(x => new TbExamquestion
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                        QuestionId = x.QuestionId,
+                        Score = x.Score,
+                    }).ToList()
+                }).ToPagedListAsync(pageIndex, pageSize);
+
+            return pageResult.Adapt<PagedList<ExamDto>>();
+        }
+
+        /// <summary>
+        /// 根据班级查询已考试列表
+        /// </summary>
+        /// <param name="classesId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<ExamDto>> FindExamFinshByClassesAndPage(int classesId, int pageIndex = 1,
+            int pageSize = 10)
+        {
+            var pageResult = await _examRepository.Change<TbExamclass>()
+                .Entities.AsNoTracking()
+                .Where(u => u.Classes.Id == classesId)
+                .Where(u => u.Exam.IsEnable == "1" && u.Exam.IsFinish == "1")
+                .Select(u => new TbExam
+                {
+                    Id = u.Exam.Id,
+                    ExamName = u.Exam.ExamName,
+                    CourseId = u.Exam.CourseId,
+                    TeacherId = u.Exam.TeacherId,
+                    StartTime = u.Exam.StartTime,
+                    EndTime = u.Exam.EndTime,
+                    Duration = u.Exam.Duration,
+                    IsEnable = u.Exam.IsEnable,
+                    IsFinish = u.Exam.IsFinish,
+                    CreateTime = u.Exam.CreateTime,
+                    ExamScore = u.Exam.ExamScore,
+                    JudgeScore = u.Exam.JudgeScore,
+                    SingleScore = u.Exam.SingleScore,
+                    SelectScore = u.Exam.SelectScore,
+                    Course = new TbCourse
+                    {
+                        Id = u.Exam.Course.Id,
+                        CourseName = u.Exam.Course.CourseName,
+                    },
+                    Teacher = new TbTeacher
+                    {
+                        Id = u.Exam.Teacher.Id,
+                        TeacherName = u.Exam.Teacher.TeacherName,
+                    },
+                    Examquestions = u.Exam.Examquestions.Select(x => new TbExamquestion
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                        QuestionId = x.QuestionId,
+                        Score = x.Score,
+                    }).ToList()
+                }).ToPagedListAsync(pageIndex, pageSize);
+
+            return pageResult.Adapt<PagedList<ExamDto>>();
+        }
+
+        /// <summary>
+        /// 根据班级查询已缺考列表
+        /// </summary>
+        /// <param name="classesId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<ExamDto>> FindExamNoneByClassesAndPage(int classesId, int pageIndex = 1,
+            int pageSize = 10)
+        {
+            var pageResult = await _examRepository.Change<TbExamclass>()
+                .Entities.AsNoTracking()
+                .Where(u => u.Classes.Id == classesId)
+                .Where(u => u.Exam.IsEnable == "1" && u.Exam.IsFinish == "1")
+                .Select(u => new TbExam
+                {
+                    Id = u.Exam.Id,
+                    ExamName = u.Exam.ExamName,
+                    CourseId = u.Exam.CourseId,
+                    TeacherId = u.Exam.TeacherId,
+                    StartTime = u.Exam.StartTime,
+                    EndTime = u.Exam.EndTime,
+                    Duration = u.Exam.Duration,
+                    IsEnable = u.Exam.IsEnable,
+                    IsFinish = u.Exam.IsFinish,
+                    CreateTime = u.Exam.CreateTime,
+                    ExamScore = u.Exam.ExamScore,
+                    JudgeScore = u.Exam.JudgeScore,
+                    SingleScore = u.Exam.SingleScore,
+                    SelectScore = u.Exam.SelectScore,
+                    Course = new TbCourse
+                    {
+                        Id = u.Exam.Course.Id,
+                        CourseName = u.Exam.Course.CourseName,
+                    },
+                    Teacher = new TbTeacher
+                    {
+                        Id = u.Exam.Teacher.Id,
+                        TeacherName = u.Exam.Teacher.TeacherName,
+                    },
+                    Examquestions = u.Exam.Examquestions.Select(x => new TbExamquestion
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                        QuestionId = x.QuestionId,
+                        Score = x.Score,
+                    }).ToList()
+                }).ToPagedListAsync(pageIndex, pageSize);
+
+            return pageResult.Adapt<PagedList<ExamDto>>();
+        }
+
+        /// <summary>
+        /// 根据关键词搜索考试分页
+        /// </summary>
+        /// <param name="classesId">学生ID</param>
+        /// <param name="keyword">搜索关键词</param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<ExamDto>> FindExamByKeywordAndStudentAndPage(int classesId, string keyword,
+            int pageIndex = 1, int pageSize = 10)
+        {
+            var pageResult = await _examRepository.Change<TbExamclass>()
+                .Entities.AsNoTracking()
+                .Where(u => u.Classes.Id == classesId && u.Exam.ExamName.Contains(keyword))
+                .Select(u => new TbExam
+                {
+                    Id = u.Exam.Id,
+                    ExamName = u.Exam.ExamName,
+                    CourseId = u.Exam.CourseId,
+                    TeacherId = u.Exam.TeacherId,
+                    StartTime = u.Exam.StartTime,
+                    EndTime = u.Exam.EndTime,
+                    Duration = u.Exam.Duration,
+                    IsEnable = u.Exam.IsEnable,
+                    IsFinish = u.Exam.IsFinish,
+                    CreateTime = u.Exam.CreateTime,
+                    ExamScore = u.Exam.ExamScore,
+                    JudgeScore = u.Exam.JudgeScore,
+                    SingleScore = u.Exam.SingleScore,
+                    SelectScore = u.Exam.SelectScore,
+                    Course = new TbCourse
+                    {
+                        Id = u.Exam.Course.Id,
+                        CourseName = u.Exam.Course.CourseName,
+                    },
+                    Teacher = new TbTeacher
+                    {
+                        Id = u.Exam.Teacher.Id,
+                        TeacherName = u.Exam.Teacher.TeacherName,
+                    },
+                    Examquestions = u.Exam.Examquestions.Select(x => new TbExamquestion
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                        QuestionId = x.QuestionId,
+                        Score = x.Score,
+                    }).ToList()
                 }).ToPagedListAsync(pageIndex, pageSize);
 
             return pageResult.Adapt<PagedList<ExamDto>>();

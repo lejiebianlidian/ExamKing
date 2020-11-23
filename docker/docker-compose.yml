@@ -50,6 +50,6 @@ volumes:
 networks: # 创建新的网络类型
   eknet:
     ipam:
-      driver: bridge  # 网络方式：桥接或集群
+      driver: default  # 网络方式：桥接或集群
       config:
         - subnet: 172.16.238.0/24
