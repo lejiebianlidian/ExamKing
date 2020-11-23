@@ -11,7 +11,7 @@ services:
       - 8071:80
     networks: 
       eknet:
-        ipv4_address: ${STUDENT_IPV4_ADDR}
+        ipv4_address: 172.16.238.11
     restart: "always"
     volumes:
       - neuget:/var/negut:rw
@@ -25,7 +25,7 @@ services:
       - 8072:80
     networks: 
       eknet:
-        ipv4_address: ${ADMIN_IPV4_ADDR}
+        ipv4_address: 172.16.238.12
     restart: "always"
     volumes:
       - neuget:/var/negut:rw
@@ -39,7 +39,7 @@ services:
       - 8073:80
     networks:
       eknet:
-        ipv4_address: ${TEACHER_IPV4_ADDR}
+        ipv4_address: 172.16.238.13
     restart: "always"
     volumes:
       - neuget:/var/negut:rw
@@ -52,4 +52,4 @@ networks: # 创建新的网络类型
     ipam:
       driver: bridge  # 网络方式：桥接或集群
       config:
-        - subnet: ${SUB_NET}
+        - subnet: 172.16.238.0/24
