@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 
@@ -79,5 +80,9 @@ namespace ExamKing.WebApp.Teacher
         /// </summary>
         public int SelectScore { get; set; }
 
+        /// <summary>
+        /// 班级
+        /// </summary>
+        public List<ClassesDeptSubOutput> Classes { get; set; }
     }
 }

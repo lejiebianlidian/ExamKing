@@ -45,7 +45,7 @@ namespace ExamKing.Core.Entites
         /// <summary>
         /// 多对多中间表
         /// </summary>
-        public List<TbExamclass> Examclasses { get; set; }
+        public ICollection<TbExamclass> Examclasses { get; set; }
 
         public void Configure(EntityTypeBuilder<TbClass> entityBuilder, DbContext dbContext, Type dbContextLocator)
         {

@@ -108,8 +108,14 @@ namespace ExamKing.Application.Mappers
         public ICollection<ExamquestionDto> Examquestions { get; set; }
         
         /// <summary>
-        /// 班级
+        /// 班级中间表
         /// </summary>
         public ICollection<TbExamclass> Examclasses { get; set; }
+
+        /// <summary>
+        /// 班级
+        /// </summary>
+        public List<ClassesDto> Classes { get; set; }
+        
     }
 }

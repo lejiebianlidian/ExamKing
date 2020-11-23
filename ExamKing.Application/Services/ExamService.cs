@@ -12,6 +12,7 @@ using Fur.DependencyInjection;
 using Fur.FriendlyException;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Profiling.Internal;
 
 namespace ExamKing.Application.Services
 {
@@ -21,8 +22,6 @@ namespace ExamKing.Application.Services
     public class ExamService : IExamService, ITransient
     {
         private readonly IRepository<TbExam> _examRepository;
-        private readonly IRepository<TbClass> _classRepository;
-        private readonly IRepository<TbCourse> _courseRepository;
 
         /// <summary>
         /// 依赖注入
@@ -33,8 +32,6 @@ namespace ExamKing.Application.Services
             IRepository<TbCourse> courseRepository)
         {
             _examRepository = examRepository;
-            _classRepository = classRepository;
-            _courseRepository = courseRepository;
         }
 
         /// <summary>
@@ -193,6 +190,17 @@ namespace ExamKing.Application.Services
                         Id = u.Teacher.Id,
                         TeacherName = u.Teacher.TeacherName,
                     },
+                    Classes = u.Classes.Select(x => new TbClass
+                    {
+                        Id = x.Id,
+                        ClassesName = x.ClassesName,
+                        DeptId = x.DeptId,
+                        Dept = new TbDept
+                        {
+                            CreateTime = x.Dept.CreateTime,
+                            DeptName = x.Dept.DeptName
+                        }
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync(u => u.Id == id);
             if (exam == null)
@@ -293,45 +301,81 @@ namespace ExamKing.Application.Services
         public async Task<PagedList<ExamDto>> FindExamOnlineByClassesAndPage(
             int classesId, int pageIndex = 1, int pageSize = 10)
         {
-            // 查询班级课程
-            var classes = await _classRepository
-                .Entities
-                .Where(u => u.Id == classesId)
-                .Select(u => new TbClass {Id = u.Id, Examclasses = u.Examclasses})
-                .FirstOrDefaultAsync();
-            // 查询班级全部考试
-            var pageResult = await _examRepository
+            var pageResult = await _examRepository.Change<TbExamclass>()
                 .Entities.AsNoTracking()
-                .Where(u => u.Examclasses == classes.Examclasses)
-                .Where(u => u.IsEnable == "1" && u.IsFinish == "0")
+                .Where(u=>u.Classes.Id==classesId)
                 .Select(u => new TbExam
                 {
-                    Id = u.Id,
-                    ExamName = u.ExamName,
-                    CourseId = u.CourseId,
-                    TeacherId = u.TeacherId,
-                    StartTime = u.StartTime,
-                    EndTime = u.EndTime,
-                    Duration = u.Duration,
-                    IsEnable = u.IsEnable,
-                    IsFinish = u.IsFinish,
-                    CreateTime = u.CreateTime,
-                    ExamScore = u.ExamScore,
-                    JudgeScore = u.JudgeScore,
-                    SingleScore = u.SingleScore,
-                    SelectScore = u.SelectScore,
+                    Id = u.Exam.Id,
+                    ExamName = u.Exam.ExamName,
+                    CourseId = u.Exam.CourseId,
+                    TeacherId = u.Exam.TeacherId,
+                    StartTime = u.Exam.StartTime,
+                    EndTime = u.Exam.EndTime,
+                    Duration = u.Exam.Duration,
+                    IsEnable = u.Exam.IsEnable,
+                    IsFinish = u.Exam.IsFinish,
+                    CreateTime = u.Exam.CreateTime,
+                    ExamScore = u.Exam.ExamScore,
+                    JudgeScore = u.Exam.JudgeScore,
+                    SingleScore = u.Exam.SingleScore,
+                    SelectScore = u.Exam.SelectScore,
                     Course = new TbCourse
                     {
-                        Id = u.Course.Id,
-                        CourseName = u.Course.CourseName,
+                        Id = u.Exam.Course.Id,
+                        CourseName = u.Exam.Course.CourseName,
                     },
                     Teacher = new TbTeacher
                     {
-                        Id = u.Teacher.Id,
-                        TeacherName = u.Teacher.TeacherName,
-                    }
-                })
-                .ToPagedListAsync(pageIndex, pageSize);
+                        Id = u.Exam.Teacher.Id,
+                        TeacherName = u.Exam.Teacher.TeacherName,
+                    },
+                }).ToPagedListAsync(pageIndex, pageSize);
+
+            return pageResult.Adapt<PagedList<ExamDto>>();
+        }
+
+        /// <summary>
+        /// 根据关键词搜索考试分页
+        /// </summary>
+        /// <param name="classesId">学生ID</param>
+        /// <param name="keyword">搜索关键词</param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<ExamDto>> FindExamByKeywordAndStudentAndPage(int classesId, string keyword,
+            int pageIndex = 1, int pageSize = 10)
+        {
+            var pageResult = await _examRepository.Change<TbExamclass>()
+                .Entities.AsNoTracking()
+                .Where(u=>u.Classes.Id==classesId && u.Exam.ExamName.Contains(keyword))
+                .Select(u => new TbExam
+                {
+                    Id = u.Exam.Id,
+                    ExamName = u.Exam.ExamName,
+                    CourseId = u.Exam.CourseId,
+                    TeacherId = u.Exam.TeacherId,
+                    StartTime = u.Exam.StartTime,
+                    EndTime = u.Exam.EndTime,
+                    Duration = u.Exam.Duration,
+                    IsEnable = u.Exam.IsEnable,
+                    IsFinish = u.Exam.IsFinish,
+                    CreateTime = u.Exam.CreateTime,
+                    ExamScore = u.Exam.ExamScore,
+                    JudgeScore = u.Exam.JudgeScore,
+                    SingleScore = u.Exam.SingleScore,
+                    SelectScore = u.Exam.SelectScore,
+                    Course = new TbCourse
+                    {
+                        Id = u.Exam.Course.Id,
+                        CourseName = u.Exam.Course.CourseName,
+                    },
+                    Teacher = new TbTeacher
+                    {
+                        Id = u.Exam.Teacher.Id,
+                        TeacherName = u.Exam.Teacher.TeacherName,
+                    },
+                }).ToPagedListAsync(pageIndex, pageSize);
 
             return pageResult.Adapt<PagedList<ExamDto>>();
         }

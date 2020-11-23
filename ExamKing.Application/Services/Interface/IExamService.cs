@@ -88,5 +88,15 @@ namespace ExamKing.Application.Services
         /// <param name="classesId">班级ID</param>
         /// <returns></returns>
         public Task<PagedList<ExamDto>> FindExamOnlineByClassesAndPage(int classesId, int pageIndex = 1, int pageSize = 10);
+
+        /// <summary>
+        /// 学生关键词搜索考试分页接口
+        /// </summary>
+        /// <param name="classesId"></param>
+        /// <param name="keyword"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public Task<PagedList<ExamDto>> FindExamByKeywordAndStudentAndPage(int classesId, string keyword, int pageIndex = 1, int pageSize = 10);
     }
 }
