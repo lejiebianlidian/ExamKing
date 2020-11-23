@@ -1,4 +1,4 @@
-using Fur;
+using Furion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,8 +10,8 @@ namespace ExamKing.WebApp.Student
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            // 学生模块鉴权
-            services.AddJwt<JwtAuthorizationHandler>();
+            // 添加JWT授权
+            services.AddJwt<JwtHandler>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

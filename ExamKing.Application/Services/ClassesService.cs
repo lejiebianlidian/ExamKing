@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Fur.DatabaseAccessor;
+using Furion.DatabaseAccessor;
 using Mapster;
 using ExamKing.Core.Entites;
 using ExamKing.Application.Mappers;
 using System.Threading.Tasks;
 using ExamKing.Core.ErrorCodes;
 using ExamKing.Core.Utils;
-using Fur.DependencyInjection;
-using Fur.FriendlyException;
+using Furion.DependencyInjection;
+using Furion.FriendlyException;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamKing.Application.Services

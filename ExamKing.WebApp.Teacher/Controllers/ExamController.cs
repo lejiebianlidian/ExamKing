@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
 using ExamKing.Core.Consts;
-using Fur.DatabaseAccessor;
+using Furion.DatabaseAccessor;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 

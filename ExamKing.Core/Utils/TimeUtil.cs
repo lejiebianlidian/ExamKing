@@ -1,5 +1,5 @@
 using System;
-using Fur.DependencyInjection;
+using Furion.DependencyInjection;
 
 namespace ExamKing.Core.Utils
 {

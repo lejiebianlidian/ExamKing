@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ExamKing.Core.Entites;
-using Fur.DatabaseAccessor;
-using Fur.DependencyInjection;
+using Furion.DatabaseAccessor;
+using Furion.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamKing.Application.Services

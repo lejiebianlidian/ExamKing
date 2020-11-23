@@ -1,7 +1,7 @@
 using ExamKing.Core.Entites;
 using ExamKing.Core.Utils;
-using Fur.DependencyInjection;
-using Fur.ObjectMapper;
+using Furion.DependencyInjection;
+using Furion.ObjectMapper;
 using Mapster;
 
 namespace ExamKing.Application.Mappers

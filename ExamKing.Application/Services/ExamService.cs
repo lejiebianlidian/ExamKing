@@ -7,9 +7,9 @@ using ExamKing.Core.Consts;
 using ExamKing.Core.Entites;
 using ExamKing.Core.ErrorCodes;
 using ExamKing.Core.Utils;
-using Fur.DatabaseAccessor;
-using Fur.DependencyInjection;
-using Fur.FriendlyException;
+using Furion.DatabaseAccessor;
+using Furion.DependencyInjection;
+using Furion.FriendlyException;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 

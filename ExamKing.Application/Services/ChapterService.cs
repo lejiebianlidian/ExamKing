@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using ExamKing.Core.ErrorCodes;
-using Fur.DatabaseAccessor;
-using Fur.DependencyInjection;
-using Fur.FriendlyException;
+using Furion.DatabaseAccessor;
+using Furion.DependencyInjection;
+using Furion.FriendlyException;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 

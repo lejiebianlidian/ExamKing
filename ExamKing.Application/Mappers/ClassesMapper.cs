@@ -1,4 +1,4 @@
-﻿using Fur.ObjectMapper;
+﻿using Furion.ObjectMapper;
 using Mapster;
 using ExamKing.Core.Entites;
 using ExamKing.Core.Utils;

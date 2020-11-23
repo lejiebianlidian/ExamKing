@@ -10,9 +10,9 @@
       <DocumentationFile>bin\Release\ExamKing.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Fur" Version="1.0.2.4" />
-        <PackageReference Include="Fur.Extras.Authentication.JwtBearer" Version="1.0.0" />
-        <PackageReference Include="Fur.Extras.DependencyModel.CodeAnalysis" Version="1.0.1" />
+        <PackageReference Include="Furion" Version="1.1.0" />
+        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="1.1.0" />
+        <PackageReference Include="Furion.Extras.DependencyModel.CodeAnalysis" Version="1.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>

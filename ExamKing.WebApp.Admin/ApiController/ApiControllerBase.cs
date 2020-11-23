@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
-using Fur;
-using Fur.DynamicApiController;
+using Furion;
+using Furion.DynamicApiController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +36,7 @@ namespace ExamKing.WebApp.Admin
         protected async Task<AdminDto> GetAdmin()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
-            var id = authorizationManager.GetUserId<int>();
+            var id = authorizationManager.GetUserId();
             var adminService = App.GetService<IManageService>();
             return await adminService.FindAdminById(id);
         }

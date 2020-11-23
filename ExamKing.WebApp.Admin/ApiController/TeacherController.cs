@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
-using Fur.DatabaseAccessor;
+using Furion.DatabaseAccessor;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 

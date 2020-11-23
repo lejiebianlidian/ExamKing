@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
-using Fur;
-using Fur.DynamicApiController;
+using Furion;
+using Furion.DynamicApiController;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +37,7 @@ namespace ExamKing.WebApp.Student
         protected async Task<StudentDto> GetStudent()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
-            var studentId = authorizationManager.GetUserId<int>();
+            var studentId = authorizationManager.GetUserId();
             var studentService = App.GetService<IStudentService>();
             return await studentService.FindStudentById(studentId);
         }

@@ -1,12 +1,12 @@
-﻿using Fur.DependencyInjection;
+﻿using Furion.DependencyInjection;
 
-namespace ExamKing.WebApp.Teacher
+namespace ExamKing.WebApp.Admin
 {
     /// <summary>
     /// 管理员模块权限常量
     /// </summary>
     [SkipScan]
-    public static class TeacherConst
+    public static class AdminConst
     {
         
     }

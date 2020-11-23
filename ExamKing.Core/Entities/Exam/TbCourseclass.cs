@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Fur.DatabaseAccessor;
+using Furion.DatabaseAccessor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

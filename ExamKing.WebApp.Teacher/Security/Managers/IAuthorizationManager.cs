@@ -1,4 +1,4 @@
-namespace ExamKing.WebApp.Student
+namespace ExamKing.WebApp.Teacher
 {
     /// <summary>
     /// 权限管理器
@@ -9,14 +9,7 @@ namespace ExamKing.WebApp.Student
         /// 获取用户 Id
         /// </summary>
         /// <returns></returns>
-        object GetUserId();
-
-        /// <summary>
-        /// 获取用户 Id
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        T GetUserId<T>();
+        int GetUserId();
 
         /// <summary>
         /// 检查授权
@@ -25,5 +18,4 @@ namespace ExamKing.WebApp.Student
         /// <returns></returns>
         bool CheckSecurity(string resourceId);
     }
-
 }

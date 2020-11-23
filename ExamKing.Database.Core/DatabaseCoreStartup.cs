@@ -1,5 +1,5 @@
-﻿using Fur;
-using Fur.DatabaseAccessor;
+﻿using Furion;
+using Furion.DatabaseAccessor;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ExamKing.Database.Core

@@ -1,5 +1,5 @@
 using ExamKing.Core.Entites;
-using Fur.ObjectMapper;
+using Furion.ObjectMapper;
 using Mapster;
 
 namespace ExamKing.Application.Mappers

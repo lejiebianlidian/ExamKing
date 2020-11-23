@@ -1,4 +1,4 @@
-﻿using Fur.FriendlyException;
+﻿using Furion.FriendlyException;
 
 namespace ExamKing.Core.ErrorCodes
 {

@@ -1,9 +1,9 @@
 ﻿using System;
-using Fur.ObjectMapper;
+using Furion.ObjectMapper;
 using Mapster;
 using ExamKing.Core.Entites;
 using ExamKing.Core.Utils;
-using Fur.DataEncryption;
+using Furion.DataEncryption;
 
 namespace ExamKing.Application.Mappers
 {

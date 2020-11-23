@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Consts;
 using ExamKing.Core.Entites;
-using Fur.DatabaseAccessor;
-using Fur.DependencyInjection;
+using Furion.DatabaseAccessor;
+using Furion.DependencyInjection;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 

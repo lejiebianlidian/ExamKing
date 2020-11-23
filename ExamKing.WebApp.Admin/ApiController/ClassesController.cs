@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
-using Fur.DatabaseAccessor;
-using Fur.FriendlyException;
+using Furion.DatabaseAccessor;
+using Furion.FriendlyException;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Core;

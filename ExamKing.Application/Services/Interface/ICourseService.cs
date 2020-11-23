@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
-using Fur.DatabaseAccessor;
-using Fur.DataEncryption;
-using Fur.DependencyInjection;
+using Furion.DatabaseAccessor;
+using Furion.DataEncryption;
+using Furion.DependencyInjection;
 
 namespace ExamKing.Application.Services
 {

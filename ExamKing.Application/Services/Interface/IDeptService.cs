@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
-using Fur.DatabaseAccessor;
+using Furion.DatabaseAccessor;
 
 namespace ExamKing.Application.Services
 {

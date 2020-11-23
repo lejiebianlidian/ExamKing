@@ -1,7 +1,7 @@
 using ExamKing.Core.Entites;
 using ExamKing.Core.Utils;
-using Fur.DataEncryption;
-using Fur.ObjectMapper;
+using Furion.DataEncryption;
+using Furion.ObjectMapper;
 using Mapster;
 
 namespace ExamKing.Application.Mappers

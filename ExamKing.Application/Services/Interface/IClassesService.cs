@@ -2,7 +2,7 @@
 using ExamKing.Application.Mappers;
 using System.Threading.Tasks;
 using ExamKing.Core.Entites;
-using Fur.DatabaseAccessor;
+using Furion.DatabaseAccessor;
 
 namespace ExamKing.Application.Services
 {

@@ -6,10 +6,10 @@ using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using ExamKing.Core.ErrorCodes;
 using ExamKing.Core.Utils;
-using Fur.DatabaseAccessor;
-using Fur.DataEncryption;
-using Fur.DependencyInjection;
-using Fur.FriendlyException;
+using Furion.DatabaseAccessor;
+using Furion.DataEncryption;
+using Furion.DependencyInjection;
+using Furion.FriendlyException;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 

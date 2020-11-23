@@ -1,4 +1,4 @@
-﻿using Fur.DatabaseAccessor;
+﻿using Furion.DatabaseAccessor;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamKing.Database.Core
