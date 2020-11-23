@@ -60,8 +60,8 @@ namespace ExamKing.WebApp.Teacher
                 q.QuestionType = QuestionTypeConst.Judge;
                 questions.Add(q);
             }
-
             addExamDto.Examquestions = questions;
+            
             var exam = await _examService.CreateExam(addExamDto);
             return exam.Adapt<ExamOutput>();
         }

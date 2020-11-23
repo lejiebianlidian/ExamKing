@@ -22,6 +22,12 @@ namespace ExamKing.WebApp.Teacher
         public int CourseId { get; set; }
 
         /// <summary>
+        /// 所属班级
+        /// </summary>
+        [Required(ErrorMessage = "请选择所属班级")]
+        public List<ExamClassesInput> Examclasses { get; set; }
+        
+        /// <summary>
         /// 开始时间
         /// </summary>
         [Required(ErrorMessage = "请选择开始考试时间")]
@@ -38,12 +44,6 @@ namespace ExamKing.WebApp.Teacher
         /// </summary>
         [Required(ErrorMessage = "请选择结束考试试卷")]
         public int Duration { get; set; }
-
-        /// <summary>
-        /// 启用状态
-        /// </summary>
-        [Required(ErrorMessage = "请选择启用状态")]
-        public string IsEnable { get; set; }
 
         /// <summary>
         /// 试卷总分数
@@ -96,5 +96,16 @@ namespace ExamKing.WebApp.Teacher
         /// 分数
         /// </summary>
         public int Score { get; set; }
+    }
+
+    /// <summary>
+    /// 分配班级输入
+    /// </summary>
+    public class ExamClassesInput
+    {
+        /// <summary>
+        /// 班级ID
+        /// </summary>
+        public int ClassesId { get; set; }
     }
 }

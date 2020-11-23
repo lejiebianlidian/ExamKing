@@ -200,6 +200,6 @@ namespace ExamKing.Application.Services
 
             await _studentRepository.DeleteAsync(stu);
         }
-
+        
     }
 }

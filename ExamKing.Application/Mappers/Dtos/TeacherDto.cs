@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 
@@ -59,5 +60,6 @@ namespace ExamKing.Application.Mappers
         /// 系别
         /// </summary>
         public DeptDto Dept { get; set; }
+        
     }
 }

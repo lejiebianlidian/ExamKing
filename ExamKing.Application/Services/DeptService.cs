@@ -21,14 +21,19 @@ namespace ExamKing.Application.Services
     {
 
         private readonly IRepository<TbDept> _deptRepository;
-        
-        /// <summary>
-        ///构造函数
-        /// </summary>
-        /// <param name="deptRepository"></param>
-        public DeptService(IRepository<TbDept> deptRepository)
+        private readonly IRepository<TbTeacher> _teacherRepository;
+
+        ///  <summary>
+        /// 构造函数
+        ///  </summary>
+        ///  <param name="deptRepository"></param>
+        ///  <param name="teacherRepository"></param>
+        public DeptService(
+            IRepository<TbDept> deptRepository,
+            IRepository<TbTeacher> teacherRepository)
         {
             _deptRepository = deptRepository;
+            _teacherRepository = teacherRepository;
         }
 
         /// <summary>
@@ -161,5 +166,41 @@ namespace ExamKing.Application.Services
 
             return dept.Adapt<DeptDto>();
         }
+        
+        /// <summary>
+        /// 根据教师查询系别分页列表
+        /// </summary>
+        /// <param name="teacherId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<DeptDto>> FindDeptByTeacherAndPage(int teacherId, int pageIndex = 1, int pageSize = 10)
+        {
+            var teachers = await _teacherRepository
+                .Entities.AsNoTracking()
+                .Where(u => u.Id == teacherId)
+                .Select(u=>new TbTeacher{Id = u.Id})
+                .FirstOrDefaultAsync();
+            
+            var pageResult = await _deptRepository
+                .Entities.AsNoTracking()
+                .Where(u=>Equals(u.Id, teachers.Id))
+                .Select(u => new TbDept
+                {
+                    Id = u.Id,
+                    DeptName = u.DeptName,
+                    CreateTime = u.CreateTime,
+                    Classes = u.Classes.Select(c => new TbClass
+                    {
+                        Id = c.Id,
+                        ClassesName = c.ClassesName,
+                        CreateTime = c.CreateTime,
+                    }).ToList()
+                })
+                .ToPagedListAsync(pageIndex, pageSize);
+
+            return pageResult.Adapt<PagedList<DeptDto>>();
+        }
+
     }
 }

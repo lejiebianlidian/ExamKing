@@ -15,7 +15,7 @@ namespace ExamKing.Core.Entites
         public int StuId { get; set; }
         public int ExamId { get; set; }
         public int QuestionId { get; set; }
-        public int QuestionType { get; set; }
+        public string QuestionType { get; set; }
         public string Stuanswer { get; set; }
         public string Answer { get; set; }
         public string Isright { get; set; }

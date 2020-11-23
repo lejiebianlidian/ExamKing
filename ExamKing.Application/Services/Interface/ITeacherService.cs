@@ -53,5 +53,6 @@ namespace ExamKing.Application.Services
         /// <param name="passwoerd"></param>
         /// <returns></returns>
         public Task<TeacherDto> LoginTeacher(string teacherNo, string passwoerd);
+        
     }
 }

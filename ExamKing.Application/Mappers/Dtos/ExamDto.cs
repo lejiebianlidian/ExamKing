@@ -15,6 +15,7 @@ namespace ExamKing.Application.Mappers
     {
         private string _isEnable = "0";
         private string _isFinsh = "0";
+        
         /// <summary>
         /// 试卷ID
         /// </summary>
@@ -106,6 +107,9 @@ namespace ExamKing.Application.Mappers
         /// </summary>
         public ICollection<ExamquestionDto> Examquestions { get; set; }
         
-        
+        /// <summary>
+        /// 班级
+        /// </summary>
+        public ICollection<TbExamclass> Examclasses { get; set; }
     }
 }

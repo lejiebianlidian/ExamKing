@@ -23,7 +23,7 @@ namespace ExamKing.Application.Services
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public Task<PagedList<DeptDto>> FindDeptAllByPage(int pageIndex = 1, int pageSize = 10);
-        
+
         /// <summary>
         /// 新增系别
         /// </summary>
@@ -52,5 +52,13 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public Task<DeptDto> FindDeptById(int id);
         
+        /// <summary>
+        /// 根据教师查询系别分页列表
+        /// </summary>
+        /// <param name="teacherId">教师ID</param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public Task<PagedList<DeptDto>> FindDeptByTeacherAndPage(int teacherId, int pageIndex = 1, int pageSize = 10);   
     }
 }
