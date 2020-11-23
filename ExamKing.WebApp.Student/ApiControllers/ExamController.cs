@@ -31,44 +31,34 @@ namespace ExamKing.WebApp.Student
         /// 查询正在考试列表
         /// </summary>
         /// <returns></returns>
-        public async Task<PagedList<ExamOutput>> GetExamOnlineList()
+        public async Task<PagedList<ExamQuestionOutput>> GetExamOnlineList()
         {
             var student = await GetStudent();
             var exams = await _examService.FindExamOnlineByClassesAndPage(student.ClassesId);
-            return exams.Adapt<PagedList<ExamOutput>>();
+            return exams.Adapt<PagedList<ExamQuestionOutput>>();
         }
         
         /// <summary>
         /// 查询未考试列表
         /// </summary>
         /// <returns></returns>
-        public async Task<PagedList<ExamOutput>> GetExamWaitList()
+        public async Task<PagedList<ExamQuestionOutput>> GetExamWaitList()
         {
             var student = await GetStudent();
             var exams = await _examService.FindExamWaitByClassesAndPage(student.ClassesId);
-            return exams.Adapt<PagedList<ExamOutput>>();
+            return exams.Adapt<PagedList<ExamQuestionOutput>>();
         }
         
         /// <summary>
         /// 查询已考试列表
         /// </summary>
         /// <returns></returns>
-        public async Task<PagedList<ExamOutput>> GetExamFinshList()
+        public async Task<PagedList<ExamQuestionOutput>> GetExamFinshList()
         {
             var student = await GetStudent();
             var exams = await _examService.FindExamFinshByClassesAndPage(student.ClassesId);
-            return exams.Adapt<PagedList<ExamOutput>>();
+            return exams.Adapt<PagedList<ExamQuestionOutput>>();
         }
         
-        /// <summary>
-        /// 查询已缺考列表
-        /// </summary>
-        /// <returns></returns>
-        public async Task<PagedList<ExamOutput>> GetExamNoneList()
-        {
-            var student = await GetStudent();
-            var exams = await _examService.FindExamNoneByClassesAndPage(student.ClassesId);
-            return exams.Adapt<PagedList<ExamOutput>>();
-        }
     }
 }
