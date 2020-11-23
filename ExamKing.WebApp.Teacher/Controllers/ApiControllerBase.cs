@@ -37,9 +37,7 @@ namespace ExamKing.WebApp.Teacher
         protected async Task<TeacherDto> GetTeacher()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
-            var id = authorizationManager.GetUserId();
-            var teacherService = App.GetService<ITeacherService>();
-            return await teacherService.FindTeacherById(id);
+            return await authorizationManager.GetTeacher();
         }
     }
 }

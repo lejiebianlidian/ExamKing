@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using ExamKing.Application.Mappers;
+
 namespace ExamKing.WebApp.Teacher
 {
     /// <summary>
@@ -6,10 +9,10 @@ namespace ExamKing.WebApp.Teacher
     public interface IAuthorizationManager
     {
         /// <summary>
-        /// 获取用户 Id
+        /// 获取教师实体
         /// </summary>
         /// <returns></returns>
-        int GetUserId();
+        Task<TeacherDto> GetTeacher();
 
         /// <summary>
         /// 检查授权

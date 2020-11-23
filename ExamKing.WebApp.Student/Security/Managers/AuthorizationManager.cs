@@ -1,5 +1,9 @@
 using System.Security.Claims;
+using System.Threading.Tasks;
+using ExamKing.Application.Mappers;
+using ExamKing.Application.Services;
 using ExamKing.WebApp.Admin;
+using Furion;
 using Furion.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 
@@ -25,12 +29,16 @@ namespace ExamKing.WebApp.Student
         }
 
         /// <summary>
-        /// 获取用户Id
+        /// 获取学生实体
         /// </summary>
         /// <returns></returns>
-        public int GetUserId()
+        public async Task<StudentDto> GetStudent()
         {
-            return int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue("UserId"));
+            var studentService = App.GetService<IStudentService>();
+            var stduent =
+                await studentService.FindStudentById(
+                    int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue("UserId")));
+            return stduent;
         }
 
         /// <summary>

@@ -37,9 +37,7 @@ namespace ExamKing.WebApp.Student
         protected async Task<StudentDto> GetStudent()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
-            var studentId = authorizationManager.GetUserId();
-            var studentService = App.GetService<IStudentService>();
-            return await studentService.FindStudentById(studentId);
+            return await authorizationManager.GetStudent();
         }
     }
 }

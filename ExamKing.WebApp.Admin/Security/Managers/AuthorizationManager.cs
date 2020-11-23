@@ -1,7 +1,12 @@
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using ExamKing.Application.Mappers;
+using ExamKing.Application.Services;
+using Furion;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
+using Mapster;
 using Microsoft.AspNetCore.Http;
 
 namespace ExamKing.WebApp.Admin
@@ -29,9 +34,12 @@ namespace ExamKing.WebApp.Admin
         /// 获取用户Id
         /// </summary>
         /// <returns></returns>
-        public int GetUserId()
+        public async Task<AdminDto> GetAdmin()
         {
-            return int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue("UserId"));
+            var adminService = App.GetService<IManageService>();
+            var admin = await adminService.FindAdminById(
+                int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue("UserId")));
+            return admin;
         }
 
         /// <summary>

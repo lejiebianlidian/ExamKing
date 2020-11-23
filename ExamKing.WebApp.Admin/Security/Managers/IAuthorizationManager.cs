@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using ExamKing.Application.Mappers;
+
 namespace ExamKing.WebApp.Admin
 {
     /// <summary>
@@ -6,10 +9,10 @@ namespace ExamKing.WebApp.Admin
     public interface IAuthorizationManager
     {
         /// <summary>
-        /// 获取用户 Id
+        /// 获取管理员实体
         /// </summary>
         /// <returns></returns>
-        int GetUserId();
+        Task<AdminDto> GetAdmin();
 
         /// <summary>
         /// 检查授权

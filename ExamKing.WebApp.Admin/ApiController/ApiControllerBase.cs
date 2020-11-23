@@ -36,9 +36,7 @@ namespace ExamKing.WebApp.Admin
         protected async Task<AdminDto> GetAdmin()
         {
             var authorizationManager = App.GetService<IAuthorizationManager>();
-            var id = authorizationManager.GetUserId();
-            var adminService = App.GetService<IManageService>();
-            return await adminService.FindAdminById(id);
+            return await authorizationManager.GetAdmin();
         }
     }
 }
