@@ -206,6 +206,13 @@ namespace ExamKing.Application.Services
                             CreateTime = x.Dept.CreateTime,
                             DeptName = x.Dept.DeptName
                         }
+                    }).ToList(),
+                    Examquestions = u.Examquestions.Select(x => new TbExamquestion
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                        QuestionId = x.QuestionId,
+                        Score = x.Score,
                     }).ToList()
                 })
                 .FirstOrDefaultAsync(u => u.Id == id);

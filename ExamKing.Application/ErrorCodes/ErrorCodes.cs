@@ -129,4 +129,16 @@ namespace ExamKing.Application.ErrorCodes
         [ErrorCodeItemMetadata("成绩不存在")]
         k2001
     }
+    
+    /// <summary>
+    /// 答题错误码
+    /// </summary>
+    [ErrorCodeType]
+    public enum ExamAnswerScoreErrorCodes
+    {
+        [ErrorCodeItemMetadata("题目不存在")]
+        d2101,
+        [ErrorCodeItemMetadata("请不要重复答题")]
+        d2102
+    }
 }

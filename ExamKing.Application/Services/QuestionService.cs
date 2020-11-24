@@ -227,5 +227,144 @@ namespace ExamKing.Application.Services
             var list = await pageResult.ToListAsync();
             return list.Adapt<List<ExamquestionDto>>();
         }
+
+        /// <summary>
+        /// 根据考试查询学生全部是非题和答题信息
+        /// </summary>
+        /// <param name="id">考试ID</param>
+        /// <param name="studentId">学生ID</param>
+        /// <returns></returns>
+        public async Task<List<ExamquestionDto>> FindJudgeAndAnswerByExamAndStudent(int id, int studentId)
+        {
+            var pageResult = from j in _repository.Change<TbJudge>().AsQueryable()
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Judge) && q.ExamId==id
+                join s in _repository.Change<TbStuanswerdetail>().AsQueryable() on q.Id equals s.QuestionId where s.StuId == studentId
+                select new ExamquestionDto
+                {
+                    Id = q.Id,
+                    QuestionType = q.QuestionType,
+                    ExamId = q.ExamId,
+                    QuestionId = q.QuestionId,
+                    Score = q.Score,
+                    Judge = new JudgeDto
+                    {
+                        Id = j.Id,
+                        Question = j.Question,
+                        Answer = j.Answer,
+                        Ideas = j.Ideas,
+                        CreateTime = j.CreateTime
+                    },
+                    Stuanswerdetail = new StuanswerdetailDto
+                    {
+                        Id = s.Id,
+                        StuId = s.StuId,
+                        ExamId = s.ExamId,
+                        QuestionId = s.QuestionId,
+                        QuestionType = s.QuestionType,
+                        Stuanswer = s.Stuanswer,
+                        Answer = s.Answer,
+                        Isright = s.Isright,
+                        CreateTime = s.CreateTime
+                    }
+                };
+            var list = await pageResult.ToListAsync();
+            return list.Adapt<List<ExamquestionDto>>();
+        }
+
+        /// <summary>
+        /// 根据考试查询学生全部多选题和答题信息
+        /// </summary>
+        /// <param name="id">考试ID</param>
+        /// <param name="studentId">学生ID</param>
+        /// <returns></returns>
+        public async Task<List<ExamquestionDto>> FindSelectAndAnswerByExamAndStudent(int id, int studentId)
+        {
+            var pageResult = from j in _repository.Change<TbSelect>().AsQueryable()
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Select) && q.ExamId==id
+                join s in _repository.Change<TbStuanswerdetail>().AsQueryable() on q.Id equals s.QuestionId where s.StuId == studentId
+                select new ExamquestionDto
+                {
+                    Id = q.Id,
+                    QuestionType = q.QuestionType,
+                    ExamId = q.ExamId,
+                    QuestionId = q.QuestionId,
+                    Score = q.Score,
+                    Select = new SelectDto
+                    {
+                        Id = j.Id,
+                        Question = j.Question,
+                        Answer = j.Answer,
+                        IsSingle = j.IsSingle,
+                        OptionA = j.OptionA,
+                        OptionB = j.OptionB,
+                        OptionC = j.OptionC,
+                        OptionD = j.OptionD,
+                        Ideas = j.Ideas,
+                        CreateTime = j.CreateTime,
+                    },
+                    Stuanswerdetail = new StuanswerdetailDto
+                    {
+                        Id = s.Id,
+                        StuId = s.StuId,
+                        ExamId = s.ExamId,
+                        QuestionId = s.QuestionId,
+                        QuestionType = s.QuestionType,
+                        Stuanswer = s.Stuanswer,
+                        Answer = s.Answer,
+                        Isright = s.Isright,
+                        CreateTime = s.CreateTime
+                    }
+                };
+            var list = await pageResult.ToListAsync();
+            return list.Adapt<List<ExamquestionDto>>();
+        }
+
+        /// <summary>
+        /// 根据考试查询学生全部单选题和答题信息
+        /// </summary>
+        /// <param name="id">考试ID</param>
+        /// <param name="studentId">学生ID</param>
+        /// <returns></returns>
+        public async Task<List<ExamquestionDto>> FindSingleAndAnswerByExamAndStudent(int id, int studentId)
+        {
+            var pageResult = from j in _repository.Change<TbSelect>().AsQueryable()
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Single) && q.ExamId==id
+                join s in _repository.Change<TbStuanswerdetail>().AsQueryable() on q.Id equals s.QuestionId where s.StuId == studentId
+                select new ExamquestionDto
+                {
+                    Id = q.Id,
+                    QuestionType = q.QuestionType,
+                    ExamId = q.ExamId,
+                    QuestionId = q.QuestionId,
+                    Score = q.Score,
+                    Single = new SelectDto
+                    {
+                        Id = j.Id,
+                        Question = j.Question,
+                        Answer = j.Answer,
+                        IsSingle = j.IsSingle,
+                        OptionA = j.OptionA,
+                        OptionB = j.OptionB,
+                        OptionC = j.OptionC,
+                        OptionD = j.OptionD,
+                        Ideas = j.Ideas,
+                        CreateTime = j.CreateTime,
+                    },
+                    Stuanswerdetail = new StuanswerdetailDto
+                    {
+                        Id = s.Id,
+                        StuId = s.StuId,
+                        ExamId = s.ExamId,
+                        QuestionId = s.QuestionId,
+                        QuestionType = s.QuestionType,
+                        Stuanswer = s.Stuanswer,
+                        Answer = s.Answer,
+                        Isright = s.Isright,
+                        CreateTime = s.CreateTime
+                    }
+                };
+            var list = await pageResult.ToListAsync();
+            return list.Adapt<List<ExamquestionDto>>();
+        }
     }
 }

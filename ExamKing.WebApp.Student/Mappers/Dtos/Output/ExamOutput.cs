@@ -76,6 +76,15 @@ namespace ExamKing.WebApp.Student
         /// 多选题分数
         /// </summary>
         public int SelectScore { get; set; }
-
+        
+        /// <summary>
+        /// 课程
+        /// </summary>
+        public CourseSubOutput Course { get; set; }
+        
+        /// <summary>
+        /// 教师
+        /// </summary>
+        public TeacherSubOutput Teacher { get; set; }
     }
 }

@@ -101,6 +101,11 @@ namespace ExamKing.Application.Mappers
         /// 课程
         /// </summary>
         public CourseDto Course { get; set; }
+        
+        /// <summary>
+        /// 教师
+        /// </summary>
+        public TeacherDto Teacher { get; set; }
 
         /// <summary>
         /// 试卷题目

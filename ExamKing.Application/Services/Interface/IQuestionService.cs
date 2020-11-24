@@ -51,5 +51,28 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public Task<List<ExamquestionDto>> FindSingleByExam(int id);
 
+        /// <summary>
+        /// 根据考试查询学生全部是非题和答题信息
+        /// </summary>
+        /// <param name="id">考试ID</param>
+        /// <param name="studentId">学生ID</param>
+        /// <returns></returns>
+        public Task<List<ExamquestionDto>> FindJudgeAndAnswerByExamAndStudent(int id, int studentId);
+
+        /// <summary>
+        /// 根据考试查询学生全部选择题和答题信息
+        /// </summary>
+        /// <param name="id">考试ID</param>
+        /// <param name="studentId">学生ID</param>
+        /// <returns></returns>
+        public Task<List<ExamquestionDto>> FindSelectAndAnswerByExamAndStudent(int id, int studentId);
+
+        /// <summary>
+        /// 根据考试查询学生全部单选题和答题信息
+        /// </summary>
+        /// <param name="id">考试ID</param>
+        /// <param name="studentId">学生ID</param>
+        /// <returns></returns>
+        public Task<List<ExamquestionDto>> FindSingleAndAnswerByExamAndStudent(int id, int studentId);
     }
 }

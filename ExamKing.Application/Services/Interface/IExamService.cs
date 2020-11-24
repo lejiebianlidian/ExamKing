@@ -120,5 +120,6 @@ namespace ExamKing.Application.Services
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public Task<PagedList<ExamDto>> FindExamByKeywordAndStudentAndPage(int classesId, string keyword, int pageIndex = 1, int pageSize = 10);
+        
     }
 }
