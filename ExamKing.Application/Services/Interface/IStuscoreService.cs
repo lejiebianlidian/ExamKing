@@ -21,6 +21,13 @@ namespace ExamKing.Application.Services
             int pageSize = 10);
 
         /// <summary>
+        /// 查询成绩详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<StuscoreDto> FindScoreById(int id);
+        
+        /// <summary>
         /// 查询学生最新一条成绩接口
         /// </summary>
         /// <param name="studentId"></param>

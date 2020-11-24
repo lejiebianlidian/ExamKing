@@ -5,6 +5,7 @@ using ExamKing.Application.Consts;
 using ExamKing.Application.Mappers;
 using ExamKing.Application.Services;
 using Mapster;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ExamKing.WebApp.Student
 {
@@ -18,6 +19,7 @@ namespace ExamKing.WebApp.Student
         private readonly IStuanswerdetailService _stuanswerdetailService;
         private readonly ISelectService _selectService;
         private readonly IJudgeService _judgeService;
+        private readonly IStuscoreService _stuscoreService;
         
         /// <summary>
         /// 依赖注入 
@@ -27,23 +29,30 @@ namespace ExamKing.WebApp.Student
             IQuestionService questionService,
             IStuanswerdetailService stuanswerdetailService,
             ISelectService selectService,
-            IJudgeService judgeService)
+            IJudgeService judgeService,
+            IStuscoreService stuscoreService)
         {
             _examService = examService;
             _questionService = questionService;
             _stuanswerdetailService = stuanswerdetailService;
             _selectService = selectService;
             _judgeService = judgeService;
+            _stuscoreService = stuscoreService;
         }
 
         /// <summary>
         /// 查询正在考试列表
         /// </summary>
         /// <returns></returns>
-        public async Task<PagedList<ExamQuestionOutput>> GetExamOnlineList()
+        public async Task<PagedList<ExamQuestionOutput>> GetExamOnlineList(
+            [FromQuery] int pageIndex = 1,
+            [FromQuery] int pageSize = 10)
         {
             var student = await GetStudent();
-            var exams = await _examService.FindExamOnlineByClassesAndPage(student.ClassesId);
+            var exams = await _examService.FindExamOnlineByClassesAndPage(
+                student.ClassesId,
+                pageIndex,
+                pageSize);
             return exams.Adapt<PagedList<ExamQuestionOutput>>();
         }
         
@@ -51,10 +60,15 @@ namespace ExamKing.WebApp.Student
         /// 查询未考试列表
         /// </summary>
         /// <returns></returns>
-        public async Task<PagedList<ExamQuestionOutput>> GetExamWaitList()
+        public async Task<PagedList<ExamQuestionOutput>> GetExamWaitList(
+            [FromQuery] int pageIndex = 1,
+            [FromQuery] int pageSize = 10)
         {
             var student = await GetStudent();
-            var exams = await _examService.FindExamWaitByClassesAndPage(student.ClassesId);
+            var exams = await _examService.FindExamWaitByClassesAndPage(
+                student.ClassesId,
+                pageIndex,
+                pageSize);
             return exams.Adapt<PagedList<ExamQuestionOutput>>();
         }
         
@@ -62,10 +76,15 @@ namespace ExamKing.WebApp.Student
         /// 查询已结束列表
         /// </summary>
         /// <returns></returns>
-        public async Task<PagedList<ExamQuestionOutput>> GetExamFinshList()
+        public async Task<PagedList<ExamQuestionOutput>> GetExamFinshList(
+            [FromQuery] int pageIndex = 1,
+            [FromQuery] int pageSize = 10)
         {
             var student = await GetStudent();
-            var exams = await _examService.FindExamFinshByClassesAndPage(student.ClassesId);
+            var exams = await _examService.FindExamFinshByClassesAndPage(
+                student.ClassesId,
+                pageIndex,
+                pageSize);
             return exams.Adapt<PagedList<ExamQuestionOutput>>();
         }
 
@@ -217,6 +236,35 @@ namespace ExamKing.WebApp.Student
                 return question.Ideas;
             }
         }
-        
+
+        /// <summary>
+        /// 查询学生成绩列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<StuscoreExamOutput>> GetExamScoreList(
+            [FromQuery] int pageIndex = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var student = await GetStudent();
+            var scores = await _stuscoreService.FindScoreAllByStudentAndPage(
+                student.Id,
+                pageIndex,
+                pageSize);
+            return scores.Adapt<PagedList<StuscoreExamOutput>>();
+        }
+
+        /// <summary>
+        /// 查询考试结果详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<ExamResultOutput> GetExamResult(int id)
+        {
+            var student = await GetStudent();
+            var result = await _examService.FindExamResultByStudent(id, student.Id);
+            return result.Adapt<ExamResultOutput>();
+        }
     }
 }

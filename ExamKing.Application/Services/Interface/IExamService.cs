@@ -120,6 +120,13 @@ namespace ExamKing.Application.Services
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public Task<PagedList<ExamDto>> FindExamByKeywordAndStudentAndPage(int classesId, string keyword, int pageIndex = 1, int pageSize = 10);
-        
+
+        /// <summary>
+        /// 根据学生查询考试结果信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        public Task<ExamDto> FindExamResultByStudent(int id, int studentId);
     }
 }

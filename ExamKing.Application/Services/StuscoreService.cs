@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExamKing.Application.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using Furion.DatabaseAccessor;
@@ -49,6 +50,13 @@ namespace ExamKing.Application.Services
                     ExamId = u.ExamId,
                     Score = u.Score,
                     CreateTime = u.CreateTime,
+                    Exam = new TbExam
+                    {
+                        Id = u.Exam.Id,
+                        ExamName = u.Exam.ExamName,
+                        StartTime = u.Exam.StartTime,
+                        Duration = u.Exam.Duration,
+                    }
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
 
@@ -69,6 +77,42 @@ namespace ExamKing.Application.Services
                 .OrderByDescending(u=>u.CreateTime)
                 .FirstOrDefaultAsync();
             return examScore?.Adapt<StuscoreDto>();
+        }
+
+        /// <summary>
+        /// 查询成绩详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<StuscoreDto> FindScoreById(int id)
+        {
+            var score = await _stuscoreRepository
+                .Entities
+                .Where(u => u.Id == id)
+                .Select(u => new TbStuscore
+                {
+                    Id = u.Id,
+                    StuId = u.StuId,
+                    CourseId = u.CourseId,
+                    ExamId = u.ExamId,
+                    Score = u.Score,
+                    CreateTime = u.CreateTime,
+                    Exam = new TbExam
+                    {
+                        Id = u.Exam.Id,
+                        ExamName = u.Exam.ExamName,
+                        StartTime = u.Exam.StartTime,
+                        Duration = u.Exam.Duration,
+                    }
+                })
+                .FirstOrDefaultAsync();
+            if (score==null)
+            {
+                throw Oops.Oh(ExamScoreErrorCodes.k2001);
+            }
+
+            return score.Adapt<StuscoreDto>();
         }
     }
 }

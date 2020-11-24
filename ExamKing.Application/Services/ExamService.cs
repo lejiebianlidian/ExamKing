@@ -562,5 +562,67 @@ namespace ExamKing.Application.Services
 
             return pageResult.Adapt<PagedList<ExamDto>>();
         }
+
+        /// <summary>
+        /// 根据学生查询考试结果信息
+        /// </summary>
+        /// <param name="id">考试ID</param>
+        /// <param name="studentId">学生ID</param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<ExamDto> FindExamResultByStudent(int id, int studentId)
+        {
+            var result = await _examRepository
+                .Entities.AsNoTracking()
+                .Where(u=>u.Id==id && u.IsFinish == "1")
+                .Include(u=>u.Stuanswerdetails.Where(x=>x.StuId==studentId))
+                .Include(u=>u.Stuscores.Where(x=>x.StuId
+                ==studentId))
+                .Select(u => new TbExam
+                {
+                    Id = u.Id,
+                    ExamName = u.ExamName,
+                    CourseId = u.CourseId,
+                    TeacherId = u.TeacherId,
+                    StartTime = u.StartTime,
+                    EndTime = u.EndTime,
+                    Duration = u.Duration,
+                    IsEnable = u.IsEnable,
+                    IsFinish = u.IsFinish,
+                    CreateTime = u.CreateTime,
+                    ExamScore = u.ExamScore,
+                    JudgeScore = u.JudgeScore,
+                    SingleScore = u.SingleScore,
+                    SelectScore = u.SelectScore,
+                    Course = new TbCourse
+                    {
+                        Id = u.Course.Id,
+                        CourseName = u.Course.CourseName
+                    },
+                    Teacher = new TbTeacher
+                    {
+                        Id = u.Teacher.Id,
+                        TeacherName = u.Teacher.TeacherName
+                    },
+                    Stuanswerdetails = u.Stuanswerdetails.Select(x=>new TbStuanswerdetail
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                        Isright = x.Isright,
+                    }).ToList(),
+                    Stuscores = u.Stuscores.Select(x=>new TbStuscore
+                    {
+                        Id = x.Id,
+                        Score = x.Score,
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+            
+            if (result==null)
+            {
+                throw Oops.Oh(ExamErrorCodes.s1901);
+            }
+
+            return result.Adapt<ExamDto>();
+        }
     }
 }

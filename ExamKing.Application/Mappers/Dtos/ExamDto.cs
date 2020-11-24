@@ -108,6 +108,16 @@ namespace ExamKing.Application.Mappers
         public TeacherDto Teacher { get; set; }
 
         /// <summary>
+        /// 答题
+        /// </summary>
+        public ICollection<StuanswerdetailDto> Stuanswerdetails { get; set; }
+
+        /// <summary>
+        /// 分数
+        /// </summary>
+        public ICollection<StuscoreDto> Stuscores { get; set; }
+        
+        /// <summary>
         /// 试卷题目
         /// </summary>
         public ICollection<ExamquestionDto> Examquestions { get; set; }
