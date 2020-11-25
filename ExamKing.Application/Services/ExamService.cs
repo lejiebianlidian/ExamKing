@@ -196,17 +196,6 @@ namespace ExamKing.Application.Services
                         Id = u.Teacher.Id,
                         TeacherName = u.Teacher.TeacherName,
                     },
-                    Classes = u.Classes.Select(x => new TbClass
-                    {
-                        Id = x.Id,
-                        ClassesName = x.ClassesName,
-                        DeptId = x.DeptId,
-                        Dept = new TbDept
-                        {
-                            CreateTime = x.Dept.CreateTime,
-                            DeptName = x.Dept.DeptName
-                        }
-                    }).ToList(),
                     Examquestions = u.Examquestions.Select(x => new TbExamquestion
                     {
                         Id = x.Id,
@@ -574,8 +563,8 @@ namespace ExamKing.Application.Services
         {
             var result = await _examRepository
                 .Entities.AsNoTracking()
-                .Where(u=>u.Id==id && u.IsFinish == "1")
-                .Include(u=>u.Stuanswerdetails.Where(x=>x.StuId==studentId))
+                .Where(u=>u.Id==id && u.IsEnable == "1")
+                .Include(u=>u.Stuanswerdetails.Where(x=>x.StuId==studentId && x.ExamId==id))
                 .Include(u=>u.Stuscores.Where(x=>x.StuId
                 ==studentId))
                 .Select(u => new TbExam
@@ -624,5 +613,6 @@ namespace ExamKing.Application.Services
 
             return result.Adapt<ExamDto>();
         }
+
     }
 }

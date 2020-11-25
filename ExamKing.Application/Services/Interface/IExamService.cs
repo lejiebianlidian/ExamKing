@@ -53,7 +53,6 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public Task<ExamDto> FindExamById(int id);
 
-        
         /// <summary>
         /// 启用试卷
         /// </summary>
@@ -128,5 +127,6 @@ namespace ExamKing.Application.Services
         /// <param name="studentId"></param>
         /// <returns></returns>
         public Task<ExamDto> FindExamResultByStudent(int id, int studentId);
+
     }
 }

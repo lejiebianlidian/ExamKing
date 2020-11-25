@@ -266,5 +266,6 @@ namespace ExamKing.WebApp.Student
             var result = await _examService.FindExamResultByStudent(id, student.Id);
             return result.Adapt<ExamResultOutput>();
         }
+        
     }
 }
