@@ -268,7 +268,7 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(ExamErrorCodes.s1901);
             }
 
-            exam.IsFinish = "1";
+            exam.IsFinish = "0";
             await exam.UpdateExcludeAsync(u => u.CreateTime);
             return exam.Adapt<ExamDto>();
         }
