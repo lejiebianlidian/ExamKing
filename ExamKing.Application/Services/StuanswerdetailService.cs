@@ -209,7 +209,8 @@ namespace ExamKing.Application.Services
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
                 .Where(u => u.IsFinish == "1")
-                .Include(u => u.Stuanswerdetails.Where(x => x.StuId == studentId && x.Isright == "0"))
+                .Include(u => u.Stuanswerdetails
+                    .Where(x => x.StuId == studentId))
                 .Select(u => new TbExam
                 {
                     Id = u.Id,
@@ -217,7 +218,40 @@ namespace ExamKing.Application.Services
                     Stuanswerdetails = u.Stuanswerdetails.Select(x => new TbStuanswerdetail
                     {
                         Id = x.Id,
-                        QuestionType = x.QuestionType
+                        QuestionType = x.QuestionType,
+                        Isright = x.Isright
+                    }).ToList()
+                })
+                .ToPagedListAsync(pageIndex, pageSize);
+
+            return wrongs.Adapt<PagedList<ExamDto>>();
+        }
+        
+        /// <summary>
+        /// 根据学生查询今日考试错题集列表
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<ExamDto>> FindWrongTodayByStudentAndPage(int studentId, int pageIndex = 1,
+            int pageSize = 10)
+        {
+            var today = DateTimeOffset.UtcNow;
+            var wrongs = await _answerRepository.Change<TbExam>()
+                .Entities.AsNoTracking()
+                .Where(u => u.IsFinish == "1")
+                .Include(u => u.Stuanswerdetails
+                    .Where(x => x.StuId == studentId && x.CreateTime.Date == today.Date))
+                .Select(u => new TbExam
+                {
+                    Id = u.Id,
+                    ExamName = u.ExamName,
+                    Stuanswerdetails = u.Stuanswerdetails.Select(x => new TbStuanswerdetail
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                        Isright = x.Isright
                     }).ToList()
                 })
                 .ToPagedListAsync(pageIndex, pageSize);

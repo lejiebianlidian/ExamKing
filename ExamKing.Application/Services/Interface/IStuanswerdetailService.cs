@@ -53,13 +53,22 @@ namespace ExamKing.Application.Services
         /// <summary>
         /// 根据学生查询考试错题集列表
         /// </summary>
-        /// <param name="examId">考试ID</param>
         /// <param name="studentId">学生ID</param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public Task<PagedList<ExamDto>> FindWrongByStudentAndPage(int studentId, int pageIndex = 1, int pageSize = 10);
 
+        /// <summary>
+        /// 根据学生查询今日考试错题集列表
+        /// </summary>
+        /// <param name="studentId">学生ID</param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public Task<PagedList<ExamDto>> FindWrongTodayByStudentAndPage(int studentId, int pageIndex = 1, int pageSize = 10);
+
+        
         /// <summary>
         /// 根据学生查询错题本详情
         /// </summary>

@@ -38,6 +38,23 @@ namespace ExamKing.WebApp.Student
             
             return wrongs.Adapt<PagedList<ExamWrongSubOutput>>();
         }
+        
+        /// <summary>
+        /// 查询今日错题集合列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<PagedList<ExamWrongSubOutput>> GetWrongTodayList(
+            [FromQuery] int pageIndex = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var student = await GetStudent();
+            var wrongs = await _stuanswerdetail.FindWrongTodayByStudentAndPage(
+                student.Id, pageIndex, pageSize);
+            
+            return wrongs.Adapt<PagedList<ExamWrongSubOutput>>();
+        }
 
         /// <summary>
         /// 获取错题本信息

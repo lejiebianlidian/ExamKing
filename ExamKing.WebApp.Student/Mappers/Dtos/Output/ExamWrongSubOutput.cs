@@ -31,5 +31,10 @@ namespace ExamKing.WebApp.Student
         /// 题目类型
         /// </summary>
         public string QuestionType { get; set; }
+
+        /// <summary>
+        /// 是否正确
+        /// </summary>
+        public string Isright { get; set; }
     }
 }
