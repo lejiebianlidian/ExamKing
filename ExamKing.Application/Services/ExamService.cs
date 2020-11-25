@@ -563,7 +563,7 @@ namespace ExamKing.Application.Services
         {
             var result = await _examRepository
                 .Entities.AsNoTracking()
-                .Where(u=>u.Id==id && u.IsEnable == "1")
+                .Where(u=>u.Id==id)
                 .Include(u=>u.Stuanswerdetails.Where(x=>x.StuId==studentId && x.ExamId==id))
                 .Include(u=>u.Stuscores.Where(x=>x.StuId
                 ==studentId))
