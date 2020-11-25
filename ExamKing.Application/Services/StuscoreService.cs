@@ -74,6 +74,22 @@ namespace ExamKing.Application.Services
             var examScore = await _stuscoreRepository
                 .Entities.AsNoTracking()
                 .Where(u => u.StuId == studentId)
+                .Select(u=>new TbStuscore
+                {
+                    Id = u.Id,
+                    StuId = u.StuId,
+                    CourseId = u.CourseId,
+                    ExamId = u.ExamId,
+                    Score = u.Score,
+                    CreateTime = u.CreateTime,
+                    Exam = new TbExam
+                    {
+                        Id = u.Exam.Id,
+                        ExamName = u.Exam.ExamName,
+                        StartTime = u.Exam.StartTime,
+                        Duration = u.Exam.Duration
+                    },
+                })
                 .OrderByDescending(u=>u.CreateTime)
                 .FirstOrDefaultAsync();
             return examScore?.Adapt<StuscoreDto>();

@@ -31,5 +31,10 @@ namespace ExamKing.WebApp.Student
         /// 创建时间
         /// </summary>
         public DateTimeOffset CreateTime { get; set; }
+        
+        /// <summary>
+        /// 考试
+        /// </summary>
+        public ExamSubOoutput Exam { get; set; }
     }
 }
