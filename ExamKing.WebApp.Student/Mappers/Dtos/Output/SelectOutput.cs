@@ -42,10 +42,5 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         public string OptionD { get; set; }
 
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTimeOffset CreateTime { get; set; }
-
     }
 }

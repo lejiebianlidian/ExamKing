@@ -100,7 +100,7 @@ namespace ExamKing.WebApp.Student
         }
         
         /// <summary>
-        /// 查询考试是非题列表
+        /// 查询考试是非题
         /// </summary>
         /// <param name="id">考试id</param>
         /// <returns></returns>
@@ -112,7 +112,7 @@ namespace ExamKing.WebApp.Student
         }
         
         /// <summary>
-        /// 查询考试多选题列表
+        /// 查询考试多选题
         /// </summary>
         /// <param name="id">考试id</param>
         /// <returns></returns>
@@ -124,7 +124,7 @@ namespace ExamKing.WebApp.Student
         }
         
         /// <summary>
-        /// 查询考试单选题列表
+        /// 查询考试单选题
         /// </summary>
         /// <param name="id">考试id</param>
         /// <returns></returns>
@@ -136,7 +136,7 @@ namespace ExamKing.WebApp.Student
         }
 
         /// <summary>
-        /// 查询考试是非及答题信息列表
+        /// 查询考试是非及答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
         /// <returns></returns>
@@ -150,7 +150,7 @@ namespace ExamKing.WebApp.Student
         }
         
         /// <summary>
-        /// 查询考试单选题及答题信息列表
+        /// 查询考试单选题及答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
         /// <returns></returns>
@@ -164,7 +164,7 @@ namespace ExamKing.WebApp.Student
         }
         
         /// <summary>
-        /// 查询考试多选题及答题信息列表
+        /// 查询考试多选题及答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
         /// <returns></returns>

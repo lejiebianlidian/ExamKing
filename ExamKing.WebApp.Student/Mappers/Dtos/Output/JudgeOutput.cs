@@ -31,10 +31,5 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         public int TeacherId { get; set; }
         
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTimeOffset CreateTime { get; set; }
-        
     }
 }

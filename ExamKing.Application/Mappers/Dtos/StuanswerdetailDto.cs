@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ExamKing.Application.Mappers
 {
@@ -43,5 +44,20 @@ namespace ExamKing.Application.Mappers
         /// 创建时间
         /// </summary>
         public DateTimeOffset CreateTime { get; set; }
+
+        /// <summary>
+        /// 试卷
+        /// </summary>
+        public ExamDto Exam { get; set; }
+
+        /// <summary>
+        /// 学生
+        /// </summary>
+        public StudentDto Student { get; set; }
+        
+        /// <summary>
+        /// 题目
+        /// </summary>
+        public ICollection<ExamquestionDto> Examquestion { get; set; }
     }
 }
