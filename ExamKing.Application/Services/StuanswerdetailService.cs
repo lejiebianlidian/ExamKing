@@ -303,8 +303,9 @@ namespace ExamKing.Application.Services
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
                 join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
+                where a.StuId == studentId && a.Isright == "1"
                 join s in _answerRepository.Change<TbSelect>().AsQueryable() on q.QuestionId equals s.Id
-                where q.ExamId == examId && a.StuId == studentId && q.QuestionType == QuestionTypeConst.Single
+                where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Single
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -315,6 +316,7 @@ namespace ExamKing.Application.Services
                         Id = a.Id,
                         Stuanswer = a.Stuanswer,
                         Answer = a.Answer,
+                        Isright = a.Isright
                     },
                     Single = new SelectDto
                     {
@@ -347,8 +349,9 @@ namespace ExamKing.Application.Services
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
                 join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
+                where a.StuId == studentId && a.Isright == "1"
                 join s in _answerRepository.Change<TbSelect>().AsQueryable() on q.QuestionId equals s.Id
-                where q.ExamId == examId && a.StuId == studentId && q.QuestionType == QuestionTypeConst.Select
+                where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Select
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -359,6 +362,7 @@ namespace ExamKing.Application.Services
                         Id = a.Id,
                         Stuanswer = a.Stuanswer,
                         Answer = a.Answer,
+                        Isright = a.Isright
                     },
                     Select = new SelectDto
                     {
@@ -390,8 +394,9 @@ namespace ExamKing.Application.Services
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
                 join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
+                where a.StuId == studentId && a.Isright == "1"
                 join j in _answerRepository.Change<TbJudge>().AsQueryable() on q.QuestionId equals j.Id
-                where q.ExamId == examId && a.StuId == studentId && q.QuestionType == QuestionTypeConst.Judge
+                where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Judge
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -402,6 +407,7 @@ namespace ExamKing.Application.Services
                         Id = a.Id,
                         Stuanswer = a.Stuanswer,
                         Answer = a.Answer,
+                        Isright = a.Isright
                     },
                     Judge = new JudgeDto
                     {
