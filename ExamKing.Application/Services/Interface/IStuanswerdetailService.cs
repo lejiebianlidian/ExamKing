@@ -24,24 +24,6 @@ namespace ExamKing.Application.Services
         public Task<int> GetWrongAnswerTodayByStudent(int studentId);
 
         /// <summary>
-        /// 获取学生错题数量
-        /// </summary>
-        /// <param name="studentId"></param>
-        /// <param name="examId"></param>
-        /// <param name="questionType"></param>
-        /// <returns></returns>
-        public Task<int> GetWrongAnswerCountByStudent(int studentId, int examId, string questionType="all");
-
-        /// <summary>
-        /// 获取学生对题数量
-        /// </summary>
-        /// <param name="studentId"></param>
-        /// <param name="examId"></param>
-        /// <param name="questionType"></param>
-        /// <returns></returns>
-        public Task<int> GetSuccessAnswerCountByStudent(int studentId, int examId, string questionType="all");
-
-        /// <summary>
         /// 学生答题
         /// </summary>
         /// <param name="studentId">学生Id</param>

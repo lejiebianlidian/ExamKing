@@ -68,54 +68,6 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
-        /// 获取学生错题数量
-        /// </summary>
-        /// <param name="studentId"></param>
-        /// <param name="examId"></param>
-        /// <param name="questionType"></param>
-        /// <returns></returns>
-        public async Task<int> GetWrongAnswerCountByStudent(
-            int studentId,
-            int examId,
-            string questionType = "all")
-        {
-            var count = _answerRepository
-                .Entities.AsNoTracking()
-                .Where(u => u.ExamId == examId && u.StuId == studentId)
-                .Where(u => u.Isright == "0");
-            if (questionType != "all")
-            {
-                count = count.Where(u => u.QuestionType == questionType);
-            }
-
-            return await count.CountAsync();
-        }
-
-        /// <summary>
-        /// 获取学生对题数量
-        /// </summary>
-        /// <param name="studentId"></param>
-        /// <param name="examId"></param>
-        /// <param name="questionType"></param>
-        /// <returns></returns>
-        public async Task<int> GetSuccessAnswerCountByStudent(
-            int studentId,
-            int examId,
-            string questionType = "all")
-        {
-            var count = _answerRepository
-                .Entities.AsNoTracking()
-                .Where(u => u.ExamId == examId && u.StuId == studentId)
-                .Where(u => u.Isright == "1");
-            if (questionType != "all")
-            {
-                count = count.Where(u => u.QuestionType == questionType);
-            }
-
-            return await count.CountAsync();
-        }
-
-        /// <summary>
         /// 学生答题
         /// </summary>
         /// <param name="studentId">学生Id</param>
@@ -198,7 +150,6 @@ namespace ExamKing.Application.Services
         /// <summary>
         /// 根据学生查询考试错题集列表
         /// </summary>
-        /// <param name="examId"></param>
         /// <param name="studentId"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
@@ -209,7 +160,8 @@ namespace ExamKing.Application.Services
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
                 .Where(u => u.IsEnable == "1")
-                .Include(u=>u.Examquestions.Where(x=>x.ExamId==u.Id))
+                .Include(u=>u.Examquestions
+                    .Where(x=>x.ExamId==u.Id))
                 .Include(u => u.Stuanswerdetails
                     .Where(x => x.StuId == studentId && x.Isright == "0"))
                 .Select(u => new TbExam
