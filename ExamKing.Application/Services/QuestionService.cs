@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExamKing.Application.Consts;
+using ExamKing.Application.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
+using Furion.FriendlyException;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +28,7 @@ namespace ExamKing.Application.Services
         {
             _repository = repository;
         }
-        
+
         /// <summary>
         /// 根据考试查询是非题分页
         /// </summary>
@@ -34,10 +36,12 @@ namespace ExamKing.Application.Services
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamquestionDto>> FindJudgeByExamAndPage(int id, int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<ExamquestionDto>> FindJudgeByExamAndPage(int id, int pageIndex = 1,
+            int pageSize = 10)
         {
             var pageResult = from j in _repository.Change<TbJudge>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Judge) && q.ExamId==id
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Judge) && q.ExamId == id
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -65,10 +69,12 @@ namespace ExamKing.Application.Services
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<PagedList<ExamquestionDto>> FindSelectByExamAndPage(int id, int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<ExamquestionDto>> FindSelectByExamAndPage(int id, int pageIndex = 1,
+            int pageSize = 10)
         {
             var pageResult = from j in _repository.Change<TbSelect>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Select) && q.ExamId==id
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Select) && q.ExamId == id
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -102,10 +108,12 @@ namespace ExamKing.Application.Services
         /// <param name="pageSize"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<PagedList<ExamquestionDto>> FindSingleByExamAndPage(int id, int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedList<ExamquestionDto>> FindSingleByExamAndPage(int id, int pageIndex = 1,
+            int pageSize = 10)
         {
             var pageResult = from j in _repository.Change<TbSelect>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Single) && q.ExamId==id
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Single) && q.ExamId == id
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -139,7 +147,8 @@ namespace ExamKing.Application.Services
         public async Task<List<ExamquestionDto>> FindJudgeByExam(int id)
         {
             var pageResult = from j in _repository.Change<TbJudge>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Judge) && q.ExamId==id
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Judge) && q.ExamId == id
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -168,7 +177,8 @@ namespace ExamKing.Application.Services
         public async Task<List<ExamquestionDto>> FindSelectByExam(int id)
         {
             var pageResult = from j in _repository.Change<TbSelect>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Select) && q.ExamId==id
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Select) && q.ExamId == id
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -202,7 +212,8 @@ namespace ExamKing.Application.Services
         public async Task<List<ExamquestionDto>> FindSingleByExam(int id)
         {
             var pageResult = from j in _repository.Change<TbSelect>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Single) && q.ExamId==id
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Single) && q.ExamId == id
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -229,16 +240,17 @@ namespace ExamKing.Application.Services
         }
 
         /// <summary>
-        /// 根据考试查询学生全部是非题和答题信息
+        /// 根据考试查询学生是非题和答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
+        /// <param name="questionId">题目Id</param>
         /// <param name="studentId">学生ID</param>
         /// <returns></returns>
-        public async Task<List<ExamquestionDto>> FindJudgeAndAnswerByExamAndStudent(int id, int studentId)
+        public async Task<ExamquestionDto> FindJudgeAndAnswerByExamAndStudent(int id, int questionId, int studentId)
         {
             var pageResult = from j in _repository.Change<TbJudge>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Judge) && q.ExamId==id
-                join s in _repository.Change<TbStuanswerdetail>().AsQueryable() on q.Id equals s.QuestionId where s.StuId == studentId
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Judge) && q.ExamId == id && q.Id == questionId
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -253,35 +265,46 @@ namespace ExamKing.Application.Services
                         Answer = j.Answer,
                         Ideas = j.Ideas,
                         CreateTime = j.CreateTime
-                    },
-                    Stuanswerdetail = new StuanswerdetailDto
-                    {
-                        Id = s.Id,
-                        StuId = s.StuId,
-                        ExamId = s.ExamId,
-                        QuestionId = s.QuestionId,
-                        QuestionType = s.QuestionType,
-                        Stuanswer = s.Stuanswer,
-                        Answer = s.Answer,
-                        Isright = s.Isright,
-                        CreateTime = s.CreateTime
                     }
                 };
-            var list = await pageResult.ToListAsync();
-            return list.Adapt<List<ExamquestionDto>>();
+            var question = await pageResult.FirstOrDefaultAsync();
+            if (question == null)
+            {
+                throw Oops.Oh(ExamAnswerScoreErrorCodes.d2101);
+            }
+            // 查询答题详情
+            var answer = await _repository.Change<TbStuanswerdetail>()
+                .Entities.AsNoTracking()
+                .Where(u => u.ExamId == id && u.StuId == studentId && u.QuestionId == questionId)
+                .Select(s=>new TbStuanswerdetail
+                {
+                    Id = s.Id,
+                    StuId = s.StuId,
+                    ExamId = s.ExamId,
+                    QuestionId = s.QuestionId,
+                    QuestionType = s.QuestionType,
+                    Stuanswer = s.Stuanswer,
+                    Answer = s.Answer,
+                    Isright = s.Isright,
+                    CreateTime = s.CreateTime
+                })
+                .FirstOrDefaultAsync();
+            question.Stuanswerdetail = answer.Adapt<StuanswerdetailDto>();
+            return question.Adapt<ExamquestionDto>();
         }
 
         /// <summary>
-        /// 根据考试查询学生全部多选题和答题信息
+        /// 根据考试查询学生多选题和答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
+        /// <param name="questionId">题目Id</param>
         /// <param name="studentId">学生ID</param>
         /// <returns></returns>
-        public async Task<List<ExamquestionDto>> FindSelectAndAnswerByExamAndStudent(int id, int studentId)
+        public async Task<ExamquestionDto> FindSelectAndAnswerByExamAndStudent(int id, int questionId, int studentId)
         {
             var pageResult = from j in _repository.Change<TbSelect>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Select) && q.ExamId==id
-                join s in _repository.Change<TbStuanswerdetail>().AsQueryable() on q.Id equals s.QuestionId where s.StuId == studentId
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Select) && q.ExamId == id && q.Id == questionId
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -301,35 +324,46 @@ namespace ExamKing.Application.Services
                         OptionD = j.OptionD,
                         Ideas = j.Ideas,
                         CreateTime = j.CreateTime,
-                    },
-                    Stuanswerdetail = new StuanswerdetailDto
-                    {
-                        Id = s.Id,
-                        StuId = s.StuId,
-                        ExamId = s.ExamId,
-                        QuestionId = s.QuestionId,
-                        QuestionType = s.QuestionType,
-                        Stuanswer = s.Stuanswer,
-                        Answer = s.Answer,
-                        Isright = s.Isright,
-                        CreateTime = s.CreateTime
                     }
                 };
-            var list = await pageResult.ToListAsync();
-            return list.Adapt<List<ExamquestionDto>>();
+            var question = await pageResult.FirstOrDefaultAsync();
+            if (question == null)
+            {
+                throw Oops.Oh(ExamAnswerScoreErrorCodes.d2101);
+            }
+            // 查询答题详情
+            var answer = await _repository.Change<TbStuanswerdetail>()
+                .Entities.AsNoTracking()
+                .Where(u => u.ExamId == id && u.StuId == studentId && u.QuestionId == questionId)
+                .Select(s=>new TbStuanswerdetail
+                {
+                    Id = s.Id,
+                    StuId = s.StuId,
+                    ExamId = s.ExamId,
+                    QuestionId = s.QuestionId,
+                    QuestionType = s.QuestionType,
+                    Stuanswer = s.Stuanswer,
+                    Answer = s.Answer,
+                    Isright = s.Isright,
+                    CreateTime = s.CreateTime
+                })
+                .FirstOrDefaultAsync();
+            question.Stuanswerdetail = answer.Adapt<StuanswerdetailDto>();
+            return question.Adapt<ExamquestionDto>();
         }
 
         /// <summary>
-        /// 根据考试查询学生全部单选题和答题信息
+        /// 根据考试查询学生单选题和答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
+        /// <param name="questionId">题目Id</param>
         /// <param name="studentId">学生ID</param>
         /// <returns></returns>
-        public async Task<List<ExamquestionDto>> FindSingleAndAnswerByExamAndStudent(int id, int studentId)
+        public async Task<ExamquestionDto> FindSingleAndAnswerByExamAndStudent(int id, int questionId, int studentId)
         {
             var pageResult = from j in _repository.Change<TbSelect>().AsQueryable()
-                join q in _repository.AsQueryable() on j.Id equals q.QuestionId where q.QuestionType.Equals(QuestionTypeConst.Single) && q.ExamId==id
-                join s in _repository.Change<TbStuanswerdetail>().AsQueryable() on q.Id equals s.QuestionId where s.StuId == studentId
+                join q in _repository.AsQueryable() on j.Id equals q.QuestionId
+                where q.QuestionType.Equals(QuestionTypeConst.Single) && q.ExamId == id && q.Id == questionId
                 select new ExamquestionDto
                 {
                     Id = q.Id,
@@ -349,22 +383,32 @@ namespace ExamKing.Application.Services
                         OptionD = j.OptionD,
                         Ideas = j.Ideas,
                         CreateTime = j.CreateTime,
-                    },
-                    Stuanswerdetail = new StuanswerdetailDto
-                    {
-                        Id = s.Id,
-                        StuId = s.StuId,
-                        ExamId = s.ExamId,
-                        QuestionId = s.QuestionId,
-                        QuestionType = s.QuestionType,
-                        Stuanswer = s.Stuanswer,
-                        Answer = s.Answer,
-                        Isright = s.Isright,
-                        CreateTime = s.CreateTime
                     }
                 };
-            var list = await pageResult.ToListAsync();
-            return list.Adapt<List<ExamquestionDto>>();
+            var question = await pageResult.FirstOrDefaultAsync();
+            if (question == null)
+            {
+                throw Oops.Oh(ExamAnswerScoreErrorCodes.d2101);
+            }
+            // 查询答题详情
+            var answer = await _repository.Change<TbStuanswerdetail>()
+                .Entities.AsNoTracking()
+                .Where(u => u.ExamId == id && u.StuId == studentId && u.QuestionId == questionId)
+                .Select(s=>new TbStuanswerdetail
+                {
+                    Id = s.Id,
+                    StuId = s.StuId,
+                    ExamId = s.ExamId,
+                    QuestionId = s.QuestionId,
+                    QuestionType = s.QuestionType,
+                    Stuanswer = s.Stuanswer,
+                    Answer = s.Answer,
+                    Isright = s.Isright,
+                    CreateTime = s.CreateTime
+                })
+                .FirstOrDefaultAsync();
+            question.Stuanswerdetail = answer.Adapt<StuanswerdetailDto>();
+            return question.Adapt<ExamquestionDto>();
         }
     }
 }

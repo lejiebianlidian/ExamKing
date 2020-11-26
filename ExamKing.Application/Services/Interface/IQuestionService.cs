@@ -29,7 +29,7 @@ namespace ExamKing.Application.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<PagedList<ExamquestionDto>> FindSingleByExamAndPage(int id, int pageIndex = 1, int pageSize = 10);
-    
+
         /// <summary>
         /// 根据考试查询全部是非题
         /// </summary>
@@ -52,27 +52,30 @@ namespace ExamKing.Application.Services
         public Task<List<ExamquestionDto>> FindSingleByExam(int id);
 
         /// <summary>
-        /// 根据考试查询学生全部是非题和答题信息
+        /// 根据考试查询学生是非题和答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
+        /// <param name="questionId">题目Id</param>
         /// <param name="studentId">学生ID</param>
         /// <returns></returns>
-        public Task<List<ExamquestionDto>> FindJudgeAndAnswerByExamAndStudent(int id, int studentId);
+        public Task<ExamquestionDto> FindJudgeAndAnswerByExamAndStudent(int id, int questionId, int studentId);
 
         /// <summary>
-        /// 根据考试查询学生全部选择题和答题信息
+        /// 根据考试查询学生选择题和答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
+        /// <param name="questionId">题目Id</param>
         /// <param name="studentId">学生ID</param>
         /// <returns></returns>
-        public Task<List<ExamquestionDto>> FindSelectAndAnswerByExamAndStudent(int id, int studentId);
+        public Task<ExamquestionDto> FindSelectAndAnswerByExamAndStudent(int id, int questionId, int studentId);
 
         /// <summary>
-        /// 根据考试查询学生全部单选题和答题信息
+        /// 根据考试查询学生单选题和答题信息
         /// </summary>
         /// <param name="id">考试ID</param>
+        /// <param name="questionId">题目Id</param>
         /// <param name="studentId">学生ID</param>
         /// <returns></returns>
-        public Task<List<ExamquestionDto>> FindSingleAndAnswerByExamAndStudent(int id, int studentId);
+        public Task<ExamquestionDto> FindSingleAndAnswerByExamAndStudent(int id, int questionId, int studentId);
     }
 }

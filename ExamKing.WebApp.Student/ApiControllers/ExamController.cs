@@ -98,41 +98,48 @@ namespace ExamKing.WebApp.Student
             var exam = await _examService.FindExamById(id);
             return exam.Adapt<ExamQuestionOutput>();
         }
-        
+
         /// <summary>
         /// 查询考试是非题
         /// </summary>
-        /// <param name="id">考试id</param>
+        /// <param name="examId">试卷ID</param>
+        /// <param name="questionId">题目ID</param>
         /// <returns></returns>
-        public async Task<List<ExamquestionSelectOutput>> GetJudges(int id)
+        public async Task<ExamquestionSelectOutput> GetJudge(int examId, int questionId)
         {
-            var judges = await _questionService.FindJudgeByExam(id);
+            var student = await GetStudent();
+            var judges = await _questionService.FindJudgeAndAnswerByExamAndStudent(examId,questionId,student
+                .Id);
 
-            return judges.Adapt<List<ExamquestionSelectOutput>>();
+            return judges.Adapt<ExamquestionSelectOutput>();
         }
-        
+
         /// <summary>
         /// 查询考试多选题
         /// </summary>
-        /// <param name="id">考试id</param>
+        /// <param name="examId">考试id</param>
+        /// <param name="questionId">题目id</param>
         /// <returns></returns>
-        public async Task<List<ExamquestionSelectOutput>> GetSelects(int id)
+        public async Task<ExamquestionSelectOutput> GetSelect(int examId, int questionId)
         {
-            var judges = await _questionService.FindSelectByExam(id);
+            var student = await GetStudent();
+            var judges = await _questionService.FindSelectAndAnswerByExamAndStudent(examId,questionId,student.Id);
 
-            return judges.Adapt<List<ExamquestionSelectOutput>>();
+            return judges.Adapt<ExamquestionSelectOutput>();
         }
         
         /// <summary>
         /// 查询考试单选题
         /// </summary>
-        /// <param name="id">考试id</param>
+        /// <param name="examId">试卷ID</param>
+        /// <param name="questionId">题目ID</param>
         /// <returns></returns>
-        public async Task<List<ExamquestionSelectOutput>> GetSingles(int id)
+        public async Task<ExamquestionSelectOutput> GetSingle(int examId, int questionId)
         {
-            var judges = await _questionService.FindSingleByExam(id);
+            var student = await GetStudent();
+            var judges = await _questionService.FindSingleAndAnswerByExamAndStudent(examId,questionId,student.Id);
 
-            return judges.Adapt<List<ExamquestionSelectOutput>>();
+            return judges.Adapt<ExamquestionSelectOutput>();
         }
 
         /// <summary>
@@ -151,30 +158,6 @@ namespace ExamKing.WebApp.Student
             return answer;
         }
         
-        /// <summary>
-        /// 获取考试错题数量
-        /// </summary>
-        /// <param name="id">考试id</param>
-        /// <param name="questionType">题目类型</param>
-        /// <returns></returns>
-        public async Task<int> GetWrongAnswerCount(int id, string questionType)
-        {
-            var student = await GetStudent();
-            return await _stuanswerdetailService.GetWrongAnswerCountByStudent(student.Id, id, questionType);
-        }
-
-        /// <summary>
-        /// 获取考试对题数量
-        /// </summary>
-        /// <param name="id">考试id</param>
-        /// <param name="questionType">题目类型</param>
-        /// <returns></returns>
-        public async Task<int> GetSuccessAnswerCount(int id, string questionType)
-        {
-            var student = await GetStudent();
-            return await _stuanswerdetailService.GetSuccessAnswerCountByStudent(student.Id, id, questionType);
-        }
-
         /// <summary>
         /// 获取解题思路信息
         /// </summary>

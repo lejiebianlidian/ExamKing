@@ -46,5 +46,10 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public JudgeOutput Judge { get; set; }
+        
+        /// <summary>
+        /// 答题详情
+        /// </summary>
+        public StuanswerdetailSubOutput Stuanswerdetail { get; set; }
     }
 }
