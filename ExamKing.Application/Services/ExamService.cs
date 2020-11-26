@@ -637,6 +637,15 @@ namespace ExamKing.Application.Services
         public async Task<StuscoreDto> SubmitExamByStudent(int id, int studentId)
         {
             var exam = await this.FindExamById(id);
+            // 判断是否已经交卷
+            var hasScore = await _examRepository.Change<TbStuscore>()
+                .Entities.AsNoTracking()
+                .Where(u => u.ExamId == id && u.StuId == studentId)
+                .FirstOrDefaultAsync();
+            if (hasScore!=null)
+            {
+                throw Oops.Oh(ExamScoreErrorCodes.k2002);
+            }
             //  计算成绩
             var score = await _examRepository.Change<TbStuanswerdetail>()
                 .Entities

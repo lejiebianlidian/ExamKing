@@ -127,7 +127,9 @@ namespace ExamKing.Application.ErrorCodes
     public enum ExamScoreErrorCodes
     {
         [ErrorCodeItemMetadata("成绩不存在")]
-        k2001
+        k2001,
+        [ErrorCodeItemMetadata("成绩已存在")]
+        k2002
     }
     
     /// <summary>
