@@ -209,6 +209,7 @@ namespace ExamKing.Application.Services
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
                 .Where(u => u.IsEnable == "1")
+                .Include(u=>u.Examquestions.Where(x=>x.ExamId==u.Id))
                 .Include(u => u.Stuanswerdetails
                     .Where(x => x.StuId == studentId))
                 .Select(u => new TbExam
@@ -220,6 +221,10 @@ namespace ExamKing.Application.Services
                         Id = x.Id,
                         QuestionType = x.QuestionType,
                         Isright = x.Isright
+                    }).ToList(),
+                    Examquestions = u.Examquestions.Select(x=>new TbExamquestion
+                    {
+                        Id = x.Id
                     }).ToList()
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
@@ -241,6 +246,7 @@ namespace ExamKing.Application.Services
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
                 .Where(u => u.IsEnable == "1")
+                .Include(u=>u.Examquestions.Where(x=>x.ExamId==u.Id))
                 .Include(u => u.Stuanswerdetails
                     .Where(x => x.StuId == studentId && x.CreateTime.Date == today.Date))
                 .Select(u => new TbExam
@@ -252,6 +258,10 @@ namespace ExamKing.Application.Services
                         Id = x.Id,
                         QuestionType = x.QuestionType,
                         Isright = x.Isright
+                    }).ToList(),
+                    Examquestions = u.Examquestions.Select(x=>new TbExamquestion
+                    {
+                        Id = x.Id
                     }).ToList()
                 })
                 .ToPagedListAsync(pageIndex, pageSize);

@@ -18,6 +18,8 @@ namespace ExamKing.WebApp.Student
         public string ExamName { get; set; }
 
         public List<ExamWrongQuestionSubOutput> Stuanswerdetails { get; set; }
+
+        public List<ExamWrongquestions> Examquestions { get; set; }
     }
 
     public class ExamWrongQuestionSubOutput
@@ -36,5 +38,13 @@ namespace ExamKing.WebApp.Student
         /// 是否正确
         /// </summary>
         public string Isright { get; set; }
+    }
+
+    public class ExamWrongquestions
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public int Id { get; set; }
     }
 }

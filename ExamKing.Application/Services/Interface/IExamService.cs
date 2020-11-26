@@ -128,5 +128,12 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public Task<ExamDto> FindExamResultByStudent(int id, int studentId);
 
+        // /// <summary>
+        // /// 根据学生交卷
+        // /// </summary>
+        // /// <param name="id"></param>
+        // /// <param name="studentId"></param>
+        // /// <returns></returns>
+        // public Task<ExamDto> SubmitExamByStudent(int id, int studentId);
     }
 }
