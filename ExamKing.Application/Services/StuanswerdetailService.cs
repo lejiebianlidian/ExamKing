@@ -47,7 +47,7 @@ namespace ExamKing.Application.Services
         public async Task<int> GetWrongAnswerByStudent(int studentId)
         {
             var count = await _answerRepository
-                .Where(x => x.StuId == studentId)
+                .Where(x => x.StuId == studentId && x.Isright == "0")
                 .CountAsync();
             return count;
         }
@@ -61,7 +61,7 @@ namespace ExamKing.Application.Services
         {
             var today = DateTimeOffset.UtcNow;
             var count = await _answerRepository
-                .Where(x => x.StuId == studentId)
+                .Where(x => x.StuId == studentId && x.Isright == "0")
                 .Where(x => x.CreateTime.Date == today.Date)
                 .CountAsync();
             return count;
