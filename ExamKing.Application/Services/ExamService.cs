@@ -292,7 +292,7 @@ namespace ExamKing.Application.Services
             await exam.UpdateExcludeAsync(u => u.CreateTime);
             return exam.Adapt<ExamDto>();
         }
-        
+
         /// <summary>
         /// 根据班级查询最新考试列表
         /// </summary>
@@ -307,8 +307,8 @@ namespace ExamKing.Application.Services
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId)
                 .Where(u => u.Exam.IsFinish == "0")
-                .OrderBy(u=>u.Exam.IsFinish)
-                .ThenByDescending(u=>u.Exam.StartTime)
+                .OrderBy(u => u.Exam.IsFinish)
+                .ThenByDescending(u => u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -339,7 +339,7 @@ namespace ExamKing.Application.Services
 
             return pageResult.Adapt<PagedList<ExamDto>>();
         }
-        
+
         /// <summary>
         /// 根据班级查询正在考试列表
         /// </summary>
@@ -354,7 +354,7 @@ namespace ExamKing.Application.Services
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId)
                 .Where(u => u.Exam.IsEnable == "1" && u.Exam.IsFinish == "0")
-                .OrderByDescending(u=>u.Exam.StartTime)
+                .OrderByDescending(u => u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -407,7 +407,7 @@ namespace ExamKing.Application.Services
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId)
                 .Where(u => u.Exam.IsEnable == "0" && u.Exam.IsFinish == "0")
-                .OrderByDescending(u=>u.Exam.StartTime)
+                .OrderByDescending(u => u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -460,7 +460,7 @@ namespace ExamKing.Application.Services
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId)
                 .Where(u => u.Exam.IsEnable == "1" && u.Exam.IsFinish == "1")
-                .OrderByDescending(u=>u.Exam.StartTime)
+                .OrderByDescending(u => u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -513,7 +513,7 @@ namespace ExamKing.Application.Services
             var pageResult = await _examRepository.Change<TbExamclass>()
                 .Entities.AsNoTracking()
                 .Where(u => u.Classes.Id == classesId && u.Exam.ExamName.Contains(keyword))
-                .OrderByDescending(u=>u.Exam.StartTime)
+                .OrderByDescending(u => u.Exam.StartTime)
                 .Select(u => new TbExam
                 {
                     Id = u.Exam.Id,
@@ -563,11 +563,10 @@ namespace ExamKing.Application.Services
         {
             var result = await _examRepository
                 .Entities.AsNoTracking()
-                .Where(u=>u.Id==id)
-                .Include(u=>u.Examquestions.Where(x=>x.ExamId==u.Id).OrderBy(x=>x.Id))
-                .Include(u=>u.Stuanswerdetails.Where(x=>x.StuId==studentId && x.ExamId==id))
-                .Include(u=>u.Stuscores.Where(x=>x.StuId
-                ==studentId))
+                .Where(u => u.Id == id)
+                .Include(u => u.Examquestions)
+                .Include(u => u.Stuanswerdetails)
+                .Include(u => u.Stuscores)
                 .Select(u => new TbExam
                 {
                     Id = u.Id,
@@ -594,32 +593,37 @@ namespace ExamKing.Application.Services
                         Id = u.Teacher.Id,
                         TeacherName = u.Teacher.TeacherName
                     },
-                    Examquestions = u.Examquestions.Select(x=> new TbExamquestion
-                    {
-                        Id = x.Id,
-                        QuestionType = x.QuestionType,
-                    }).ToList(),
-                    Stuanswerdetails = u.Stuanswerdetails.Select(x=>new TbStuanswerdetail
-                    {
-                        Id = x.Id,
-                        QuestionId = x.QuestionId,
-                        QuestionType = x.QuestionType,
-                        Isright = x.Isright,
-                    }).ToList(),
-                    Stuscores = u.Stuscores.Select(x=>new TbStuscore
-                    {
-                        Id = x.Id,
-                        Score = x.Score,
-                    }).ToList(),
+                    Examquestions = u.Examquestions
+                        .Where(x => x.ExamId == u.Id).OrderBy(x => x.Id)
+                        .Select(x => new TbExamquestion
+                        {
+                            Id = x.Id,
+                            QuestionType = x.QuestionType,
+                        }).ToList(),
+                    Stuanswerdetails = u.Stuanswerdetails
+                        .Where(x => x.StuId == studentId && x.ExamId == id)
+                        .Select(x => new TbStuanswerdetail
+                        {
+                            Id = x.Id,
+                            QuestionId = x.QuestionId,
+                            QuestionType = x.QuestionType,
+                            Isright = x.Isright,
+                        }).ToList(),
+                    Stuscores = u.Stuscores
+                        .Where(x => x.StuId == studentId)
+                        .Select(x => new TbStuscore
+                        {
+                            Id = x.Id,
+                            Score = x.Score,
+                        }).ToList(),
                 }).FirstOrDefaultAsync();
-            
-            if (result==null)
+
+            if (result == null)
             {
                 throw Oops.Oh(ExamErrorCodes.s1901);
             }
 
             return result.Adapt<ExamDto>();
         }
-
     }
 }

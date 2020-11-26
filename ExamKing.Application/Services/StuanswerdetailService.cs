@@ -160,30 +160,32 @@ namespace ExamKing.Application.Services
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
                 .Where(u => u.IsEnable == "1")
-                .Include(u=>u.Examquestions
-                    .Where(x=>x.ExamId==u.Id))
-                .Include(u => u.Stuanswerdetails
-                    .Where(x => x.StuId == studentId && x.Isright == "0"))
+                .Include(u => u.Examquestions)
+                .Include(u => u.Stuanswerdetails)
                 .Select(u => new TbExam
                 {
                     Id = u.Id,
                     ExamName = u.ExamName,
-                    Stuanswerdetails = u.Stuanswerdetails.Select(x => new TbStuanswerdetail
-                    {
-                        Id = x.Id,
-                        QuestionType = x.QuestionType,
-                        Isright = x.Isright
-                    }).ToList(),
-                    Examquestions = u.Examquestions.Select(x=>new TbExamquestion
-                    {
-                        Id = x.Id
-                    }).ToList()
+                    Stuanswerdetails = u.Stuanswerdetails
+                        .Where(x => x.StuId == studentId && x.Isright == "0")
+                        .Select(x => new TbStuanswerdetail
+                        {
+                            Id = x.Id,
+                            QuestionType = x.QuestionType,
+                            Isright = x.Isright
+                        }).ToList(),
+                    Examquestions = u.Examquestions
+                        .Where(x => x.ExamId == u.Id)
+                        .Select(x => new TbExamquestion
+                        {
+                            Id = x.Id
+                        }).ToList()
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
 
             return wrongs.Adapt<PagedList<ExamDto>>();
         }
-        
+
         /// <summary>
         /// 根据学生查询今日考试错题集列表
         /// </summary>
@@ -198,23 +200,26 @@ namespace ExamKing.Application.Services
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
                 .Where(u => u.IsEnable == "1")
-                .Include(u=>u.Examquestions.Where(x=>x.ExamId==u.Id))
-                .Include(u => u.Stuanswerdetails
-                    .Where(x => x.StuId == studentId && x.Isright == "0" && x.CreateTime.Date == today.Date))
+                .Include(u => u.Examquestions)
+                .Include(u => u.Stuanswerdetails)
                 .Select(u => new TbExam
                 {
                     Id = u.Id,
                     ExamName = u.ExamName,
-                    Stuanswerdetails = u.Stuanswerdetails.Select(x => new TbStuanswerdetail
-                    {
-                        Id = x.Id,
-                        QuestionType = x.QuestionType,
-                        Isright = x.Isright
-                    }).ToList(),
-                    Examquestions = u.Examquestions.Select(x=>new TbExamquestion
-                    {
-                        Id = x.Id
-                    }).ToList()
+                    Stuanswerdetails = u.Stuanswerdetails
+                        .Where(x => x.StuId == studentId && x.Isright == "0" && x.CreateTime.Date == today.Date)
+                        .Select(x => new TbStuanswerdetail
+                        {
+                            Id = x.Id,
+                            QuestionType = x.QuestionType,
+                            Isright = x.Isright
+                        }).ToList(),
+                    Examquestions = u.Examquestions
+                        .Where(x => x.ExamId == u.Id)
+                        .Select(x => new TbExamquestion
+                        {
+                            Id = x.Id
+                        }).ToList()
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
 
@@ -232,17 +237,18 @@ namespace ExamKing.Application.Services
             var wrong = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
                 .Where(u => u.IsEnable == "1")
-                .Include(u => u.Stuanswerdetails
-                    .Where(x => x.StuId == studentId && x.Isright == "0" && x.ExamId == examId))
+                .Include(u => u.Stuanswerdetails)
                 .Select(u => new TbExam
                 {
                     Id = u.Id,
                     ExamName = u.ExamName,
-                    Stuanswerdetails = u.Stuanswerdetails.Select(s => new TbStuanswerdetail
-                    {
-                        Id = s.Id,
-                        QuestionType = s.QuestionType,
-                    }).ToList(),
+                    Stuanswerdetails = u.Stuanswerdetails
+                        .Where(x => x.StuId == studentId && x.Isright == "0" && x.ExamId == examId)
+                        .Select(s => new TbStuanswerdetail
+                        {
+                            Id = s.Id,
+                            QuestionType = s.QuestionType,
+                        }).ToList(),
                 }).FirstOrDefaultAsync();
             if (wrong == null)
             {
@@ -264,7 +270,8 @@ namespace ExamKing.Application.Services
             int examId, int studentId, int pageIndex = 1, int pageSize = 10)
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
-                join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
+                join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable()
+                    .OrderByDescending(u => u.CreateTime) on q.Id equals a.QuestionId
                 where a.StuId == studentId && a.Isright == "0"
                 join s in _answerRepository.Change<TbSelect>().AsQueryable() on q.QuestionId equals s.Id
                 where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Single
@@ -285,7 +292,7 @@ namespace ExamKing.Application.Services
                         Id = s.Id,
                         Question = s.Question,
                         Answer = s.Answer,
-                        IsSingle =s.IsSingle,
+                        IsSingle = s.IsSingle,
                         OptionA = s.OptionA,
                         OptionB = s.OptionB,
                         OptionC = s.OptionC,
@@ -310,7 +317,8 @@ namespace ExamKing.Application.Services
             int pageIndex = 1, int pageSize = 10)
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
-                join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
+                join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable()
+                    .OrderByDescending(u => u.CreateTime) on q.Id equals a.QuestionId
                 where a.StuId == studentId && a.Isright == "0"
                 join s in _answerRepository.Change<TbSelect>().AsQueryable() on q.QuestionId equals s.Id
                 where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Select
@@ -331,7 +339,7 @@ namespace ExamKing.Application.Services
                         Id = s.Id,
                         Question = s.Question,
                         Answer = s.Answer,
-                        IsSingle =s.IsSingle,
+                        IsSingle = s.IsSingle,
                         OptionA = s.OptionA,
                         OptionB = s.OptionB,
                         OptionC = s.OptionC,
@@ -355,7 +363,8 @@ namespace ExamKing.Application.Services
             int pageIndex = 1, int pageSize = 10)
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
-                join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
+                join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable()
+                    .OrderByDescending(u => u.CreateTime) on q.Id equals a.QuestionId
                 where a.StuId == studentId && a.Isright == "0"
                 join j in _answerRepository.Change<TbJudge>().AsQueryable() on q.QuestionId equals j.Id
                 where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Judge
