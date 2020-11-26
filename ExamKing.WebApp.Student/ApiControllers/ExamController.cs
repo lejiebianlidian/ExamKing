@@ -207,6 +207,17 @@ namespace ExamKing.WebApp.Student
             var result = await _examService.FindExamResultByStudent(id, student.Id);
             return result.Adapt<ExamResultOutput>();
         }
-        
+
+        /// <summary>
+        /// 交卷
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        public async Task<StuscoreOutput> SubmitExamPaper(int examId)
+        {
+            var student = await GetStudent();
+            var stuscore = await _examService.SubmitExamByStudent(examId, student.Id);
+            return stuscore.Adapt<StuscoreOutput>();
+        }
     }
 }

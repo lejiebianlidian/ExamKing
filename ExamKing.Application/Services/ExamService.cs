@@ -625,5 +625,36 @@ namespace ExamKing.Application.Services
 
             return result.Adapt<ExamDto>();
         }
+
+        
+        /// <summary>
+        /// 根据学生交卷
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        public async Task<StuscoreDto> SubmitExamByStudent(int id, int studentId)
+        {
+            var exam = await this.FindExamById(id);
+            //  计算成绩
+            var score = await _examRepository.Change<TbStuanswerdetail>()
+                .Entities
+                .Where(u=>u.ExamId==exam.Id && u.StuId==studentId && u.Isright == "1")
+                .SumAsync(u=>u.Examquestion.Score);
+            
+            // 记录分数
+            var stuScore = new StuscoreDto
+            {
+                StuId = studentId,
+                CourseId = exam.CourseId,
+                ExamId = exam.Id,
+                Score = score
+            };
+
+            var stuScoreInsert = await _examRepository.Change<TbStuscore>()
+                .InsertNowAsync(stuScore.Adapt<TbStuscore>());
+
+            return stuScoreInsert.Entity.Adapt<StuscoreDto>();
+        }
     }
 }
