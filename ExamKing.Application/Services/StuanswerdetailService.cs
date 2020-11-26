@@ -208,7 +208,7 @@ namespace ExamKing.Application.Services
         {
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
-                .Where(u => u.IsFinish == "1")
+                .Where(u => u.IsEnable == "1")
                 .Include(u => u.Stuanswerdetails
                     .Where(x => x.StuId == studentId))
                 .Select(u => new TbExam
@@ -240,7 +240,7 @@ namespace ExamKing.Application.Services
             var today = DateTimeOffset.UtcNow;
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
-                .Where(u => u.IsFinish == "1")
+                .Where(u => u.IsEnable == "1")
                 .Include(u => u.Stuanswerdetails
                     .Where(x => x.StuId == studentId && x.CreateTime.Date == today.Date))
                 .Select(u => new TbExam
@@ -269,7 +269,7 @@ namespace ExamKing.Application.Services
         {
             var wrong = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
-                .Where(u => u.IsFinish == "1")
+                .Where(u => u.IsEnable == "1")
                 .Include(u => u.Stuanswerdetails
                     .Where(x => x.StuId == studentId && x.Isright == "0" && x.ExamId == examId))
                 .Select(u => new TbExam
