@@ -12,8 +12,6 @@ RUN dotnet restore \
 FROM mcr.microsoft.com/dotnet/nightly/aspnet:5.0-alpine
 # 镜像信息
 LABEL author="pig224" email="xiaomo_0258@icloud.com"
-# 时区
-ENV TZ=Asia/Shanghai
 
 # 运行项目
 WORKDIR /app
@@ -21,3 +19,5 @@ COPY --from=builder /build/publish/ ./
 EXPOSE 80
 # 运行服务
 ENTRYPOINT ["dotnet", "ExamKing.WebApp.Student.dll"]
+# 时区
+ENV TZ=Asia/Shanghai
