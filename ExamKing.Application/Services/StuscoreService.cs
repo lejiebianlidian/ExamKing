@@ -42,6 +42,7 @@ namespace ExamKing.Application.Services
         {
             var pageResult = await _stuscoreRepository
                 .Entities.AsNoTracking()
+                .Where(u=>u.StuId==studentId)
                 .Select(u => new TbStuscore
                 {
                     Id = u.Id,
@@ -98,14 +99,15 @@ namespace ExamKing.Application.Services
         /// <summary>
         /// 查询成绩详情
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="examId"></param>
+        /// <param name="studentId"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<StuscoreDto> FindScoreById(int id)
+        public async Task<StuscoreDto> FindExamScoreByStudent(int examId, int studentId)
         {
             var score = await _stuscoreRepository
                 .Entities
-                .Where(u => u.Id == id)
+                .Where(u => u.ExamId == examId && u.StuId == studentId)
                 .Select(u => new TbStuscore
                 {
                     Id = u.Id,

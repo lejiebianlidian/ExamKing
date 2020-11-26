@@ -179,24 +179,6 @@ namespace ExamKing.WebApp.Student
         }
 
         /// <summary>
-        /// 查询学生成绩列表
-        /// </summary>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        public async Task<PagedList<StuscoreExamOutput>> GetExamScoreList(
-            [FromQuery] int pageIndex = 1,
-            [FromQuery] int pageSize = 10)
-        {
-            var student = await GetStudent();
-            var scores = await _stuscoreService.FindScoreAllByStudentAndPage(
-                student.Id,
-                pageIndex,
-                pageSize);
-            return scores.Adapt<PagedList<StuscoreExamOutput>>();
-        }
-
-        /// <summary>
         /// 查询考试结果详情
         /// </summary>
         /// <param name="id"></param>

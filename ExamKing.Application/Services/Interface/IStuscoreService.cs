@@ -23,9 +23,10 @@ namespace ExamKing.Application.Services
         /// <summary>
         /// 查询成绩详情
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="examId"></param>
+        /// <param name="studentId"></param>
         /// <returns></returns>
-        public Task<StuscoreDto> FindScoreById(int id);
+        public Task<StuscoreDto> FindExamScoreByStudent(int examId, int studentId);
         
         /// <summary>
         /// 查询学生最新一条成绩接口
