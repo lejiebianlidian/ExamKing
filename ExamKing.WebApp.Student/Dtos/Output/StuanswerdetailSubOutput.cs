@@ -16,5 +16,10 @@ namespace ExamKing.WebApp.Student
         /// 正确答案
         /// </summary>
         public string Answer { get; set; }
+        
+        /// <summary>
+        /// 是否回答正确
+        /// </summary>
+        public string Isright { get; set; }
     }
 }
