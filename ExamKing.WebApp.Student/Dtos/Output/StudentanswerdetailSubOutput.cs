@@ -8,6 +8,11 @@ namespace ExamKing.WebApp.Student
         public int Id { get; set; }
         
         /// <summary>
+        /// 题目ID
+        /// </summary>
+        public int QuestionId { get; set; }
+        
+        /// <summary>
         /// 题目类型
         /// </summary>
         public string QuestionType { get; set; }

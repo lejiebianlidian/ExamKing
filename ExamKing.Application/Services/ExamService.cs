@@ -602,6 +602,7 @@ namespace ExamKing.Application.Services
                     Stuanswerdetails = u.Stuanswerdetails.Select(x=>new TbStuanswerdetail
                     {
                         Id = x.Id,
+                        QuestionId = x.QuestionId,
                         QuestionType = x.QuestionType,
                         Isright = x.Isright,
                     }).ToList(),
