@@ -303,7 +303,7 @@ namespace ExamKing.Application.Services
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
                 join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
-                where a.StuId == studentId && a.Isright == "1"
+                where a.StuId == studentId && a.Isright == "0"
                 join s in _answerRepository.Change<TbSelect>().AsQueryable() on q.QuestionId equals s.Id
                 where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Single
                 select new ExamquestionDto
@@ -349,7 +349,7 @@ namespace ExamKing.Application.Services
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
                 join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
-                where a.StuId == studentId && a.Isright == "1"
+                where a.StuId == studentId && a.Isright == "0"
                 join s in _answerRepository.Change<TbSelect>().AsQueryable() on q.QuestionId equals s.Id
                 where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Select
                 select new ExamquestionDto
@@ -394,7 +394,7 @@ namespace ExamKing.Application.Services
         {
             var pageResult = from q in _answerRepository.Change<TbExamquestion>().AsQueryable()
                 join a in _answerRepository.Change<TbStuanswerdetail>().AsQueryable().OrderByDescending(u=>u.CreateTime) on q.Id equals a.QuestionId
-                where a.StuId == studentId && a.Isright == "1"
+                where a.StuId == studentId && a.Isright == "0"
                 join j in _answerRepository.Change<TbJudge>().AsQueryable() on q.QuestionId equals j.Id
                 where q.ExamId == examId && q.QuestionType == QuestionTypeConst.Judge
                 select new ExamquestionDto
