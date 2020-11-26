@@ -136,48 +136,6 @@ namespace ExamKing.WebApp.Student
         }
 
         /// <summary>
-        /// 查询考试是非及答题信息
-        /// </summary>
-        /// <param name="id">考试ID</param>
-        /// <returns></returns>
-        public async Task<List<ExamQuestionAnswerOutput>> GetJudgesAnswer(int id)
-        {
-            var student = await GetStudent();
-            var judges = await _questionService.FindJudgeAndAnswerByExamAndStudent(
-                id,
-                student.Id);
-            return judges.Adapt<List<ExamQuestionAnswerOutput>>();
-        }
-        
-        /// <summary>
-        /// 查询考试单选题及答题信息
-        /// </summary>
-        /// <param name="id">考试ID</param>
-        /// <returns></returns>
-        public async Task<List<ExamQuestionAnswerOutput>> GetSinglesAnswer(int id)
-        {
-            var student = await GetStudent();
-            var singles = await _questionService.FindSingleAndAnswerByExamAndStudent(
-                id,
-                student.Id);
-            return singles.Adapt<List<ExamQuestionAnswerOutput>>();
-        }
-        
-        /// <summary>
-        /// 查询考试多选题及答题信息
-        /// </summary>
-        /// <param name="id">考试ID</param>
-        /// <returns></returns>
-        public async Task<List<ExamQuestionAnswerOutput>> GetSelectsAnswer(int id)
-        {
-            var student = await GetStudent();
-            var selects = await _questionService.FindSelectAndAnswerByExamAndStudent(
-                id,
-                student.Id);
-            return selects.Adapt<List<ExamQuestionAnswerOutput>>();
-        }
-        
-        /// <summary>
         /// 提交答题结果
         /// </summary>
         /// <param name="addExamAnswerInput"></param>

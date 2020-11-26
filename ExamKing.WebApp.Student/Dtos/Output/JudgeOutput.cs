@@ -18,18 +18,5 @@ namespace ExamKing.WebApp.Student
         /// </summary>
         public string Question { get; set; }
         
-        /// <summary>
-        /// 课程ID
-        /// </summary>
-        public int CourseId { get; set; }
-        /// <summary>
-        /// 章节ID
-        /// </summary>
-        public int ChapterId { get; set; }
-        /// <summary>
-        /// 教师ID
-        /// </summary>
-        public int TeacherId { get; set; }
-        
     }
 }
