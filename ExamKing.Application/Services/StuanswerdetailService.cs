@@ -211,7 +211,7 @@ namespace ExamKing.Application.Services
                 .Where(u => u.IsEnable == "1")
                 .Include(u=>u.Examquestions.Where(x=>x.ExamId==u.Id))
                 .Include(u => u.Stuanswerdetails
-                    .Where(x => x.StuId == studentId))
+                    .Where(x => x.StuId == studentId && x.Isright == "0"))
                 .Select(u => new TbExam
                 {
                     Id = u.Id,
@@ -248,7 +248,7 @@ namespace ExamKing.Application.Services
                 .Where(u => u.IsEnable == "1")
                 .Include(u=>u.Examquestions.Where(x=>x.ExamId==u.Id))
                 .Include(u => u.Stuanswerdetails
-                    .Where(x => x.StuId == studentId && x.CreateTime.Date == today.Date))
+                    .Where(x => x.StuId == studentId && x.Isright == "0" && x.CreateTime.Date == today.Date))
                 .Select(u => new TbExam
                 {
                     Id = u.Id,
