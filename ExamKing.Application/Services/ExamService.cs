@@ -564,6 +564,7 @@ namespace ExamKing.Application.Services
             var result = await _examRepository
                 .Entities.AsNoTracking()
                 .Where(u=>u.Id==id)
+                .Include(u=>u.Examquestions.Where(x=>x.ExamId==u.Id).OrderBy(x=>x.Id))
                 .Include(u=>u.Stuanswerdetails.Where(x=>x.StuId==studentId && x.ExamId==id))
                 .Include(u=>u.Stuscores.Where(x=>x.StuId
                 ==studentId))
@@ -593,6 +594,11 @@ namespace ExamKing.Application.Services
                         Id = u.Teacher.Id,
                         TeacherName = u.Teacher.TeacherName
                     },
+                    Examquestions = u.Examquestions.Select(x=> new TbExamquestion
+                    {
+                        Id = x.Id,
+                        QuestionType = x.QuestionType,
+                    }).ToList(),
                     Stuanswerdetails = u.Stuanswerdetails.Select(x=>new TbStuanswerdetail
                     {
                         Id = x.Id,

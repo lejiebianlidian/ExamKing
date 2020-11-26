@@ -45,19 +45,5 @@ namespace ExamKing.Application.Mappers
         /// </summary>
         public DateTimeOffset CreateTime { get; set; }
 
-        /// <summary>
-        /// 试卷
-        /// </summary>
-        public ExamDto Exam { get; set; }
-
-        /// <summary>
-        /// 学生
-        /// </summary>
-        public StudentDto Student { get; set; }
-        
-        /// <summary>
-        /// 题目
-        /// </summary>
-        public ICollection<ExamquestionDto> Examquestion { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ExamKing.Application.Mappers;
 
 namespace ExamKing.WebApp.Student
 {
@@ -9,6 +8,11 @@ namespace ExamKing.WebApp.Student
     public class ExamResultOutput : ExamOutput
     {
         /// <summary>
+        /// 题目
+        /// </summary>
+        public List<ExamResultQuestionSubOutput> Examquestions { get; set; }
+        
+        /// <summary>
         /// 答题
         /// </summary>
         public List<StudentanswerdetailSubOutput> Stuanswerdetails { get; set; }
@@ -17,5 +21,18 @@ namespace ExamKing.WebApp.Student
         /// 分数
         /// </summary>
         public List<StuscoreSubOutput> Stuscores { get; set; }
+    }
+
+    public class ExamResultQuestionSubOutput
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public int Id { get; set; }
+        
+        /// <summary>
+        /// 题目类型
+        /// </summary>
+        public string QuestionType { get; set; }
     }
 }
