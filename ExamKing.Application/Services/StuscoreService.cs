@@ -122,7 +122,7 @@ namespace ExamKing.Application.Services
                         ExamName = u.Exam.ExamName,
                         StartTime = u.Exam.StartTime,
                         Duration = u.Exam.Duration,
-                    }
+                    },
                 })
                 .FirstOrDefaultAsync();
             if (score==null)

@@ -89,17 +89,6 @@ namespace ExamKing.WebApp.Student
         }
 
         /// <summary>
-        /// 查询考试信息
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<ExamQuestionOutput> GetExamInfo(int id)
-        {
-            var exam = await _examService.FindExamById(id);
-            return exam.Adapt<ExamQuestionOutput>();
-        }
-
-        /// <summary>
         /// 查询考试是非题
         /// </summary>
         /// <param name="examId">试卷ID</param>
