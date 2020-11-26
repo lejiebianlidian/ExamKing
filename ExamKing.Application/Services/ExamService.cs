@@ -540,7 +540,8 @@ namespace ExamKing.Application.Services
                         Id = u.Exam.Teacher.Id,
                         TeacherName = u.Exam.Teacher.TeacherName,
                     },
-                    Examquestions = u.Exam.Examquestions.Select(x => new TbExamquestion
+                    Examquestions = u.Exam.Examquestions
+                        .Select(x => new TbExamquestion
                     {
                         Id = x.Id,
                         QuestionType = x.QuestionType,
@@ -610,7 +611,7 @@ namespace ExamKing.Application.Services
                             Isright = x.Isright,
                         }).ToList(),
                     Stuscores = u.Stuscores
-                        .Where(x => x.StuId == studentId)
+                        .Where(x => x.StuId == studentId && x.ExamId == id)
                         .Select(x => new TbStuscore
                         {
                             Id = x.Id,
