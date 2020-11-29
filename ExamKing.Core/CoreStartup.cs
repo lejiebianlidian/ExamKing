@@ -5,7 +5,7 @@ namespace ExamKing.Core
 {
     /// <inheritdoc />
     [AppStartup(800)]
-    public sealed class ExamKingCoreStartup : AppStartup
+    public sealed class CoreStartup : AppStartup
     {
         /// <summary>
         /// ExamKingCore ConfigureServices

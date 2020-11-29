@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ExamKing.Database.Core
 {
+    /// <summary>
+    /// Database Startup
+    /// </summary>
     [AppStartup(700)]
     public sealed class DatabaseCoreStartup : AppStartup
     {
