@@ -184,7 +184,6 @@ namespace ExamKing.Application.Services
                     Id = u.Id,
                     DeptName = u.DeptName,
                     CreateTime = u.CreateTime,
-                    Teachers = u.Teachers.Select(x=>new TbTeacher{Id = teacherId}).ToList(),
                     Classes = u.Classes.Select(c => new TbClass
                     {
                         Id = c.Id,

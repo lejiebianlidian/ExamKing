@@ -63,7 +63,14 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(ExamErrorCodes.s1901);
             }
-
+            // 删除班级关联
+            await _examRepository
+                .Change<TbExamclass>()
+                .DeleteAsync(
+                    _examRepository
+                        .Change<TbExamclass>()
+                        .Where(u => u.ExamId == oldExam.Id, false).ToList()
+                );
             // 删除原试卷题目
             await _examRepository
                 .Change<TbExamquestion>()
