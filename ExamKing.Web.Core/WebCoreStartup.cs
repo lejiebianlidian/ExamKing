@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace ExamKing.Web.Core
 {
-    [AppStartup(700)]
+    [AppStartup(600)]
     public sealed class WebCoreStartup : AppStartup
     {
         public void ConfigureServices(IServiceCollection services)

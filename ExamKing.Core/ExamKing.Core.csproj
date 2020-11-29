@@ -21,5 +21,6 @@
     <ItemGroup>
         <Folder Include="Entities\" />
         <Folder Include="Entities\Exam\" />
+        <Folder Include="Quartz" />
     </ItemGroup>
 </Project>

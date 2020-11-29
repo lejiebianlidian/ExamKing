@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ExamKing.WebApp.Student
 {
-    [AppStartup(800)]
+    [AppStartup(500)]
     public sealed class SecurityStartup : AppStartup
     {
         public void ConfigureServices(IServiceCollection services)

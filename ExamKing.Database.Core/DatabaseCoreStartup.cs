@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ExamKing.Database.Core
 {
-    [AppStartup(600)]
+    [AppStartup(700)]
     public sealed class DatabaseCoreStartup : AppStartup
     {
         public void ConfigureServices(IServiceCollection services)
