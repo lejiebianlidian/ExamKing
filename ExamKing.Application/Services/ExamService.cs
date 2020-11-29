@@ -63,6 +63,7 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(ExamErrorCodes.s1901);
             }
+
             // 删除班级关联
             await _examRepository
                 .Change<TbExamclass>()
@@ -203,7 +204,13 @@ namespace ExamKing.Application.Services
                         Id = u.Teacher.Id,
                         TeacherName = u.Teacher.TeacherName,
                     },
-                    Classes = u.Classes.Select(x=>new TbClass
+                    Examclasses = u.Examclasses
+                        .Select(x => new TbExamclass
+                        {
+                            ExamId = x.ExamId,
+                            ClassesId = x.ClassesId
+                        }).ToList(),
+                    Classes = u.Classes.Select(x => new TbClass
                     {
                         Id = x.Id,
                         ClassesName = x.ClassesName,
@@ -559,12 +566,12 @@ namespace ExamKing.Application.Services
                     },
                     Examquestions = u.Exam.Examquestions
                         .Select(x => new TbExamquestion
-                    {
-                        Id = x.Id,
-                        QuestionType = x.QuestionType,
-                        QuestionId = x.QuestionId,
-                        Score = x.Score,
-                    }).ToList()
+                        {
+                            Id = x.Id,
+                            QuestionType = x.QuestionType,
+                            QuestionId = x.QuestionId,
+                            Score = x.Score,
+                        }).ToList()
                 }).ToPagedListAsync(pageIndex, pageSize);
 
             return pageResult.Adapt<PagedList<ExamDto>>();
@@ -644,7 +651,7 @@ namespace ExamKing.Application.Services
             return result.Adapt<ExamDto>();
         }
 
-        
+
         /// <summary>
         /// 根据学生交卷
         /// </summary>
@@ -659,16 +666,17 @@ namespace ExamKing.Application.Services
                 .Entities.AsNoTracking()
                 .Where(u => u.ExamId == id && u.StuId == studentId)
                 .FirstOrDefaultAsync();
-            if (hasScore!=null)
+            if (hasScore != null)
             {
                 throw Oops.Oh(ExamScoreErrorCodes.k2002);
             }
+
             //  计算成绩
             var score = await _examRepository.Change<TbStuanswerdetail>()
                 .Entities
-                .Where(u=>u.ExamId==exam.Id && u.StuId==studentId && u.Isright == "1")
-                .SumAsync(u=>u.Examquestion.Score);
-            
+                .Where(u => u.ExamId == exam.Id && u.StuId == studentId && u.Isright == "1")
+                .SumAsync(u => u.Examquestion.Score);
+
             // 记录分数
             var stuScore = new StuscoreDto
             {
