@@ -203,6 +203,16 @@ namespace ExamKing.Application.Services
                         Id = u.Teacher.Id,
                         TeacherName = u.Teacher.TeacherName,
                     },
+                    Classes = u.Classes.Select(x=>new TbClass
+                    {
+                        Id = x.Id,
+                        ClassesName = x.ClassesName,
+                        Dept = new TbDept
+                        {
+                            Id = x.Dept.Id,
+                            DeptName = x.Dept.DeptName
+                        },
+                    }).ToList(),
                     Examquestions = u.Examquestions.Select(x => new TbExamquestion
                     {
                         Id = x.Id,
