@@ -84,5 +84,16 @@ namespace ExamKing.WebApp.Teacher
         /// 班级
         /// </summary>
         public List<ClassesDeptSubOutput> Classes { get; set; }
+
+        /// <summary>
+        /// 试卷班级关联
+        /// </summary>
+        public List<ExamClassSubOutput> Examclasses { get; set; }
+    }
+
+    public class ExamClassSubOutput
+    {
+        public int ExamId { get; set; }
+        public int ClassesId { get; set; }
     }
 }
