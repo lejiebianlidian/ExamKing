@@ -14,9 +14,9 @@ FROM mcr.microsoft.com/dotnet/nightly/aspnet:5.0-alpine
 LABEL author="pig224" email="xiaomo_0258@icloud.com"
 
 # 时区
-# RUN apk --no-cache add tzdata  && \
-#   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-#   echo "Asia/Shanghai" > /etc/timezone 
+RUN apk --no-cache add tzdata  && \
+  ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+  echo "Asia/Shanghai" > /etc/timezone 
 
 # 运行项目
 WORKDIR /app
