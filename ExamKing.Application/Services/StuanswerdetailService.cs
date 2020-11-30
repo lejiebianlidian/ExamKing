@@ -59,7 +59,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<int> GetWrongAnswerTodayByStudent(int studentId)
         {
-            var today = DateTimeOffset.UtcNow;
+            var today = DateTimeOffset.Now;
             var count = await _answerRepository
                 .Where(x => x.StuId == studentId && x.Isright == "0")
                 .Where(x => x.CreateTime.Date == today.Date)
@@ -196,7 +196,7 @@ namespace ExamKing.Application.Services
         public async Task<PagedList<ExamDto>> FindWrongTodayByStudentAndPage(int studentId, int pageIndex = 1,
             int pageSize = 10)
         {
-            var today = DateTimeOffset.UtcNow;
+            var today = DateTimeOffset.Now;
             var wrongs = await _answerRepository.Change<TbExam>()
                 .Entities.AsNoTracking()
                 .Where(u => u.IsEnable == "1")

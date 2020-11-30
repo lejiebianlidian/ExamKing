@@ -17,6 +17,7 @@ namespace ExamKing.Web.Core
                 .AddControllersWithViews()
                 .AddInject()
                 .AddDateTimeJsonConverter("yyyy-MM-dd HH:mm:ss");
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

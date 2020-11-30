@@ -14,7 +14,7 @@ namespace ExamKing.Core.Utils
         {
             // var ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             // var createTime = Convert.ToInt64(ts.TotalSeconds).ToString();
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+            var timestamp = DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
             return timestamp;
         }
         

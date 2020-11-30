@@ -240,7 +240,7 @@ namespace ExamKing.Application.Services
                 return false;
             }
             // 判断是否可以启用试卷
-            var nowTime = DateTimeOffset.UtcNow;
+            var nowTime = DateTimeOffset.Now;
             if (nowTime >= examJob.Exam.StartTime && examJob.Exam.IsEnable == "0")
             {
                 await _examService.EnableExamById(examJob.ExamId);
