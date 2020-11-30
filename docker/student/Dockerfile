@@ -14,10 +14,11 @@ FROM mcr.microsoft.com/dotnet/nightly/aspnet:5.0-alpine
 LABEL author="pig224" email="xiaomo_0258@icloud.com"
 
 # 时区
-RUN sed -i "s@http://dl-cdn.alpinelinux.org/@https://repo.huaweicloud.com/@g" repositories  \
-  && apk --no-cache add tzdata \
-  && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-  && echo 'Asia/Shanghai' > /etc/timezone
+ENV TZ=Asia/Shanghai
+RUN echo "http://mirrors.aliyun.com/alpine/v3.4/main/" > /etc/apk/repositories \
+  && apk --no-cache add tzdata zeromq \
+  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+  && echo '$TZ' > /etc/timezone
 
 # 运行项目
 WORKDIR /app
