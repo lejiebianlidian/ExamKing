@@ -21,11 +21,11 @@ namespace ExamKing.WebApp.Teacher
         [Required(ErrorMessage = "请选择所属课程")]
         public int CourseId { get; set; }
 
-        /// <summary>
-        /// 所属班级
-        /// </summary>
-        [Required(ErrorMessage = "请选择所属班级")]
-        public List<ExamClassesInput> Examclasses { get; set; }
+        // /// <summary>
+        // /// 所属班级
+        // /// </summary>
+        // [Required(ErrorMessage = "请选择所属班级")]
+        // public List<ExamClassesInput> Examclasses { get; set; }
         
         /// <summary>
         /// 开始时间

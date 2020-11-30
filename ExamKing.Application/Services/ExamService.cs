@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using ExamKing.Application.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
+using Furion;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ExamKing.Application.Services
 {
@@ -20,14 +21,12 @@ namespace ExamKing.Application.Services
     public class ExamService : IExamService, ITransient
     {
         private readonly IRepository<TbExam> _examRepository;
-
+        
         /// <summary>
         /// 依赖注入
         /// </summary>
         public ExamService(
-            IRepository<TbExam> examRepository,
-            IRepository<TbClass> classRepository,
-            IRepository<TbCourse> courseRepository)
+            IRepository<TbExam> examRepository)
         {
             _examRepository = examRepository;
         }
@@ -39,16 +38,52 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<ExamDto> CreateExam(ExamDto examDto)
         {
+            // 查询课程所属班级
+            var course = await _examRepository.Change<TbCourse>()
+                .Entities.AsNoTracking()
+                .Where(u => u.Id == examDto.CourseId)
+                .Select(u => new TbCourse
+                {
+                    Id = u.Id,
+                    Classes = u.Classes.Select(x=> new TbClass
+                    {
+                        Id = x.Id
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+            if (course == null)
+            {
+                throw Oops.Oh(CourseErrorCodes.c1501);
+            }
+            var examInsert = examDto.Adapt<TbExam>();
+            var examclasses = new List<TbExamclass>();
+            // 考试绑定班级
+            foreach (var classes in course.Classes)
+            {
+                var examclasse = new TbExamclass
+                {
+                    ExamId = examInsert.Id,
+                    ClassesId = classes.Id,
+                };
+                examclasses.Add(examclasse);
+            }
+            examInsert.Examclasses = examclasses;
             var exam = await _examRepository
-                .InsertNowAsync(examDto.Adapt<TbExam>());
+                .InsertNowAsync(examInsert);
             var examEntity = exam.Entity;
+            var examJobService = App.GetService<IExamJobService>();
+            if (examJobService != null)
+                await examJobService.AddExamJob(new TbExamjobs
+                {
+                    ExamId = examEntity.Id,
+                    Status = 0
+                });
             return examEntity.Adapt<ExamDto>();
         }
 
-        public async Task<ExamDto> AutoCreateExam(ExamDto examDto)
-        {
-            throw new System.NotImplementedException();
-        }
+        // public async Task<ExamDto> AutoCreateExam(ExamDto examDto)
+        // {
+        //     throw new System.NotImplementedException();
+        // }
 
         /// <summary>
         /// 更新试卷
@@ -83,6 +118,34 @@ namespace ExamKing.Application.Services
 
             // 更新试卷
             var exam = examDto.Adapt(oldExam);
+            // 查询课程所属班级
+            var course = await _examRepository.Change<TbCourse>()
+                .Entities.AsNoTracking()
+                .Where(u => u.Id == exam.CourseId)
+                .Select(u => new TbCourse
+                {
+                    Id = u.Id,
+                    Classes = u.Classes.Select(x=> new TbClass
+                    {
+                        Id = x.Id
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+            if (course == null)
+            {
+                throw Oops.Oh(CourseErrorCodes.c1501);
+            }
+            var examclasses = new List<TbExamclass>();
+            // 考试绑定班级
+            foreach (var classes in course.Classes)
+            {
+                var examclasse = new TbExamclass
+                {
+                    ExamId = exam.Id,
+                    ClassesId = classes.Id,
+                };
+                examclasses.Add(examclasse);
+            }
+            exam.Examclasses = examclasses;
             await exam
                 .UpdateExcludeAsync(u => u.CreateTime);
 
@@ -251,9 +314,8 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(ExamErrorCodes.s1901);
             }
-
             exam.IsEnable = "1";
-            await exam.UpdateExcludeAsync(u => u.CreateTime);
+            await _examRepository.UpdateIncludeNowAsync(exam, u=>u.IsEnable);
             return exam.Adapt<ExamDto>();
         }
 
@@ -273,7 +335,7 @@ namespace ExamKing.Application.Services
             }
 
             exam.IsEnable = "0";
-            await exam.UpdateExcludeAsync(u => u.CreateTime);
+            await _examRepository.UpdateIncludeNowAsync(exam, u=>u.IsEnable);
             return exam.Adapt<ExamDto>();
         }
 
@@ -293,7 +355,7 @@ namespace ExamKing.Application.Services
             }
 
             exam.IsFinish = "0";
-            await exam.UpdateExcludeAsync(u => u.CreateTime);
+            await _examRepository.UpdateIncludeNowAsync(exam, u=>u.IsFinish);
             return exam.Adapt<ExamDto>();
         }
 
@@ -313,7 +375,7 @@ namespace ExamKing.Application.Services
             }
 
             exam.IsFinish = "1";
-            await exam.UpdateExcludeAsync(u => u.CreateTime);
+            await _examRepository.UpdateIncludeNowAsync(exam, u=>u.IsFinish);
             return exam.Adapt<ExamDto>();
         }
 
@@ -660,7 +722,7 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public async Task<StuscoreDto> SubmitExamByStudent(int id, int studentId)
         {
-            var exam = await this.FindExamById(id);
+            var exam = await FindExamById(id);
             // 判断是否已经交卷
             var hasScore = await _examRepository.Change<TbStuscore>()
                 .Entities.AsNoTracking()
@@ -670,7 +732,26 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(ExamScoreErrorCodes.k2002);
             }
-
+            //  处理未答题数据
+            var questions = await _examRepository.Change<TbExamquestion>()
+                .Entities.AsNoTracking()
+                .Where(u => u.ExamId == id)
+                .ToListAsync();
+            foreach (var question in questions)
+            {
+                // 判断是否已经答题
+                var stuanswer = await _examRepository.Change<TbStuanswerdetail>()
+                    .Entities.AsNoTracking()
+                    .Where(u => u.QuestionId == question.Id && u.StuId == studentId)
+                    .FirstOrDefaultAsync();
+                if (stuanswer == null)
+                {
+                    if (App.ServiceProvider.GetService(typeof(IStuanswerdetailService)) is IStuanswerdetailService stuanswerdetailService)
+                    {
+                        await stuanswerdetailService.AnswerQuestionByStudent(studentId, question.Id, new []{""});
+                    }
+                }
+            }
             //  计算成绩
             var score = await _examRepository.Change<TbStuanswerdetail>()
                 .Entities

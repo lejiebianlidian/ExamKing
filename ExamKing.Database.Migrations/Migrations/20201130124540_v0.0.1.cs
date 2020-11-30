@@ -385,6 +385,27 @@ namespace ExamKing.Database.Migrations.Migrations
                 comment: "试卷班级关联表");
 
             migrationBuilder.CreateTable(
+                name: "tb_examjobs",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false, comment: "ID")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    examId = table.Column<int>(type: "int", nullable: false, comment: "考试ID"),
+                    status = table.Column<int>(type: "int", nullable: false, comment: "任务状态")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_examjobs", x => x.id);
+                    table.ForeignKey(
+                        name: "examjobs_exam_id",
+                        column: x => x.examId,
+                        principalTable: "tb_exam",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                },
+                comment: "考试任务表");
+
+            migrationBuilder.CreateTable(
                 name: "tb_examquestion",
                 columns: table => new
                 {
@@ -454,7 +475,7 @@ namespace ExamKing.Database.Migrations.Migrations
                     stuId = table.Column<int>(type: "int", nullable: false, comment: "学生ID"),
                     examId = table.Column<int>(type: "int", nullable: false, comment: "试卷ID"),
                     questionId = table.Column<int>(type: "int", nullable: false, comment: "题目ID"),
-                    questionType = table.Column<int>(type: "int", nullable: false, comment: "题型"),
+                    questionType = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true, comment: "题型"),
                     stuanswer = table.Column<string>(type: "varchar(100)", nullable: false, comment: "学生答案", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
                     answer = table.Column<string>(type: "varchar(100)", nullable: false, comment: "正确答案", collation: "utf8_general_ci")
@@ -578,6 +599,17 @@ namespace ExamKing.Database.Migrations.Migrations
                 name: "examclasses_exam_idx",
                 table: "tb_examclasses",
                 column: "examId");
+
+            migrationBuilder.CreateIndex(
+                name: "examjobs_exam_id",
+                table: "tb_examjobs",
+                column: "examId");
+
+            migrationBuilder.CreateIndex(
+                name: "examjobs_id",
+                table: "tb_examjobs",
+                column: "id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "examquestion_id",
@@ -712,6 +744,9 @@ namespace ExamKing.Database.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_examclasses");
+
+            migrationBuilder.DropTable(
+                name: "tb_examjobs");
 
             migrationBuilder.DropTable(
                 name: "tb_judge");

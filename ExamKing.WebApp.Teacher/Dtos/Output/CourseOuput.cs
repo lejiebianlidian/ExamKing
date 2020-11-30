@@ -31,7 +31,11 @@ namespace ExamKing.WebApp.Teacher
         /// 创建时间
         /// </summary>
         public DateTimeOffset CreateTime { get; set; }
-        
+
+        /// <summary>
+        /// 班级
+        /// </summary>
+        public List<ClassesDeptSubOutput> Classes { get; set; }
     }
 
 }

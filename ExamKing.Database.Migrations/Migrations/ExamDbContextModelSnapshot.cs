@@ -374,6 +374,37 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasComment("试卷班级关联表");
                 });
 
+            modelBuilder.Entity("ExamKing.Core.Entites.TbExamjobs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id")
+                        .HasComment("ID");
+
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int")
+                        .HasColumnName("examId")
+                        .HasComment("考试ID");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
+                        .HasColumnName("status")
+                        .HasComment("任务状态");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "ExamId" }, "examjobs_exam_id");
+
+                    b.HasIndex(new[] { "Id" }, "examjobs_id")
+                        .IsUnique();
+
+                    b.ToTable("tb_examjobs");
+
+                    b
+                        .HasComment("考试任务表");
+                });
+
             modelBuilder.Entity("ExamKing.Core.Entites.TbExamquestion", b =>
                 {
                     b.Property<int>("Id")
@@ -638,8 +669,8 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasColumnName("questionId")
                         .HasComment("题目ID");
 
-                    b.Property<int>("QuestionType")
-                        .HasColumnType("int")
+                    b.Property<string>("QuestionType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
                         .HasColumnName("questionType")
                         .HasComment("题型");
 
@@ -989,6 +1020,17 @@ namespace ExamKing.Database.Migrations.Migrations
                     b.Navigation("Exam");
                 });
 
+            modelBuilder.Entity("ExamKing.Core.Entites.TbExamjobs", b =>
+                {
+                    b.HasOne("ExamKing.Core.Entites.TbExam", "Exam")
+                        .WithMany("Examjobses")
+                        .HasForeignKey("ExamId")
+                        .HasConstraintName("examjobs_exam_id")
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+                });
+
             modelBuilder.Entity("ExamKing.Core.Entites.TbExamquestion", b =>
                 {
                     b.HasOne("ExamKing.Core.Entites.TbExam", "Exam")
@@ -1183,6 +1225,8 @@ namespace ExamKing.Database.Migrations.Migrations
             modelBuilder.Entity("ExamKing.Core.Entites.TbExam", b =>
                 {
                     b.Navigation("Examclasses");
+
+                    b.Navigation("Examjobses");
 
                     b.Navigation("Examquestions");
 

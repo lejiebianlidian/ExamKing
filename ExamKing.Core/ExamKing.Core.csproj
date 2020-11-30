@@ -10,13 +10,14 @@
       <DocumentationFile>bin\Release\ExamKing.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Furion" Version="1.1.1" />
+        <PackageReference Include="Furion" Version="1.1.8" />
         <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="1.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.3.ci.20201114020548" />
+        <PackageReference Include="Quartz" Version="3.2.3" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Entities\" />

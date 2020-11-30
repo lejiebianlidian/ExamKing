@@ -39,6 +39,7 @@ namespace ExamKing.Core.Entites
         public ICollection<TbStuanswerdetail> Stuanswerdetails { get; set; }
         public ICollection<TbStuscore> Stuscores { get; set; }
         public ICollection<TbExamquestion> Examquestions { get; set; }
+        public ICollection<TbExamjobs> Examjobses { get; set; }
 
         /// <summary>
         /// 多对多

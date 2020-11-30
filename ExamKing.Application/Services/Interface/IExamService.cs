@@ -16,12 +16,12 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public Task<ExamDto> CreateExam(ExamDto examDto);
         
-        /// <summary>
-        /// 自动组卷
-        /// </summary>
-        /// <param name="examDto"></param>
-        /// <returns></returns>
-        public Task<ExamDto> AutoCreateExam(ExamDto examDto);
+        // /// <summary>
+        // /// 自动组卷
+        // /// </summary>
+        // /// <param name="examDto"></param>
+        // /// <returns></returns>
+        // public Task<ExamDto> AutoCreateExam(ExamDto examDto);
 
         /// <summary>
         /// 更新试卷

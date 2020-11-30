@@ -1,4 +1,5 @@
 ﻿using System;
+using ExamKing.Application.Services;
 using Furion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -257,6 +257,16 @@ namespace ExamKing.Application.Services
                     DeptId = u.DeptId,
                     TeacherId = u.TeacherId,
                     CreateTime = u.CreateTime,
+                    Classes = u.Classes.Select(x=>new TbClass
+                    {
+                        Id = x.Id,
+                        ClassesName = x.ClassesName,
+                        Dept = new TbDept
+                        {
+                            Id = x.Dept.Id,
+                            DeptName = x.Dept.DeptName
+                        }
+                    }).ToList()
                 })
                 .ToPagedListAsync(pageIndex, pageSize);
 
