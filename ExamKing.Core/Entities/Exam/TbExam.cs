@@ -22,8 +22,8 @@ namespace ExamKing.Core.Entites
         public string ExamName { get; set; }
         public int CourseId { get; set; }
         public int TeacherId { get; set; }
-        public DateTimeOffset StartTime { get; set; }
-        public DateTimeOffset EndTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         public int Duration { get; set; }
         public string IsEnable { get; set; }
         public string IsFinish { get; set; }

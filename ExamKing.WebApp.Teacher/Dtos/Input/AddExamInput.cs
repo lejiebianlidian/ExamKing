@@ -31,13 +31,13 @@ namespace ExamKing.WebApp.Teacher
         /// 开始时间
         /// </summary>
         [Required(ErrorMessage = "请选择开始考试时间")]
-        public DateTimeOffset StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         /// <summary>
         /// 结束时间
         /// </summary>
         [Required(ErrorMessage = "请选择结束考试试卷")]
-        public DateTimeOffset EndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         /// <summary>
         /// 考试时长
