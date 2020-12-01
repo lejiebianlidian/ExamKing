@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  student:
+    build:
+      context: ../
+      dockerfile: ./docker/student/Dockerfile
+    image: ek_student_server:${VERSIONTAG}
+    container_name: student
+    ports:
+      - 8071:80
+    networks: 
+      eknet:
+        ipv4_address: 172.16.238.11
+    restart: "always"
+    volumes:
+      - neuget:/var/negut:rw
+  admin:
+    build:
+      context: ../
+      dockerfile: ./docker/admin/Dockerfile
+    image: ek_admin_server:${VERSIONTAG}
+    container_name: admin
+    ports:
+      - 8072:80
+    networks: 
+      eknet:
+        ipv4_address: 172.16.238.12
+    restart: "always"
+    volumes:
+      - neuget:/var/negut:rw
+  teacher:
+    build: 
+      context: ../
+      dockerfile: ./docker/teacher/Dockerfile
+    image: ek_teacher_server:${VERSIONTAG}
+    container_name: teacher
+    ports:
+      - 8073:80
+    networks:
+      eknet:
+        ipv4_address: 172.16.238.13
+    restart: "always"
+    volumes:
+      - neuget:/var/negut:rw
+
+volumes: 
+  neuget:
+
+networks: # 创建新的网络类型
+  eknet:
+    ipam:
+      driver: default  # 网络方式：桥接或集群
+      config:
+        - subnet: 172.16.238.0/24
