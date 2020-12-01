@@ -27,6 +27,12 @@
 <img src="./imgs/ExamKing-Diagram.png" height="650"/>
 </p>
 
+## 🍻 相关项目
+- APP端：https://gitee.com/pig0224/ExamKing-app
+- 后端：https://gitee.com/pig0224/ExamKing
+- 管理员后台：https://gitee.com/pig0224/ExamKing-Admin
+- 教师后台：https://gitee.com/pig0224/examking-teacher
+
 ## 🥗 环境要求
 
 - Visual Studio 2019 16.8 +
