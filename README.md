@@ -36,7 +36,7 @@
 > 使用Docker部署需要安装Dokcer和Docker-Compose。
 
 ## 🌭 数据迁移
-> ⚠️注意：进入ExamKing.Database.Core程序集配置dbsetting.json中的数据库ConnectionStrings。
+> ⚠️注意：初始化数据库需进入ExamKing.Database.Core程序集配置dbsetting.json中的数据库ConnectionStrings。
 
 ```shell
 cd ./ExamKing.Database.Migrations
@@ -44,7 +44,6 @@ dotnet ef database update -s "../ExamKing.WebApp.Admin"
 ```
 
 ## 🍿 Docker运行
-> ⚠️注意：需要
 ```shell
 ./deploy.sh start
 ```
