@@ -146,9 +146,14 @@ namespace ExamKing.Application.Services
                 examclasses.Add(examclasse);
             }
             exam.Examclasses = examclasses;
+            // 考试任务更新
+            var examJobService = App.GetService<IExamJobService>();
+            if (examJobService != null)
+                await examJobService.UpdateExamJob(exam.Id, exam.StartTime);
+            
             await exam
                 .UpdateExcludeAsync(u => u.CreateTime);
-
+            
             return exam.Adapt<ExamDto>();
         }
 

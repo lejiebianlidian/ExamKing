@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamKing.Core.Entites;
@@ -34,7 +35,7 @@ namespace ExamKing.Application.Services
         /// 开始考试任务
         /// </summary>
         /// <returns></returns>
-        public Task<bool> StartExamJob(TbExamjobs examJob);
+        public Task<bool> StartExamJob(string examId, DateTimeOffset startTime);
         
         /// <summary>
         /// 执行考试任务
@@ -43,5 +44,12 @@ namespace ExamKing.Application.Services
         /// <returns></returns>
         public Task<bool> ExecuteExamJob(int id);
 
+        /// <summary>
+        /// 更新考试任务
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="startTime"></param>
+        /// <returns></returns>
+        public Task<bool> UpdateExamJob(int id, DateTimeOffset startTime);
     }
 }

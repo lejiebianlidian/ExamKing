@@ -73,7 +73,7 @@ namespace ExamKing.Application.Services
 
             foreach (var examJob in jobs)
             {
-                await StartExamJob(examJob);
+                await StartExamJob(examJob.ExamId.ToString(), examJob.Exam.StartTime);
             }
 
             return jobs;
@@ -107,7 +107,7 @@ namespace ExamKing.Application.Services
                 })
                 .FirstOrDefaultAsync();
 
-            await StartExamJob(examJob);
+            await StartExamJob(examJob.ExamId.ToString(), examjob.Exam.StartTime);
         }
 
         /// <summary>
@@ -186,16 +186,16 @@ namespace ExamKing.Application.Services
         /// 开始考试任务
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> StartExamJob(TbExamjobs examJob)
+        public async Task<bool> StartExamJob(string examId, DateTimeOffset startTime)
         {
             IScheduler scheduler = await _schedulerFactory.GetScheduler();
             scheduler.JobFactory = _jobFactory;
 
-            var jobKey = "job_" + examJob.ExamId.ToString();
-            var triggerKey = "trigger_" + examJob.ExamId.ToString();
+            var jobKey = "job_" + examId;
+            var triggerKey = "trigger_" + examId;
 
             IJobDetail job = JobBuilder.Create<ExamJob>()
-                .UsingJobData("ExamId", examJob.ExamId)
+                .UsingJobData("ExamId", examId)
                 .StoreDurably(true)
                 .RequestRecovery(true)
                 .WithIdentity(jobKey, "exams")
@@ -203,7 +203,7 @@ namespace ExamKing.Application.Services
 
             ITrigger trigger = TriggerBuilder.Create()
                 .WithIdentity(triggerKey, "exams")
-                .StartAt(examJob.Exam.StartTime)
+                .StartAt(startTime)
                 .WithSimpleSchedule(
                     // 5s 调度一次任务
                     x => x.WithIntervalInSeconds(5).RepeatForever())
@@ -253,6 +253,29 @@ namespace ExamKing.Application.Services
             {
                await FinshExamJob(examJob.ExamId);
             }
+            return true;
+        }
+
+        public async Task<bool> UpdateExamJob(int id, DateTimeOffset startTime)
+        {
+            var examJob = await _repository.Entities.AsNoTracking()
+                .Select(u => new TbExamjobs
+                {
+                    Id = u.Id,
+                    ExamId = u.ExamId,
+                    Status = u.Status
+                })
+                .FirstOrDefaultAsync(u => u.Id == id);
+            if (examJob == null)
+            {
+                return false;
+            }
+            var jobKey = "job_" + examJob.ExamId.ToString();
+            JobKey jk = new JobKey(jobKey, "exams");
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.DeleteJob(jk);
+
+            await StartExamJob(examJob.ExamId.ToString(), startTime);
             return true;
         }
     }
