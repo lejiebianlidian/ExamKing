@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamKing.Database.Migrations.Migrations
 {
     [DbContext(typeof(ExamDbContext))]
-    [Migration("20201201074512_v0.0.1")]
-    partial class v001
+    [Migration("20201201170344_v1.0.0")]
+    partial class v100
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
