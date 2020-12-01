@@ -11,7 +11,7 @@
 [![fork](https://gitee.com/pig0224/ExamKing/badge/fork.svg?theme=gvp)](https://gitee.com/pig0224/ExamKing/members) 
 [![GitHub stars](https://img.shields.io/github/stars/pig0224/ExamKing?logo=github)](https://github.com/pig0224/ExamKing/stargazers) 
 [![GitHub forks](https://img.shields.io/github/forks/pig0224/ExamKing?logo=github)](https://github.com/pig0224/ExamKing/network) 
-[![GitHub license](https://img.shields.io/github/license/pig0224/ExamKing)](https://github.com/MonkSoul/Furion/blob/main/LICENSE) 
+[![GitHub license](https://img.shields.io/github/license/pig0224/ExamKing)](https://github.com/pig0224/ExamKing/blob/master/LICENSE) 
 
 </div>
 
@@ -31,7 +31,7 @@
 - APP端：https://gitee.com/pig0224/ExamKing-app
 - 后端：https://gitee.com/pig0224/ExamKing
 - 管理员后台：https://gitee.com/pig0224/ExamKing-Admin
-- 教师后台：https://gitee.com/pig0224/examking-teacher
+- 教师后台：https://gitee.com/pig0224/ExamKing-Teacher
 
 ## 🥗 环境要求
 
