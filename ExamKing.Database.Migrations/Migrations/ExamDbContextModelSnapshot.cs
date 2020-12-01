@@ -276,7 +276,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasColumnName("duration")
                         .HasComment("考试时长");
 
-                    b.Property<DateTimeOffset>("EndTime")
+                    b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("endTime")
                         .HasComment("结束时间");
@@ -325,7 +325,7 @@ namespace ExamKing.Database.Migrations.Migrations
                         .HasColumnName("singleScore")
                         .HasComment("单选题分值");
 
-                    b.Property<DateTimeOffset>("StartTime")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("startTime")
                         .HasComment("开始时间");
@@ -695,6 +695,9 @@ namespace ExamKing.Database.Migrations.Migrations
 
                     b.HasIndex(new[] { "StuId" }, "answerdetail_stu_id");
 
+                    b.HasIndex(new[] { "StuId", "ExamId", "QuestionId" }, "answerdetail_stu_id_question_id")
+                        .IsUnique();
+
                     b.HasIndex(new[] { "Id" }, "stuanseerdetail_id")
                         .IsUnique();
 
@@ -835,6 +838,9 @@ namespace ExamKing.Database.Migrations.Migrations
                         .IsUnique();
 
                     b.HasIndex(new[] { "StuId" }, "stuscore_stu_id");
+
+                    b.HasIndex(new[] { "StuId", "ExamId" }, "stuscore_stu_id_exam_id")
+                        .IsUnique();
 
                     b.ToTable("tb_stuscore");
 

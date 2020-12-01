@@ -233,8 +233,8 @@ namespace ExamKing.Database.Migrations.Migrations
                         .Annotation("MySql:CharSet", "utf8"),
                     courseId = table.Column<int>(type: "int", nullable: false, comment: "课程ID"),
                     teacherId = table.Column<int>(type: "int", nullable: false, comment: "教师ID"),
-                    startTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "开始时间"),
-                    endTime = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false, comment: "结束时间"),
+                    startTime = table.Column<DateTime>(type: "datetime(6)", nullable: false, comment: "开始时间"),
+                    endTime = table.Column<DateTime>(type: "datetime(6)", nullable: false, comment: "结束时间"),
                     duration = table.Column<int>(type: "int", nullable: false, comment: "考试时长"),
                     isEnable = table.Column<string>(type: "varchar(10)", nullable: false, comment: "启用状态", collation: "utf8_general_ci")
                         .Annotation("MySql:CharSet", "utf8"),
@@ -680,6 +680,12 @@ namespace ExamKing.Database.Migrations.Migrations
                 column: "stuId");
 
             migrationBuilder.CreateIndex(
+                name: "answerdetail_stu_id_question_id",
+                table: "tb_stuanswerdetail",
+                columns: new[] { "stuId", "examId", "questionId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "stuanseerdetail_id",
                 table: "tb_stuanswerdetail",
                 column: "id",
@@ -721,6 +727,12 @@ namespace ExamKing.Database.Migrations.Migrations
                 name: "stuscore_stu_id",
                 table: "tb_stuscore",
                 column: "stuId");
+
+            migrationBuilder.CreateIndex(
+                name: "stuscore_stu_id_exam_id",
+                table: "tb_stuscore",
+                columns: new[] { "stuId", "examId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "teacher_dept_id",

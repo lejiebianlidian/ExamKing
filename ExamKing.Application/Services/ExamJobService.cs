@@ -150,6 +150,12 @@ namespace ExamKing.Application.Services
                 return false;
             }
             
+            // 移除任务调度
+            var jobKey = "job_" + examJob.ExamId.ToString();
+            JobKey jk = new JobKey(jobKey, "exams");
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.DeleteJob(jk);
+            
             // 计算全部考生成绩
             foreach (var classes in examJob.Exam.Classes)
             {
@@ -167,11 +173,8 @@ namespace ExamKing.Application.Services
                     
                 }
             }
-            // 移除任务调度
-            var jobKey = "job_" + examJob.ExamId.ToString();
-            JobKey jk = new JobKey(jobKey, "exams");
-            IScheduler scheduler = await _schedulerFactory.GetScheduler();
-            await scheduler.DeleteJob(jk);
+            
+            // 结束任务调度
             examJob.Status = 1;
             await _repository.UpdateIncludeNowAsync(examJob, u=>u.Status);
             // 结束开始

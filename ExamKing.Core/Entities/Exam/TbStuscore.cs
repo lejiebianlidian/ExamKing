@@ -16,6 +16,7 @@ namespace ExamKing.Core.Entites
         public int CourseId { get; set; }
         public int ExamId { get; set; }
         public int Score { get; set; }
+        
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset CreateTime { get; set; }
 
@@ -38,6 +39,9 @@ namespace ExamKing.Core.Entites
                 entityBuilder.HasIndex(e => e.Id, "stuscore_id")
                     .IsUnique();
 
+                entityBuilder.HasIndex(p => new {p.StuId, p.ExamId}, "stuscore_stu_id_exam_id")
+                    .IsUnique();
+                
                 entityBuilder.HasIndex(e => e.StuId, "stuscore_stu_id");
 
                 entityBuilder.Property(e => e.Id)

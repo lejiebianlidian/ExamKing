@@ -42,7 +42,10 @@ namespace ExamKing.Core.Entites
 
                 entityBuilder.HasIndex(e => e.Id, "stuanseerdetail_id")
                     .IsUnique();
-
+                
+                entityBuilder.HasIndex(p => new {p.StuId, p.ExamId, p.QuestionId}, "answerdetail_stu_id_question_id")
+                    .IsUnique();
+                
                 entityBuilder.Property(e => e.Id)
                     .HasColumnName("id")
                     .HasComment("ID");
