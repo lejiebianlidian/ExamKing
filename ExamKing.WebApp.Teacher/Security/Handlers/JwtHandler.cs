@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using Furion;
 using Furion.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,15 +13,17 @@ namespace ExamKing.WebApp.Teacher
     public class JwtHandler : AppAuthorizeHandler
     {
         /// <summary>
-        /// 验证管道
+        /// 请求管道
         /// </summary>
         /// <param name="context"></param>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public override bool Pipeline(AuthorizationHandlerContext context, DefaultHttpContext httpContext)
+        public override Task<bool> PipelineAsync(AuthorizationHandlerContext context, DefaultHttpContext httpContext)
         {
-            // 检查权限
-            return CheckAuthorzie(httpContext);
+            // 此处已经自动验证 Jwt token的有效性了，无需手动验证
+
+            // 检查权限，如果方法时异步的就不用 Task.FromResult 包裹，直接使用 async/await 即可
+            return Task.FromResult(CheckAuthorzie(httpContext));
         }
 
         /// <summary>
@@ -37,7 +41,7 @@ namespace ExamKing.WebApp.Teacher
             var authorizationManager = httpContext.RequestServices.GetService<IAuthorizationManager>();
 
             // 检查授权
-            return authorizationManager.CheckSecurity(securityDefineAttribute.ResourceId);
+            return App.GetService<IAuthorizationManager>().CheckSecurity(securityDefineAttribute.ResourceId);
         }
     }
 }

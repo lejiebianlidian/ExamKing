@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-using Furion.JsonConverters;
-
 namespace ExamKing.Application.Mappers
 {
     /// <summary>

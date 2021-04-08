@@ -1,12 +1,10 @@
-﻿using Furion.ObjectMapper;
-using Mapster;
+﻿using Mapster;
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
 
 namespace ExamKing.Application.Mappers
 {
     /// <inheritdoc />
-    public class ClassesMapper : IObjectMapper
+    public class ClassesMapper : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {

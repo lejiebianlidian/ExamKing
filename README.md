@@ -42,21 +42,26 @@
 > 使用Docker部署需要安装Dokcer和Docker-Compose。
 
 ## 🌭 数据迁移
-> ⚠️注意：初始化数据库需进入ExamKing.Database.Core程序集配置dbsetting.json中的数据库ConnectionStrings。
+
+> ⚠️注意：数据迁移先前进入ExamKing.Database.Core程序集配置dbsetting.json中的数据库ConnectionStrings。（dbsettings.Development.json 开发环境、dbsettings.Production.json 生产环境）
 
 ```shell
+方法一：
 cd ./ExamKing.Database.Migrations
 dotnet ef database update -s "../ExamKing.WebApp.Admin"
+
+方法二：
+直接将仓库目录下的examking.sql文件导入数据库
 ```
 
-## 🍿 Docker运行
+## 🍿 运行
 ```shell
-./deploy.sh start
+使用Visual Studio打开ExamKing.sln分别运行admin、teacher、student项目即可
 ```
 
-- 学生端接口文档：http://localhost:8071/
-- 管理员端接口文档：http://localhost:8072/
-- 教师端接口文档    ：http://localhost:8073/
+- 学生端接口文档：http://localhost:5001/
+- 管理员端接口文档：http://localhost:5002/
+- 教师端接口文档：http://localhost:5003/
 
 ## 🍖 预览
 

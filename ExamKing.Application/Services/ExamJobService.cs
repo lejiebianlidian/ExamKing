@@ -8,7 +8,7 @@ using Furion;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Furion.DatabaseAccessor.Extensions;
 using Quartz;
 using Quartz.Spi;
 
@@ -176,7 +176,7 @@ namespace ExamKing.Application.Services
             
             // 结束任务调度
             examJob.Status = 1;
-            await _repository.UpdateIncludeNowAsync(examJob, u=>u.Status);
+            await _repository.UpdateIncludeAsync(examJob, new[] { "Status" });
             // 结束开始
             await _examService.FinshExamById(examJob.ExamId);
             return true;

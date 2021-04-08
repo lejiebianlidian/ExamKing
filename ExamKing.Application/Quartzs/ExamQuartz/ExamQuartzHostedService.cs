@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ExamKing.Application.Services;
 using Furion;
-using Furion.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Spi;

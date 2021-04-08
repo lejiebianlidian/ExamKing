@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ExamKing.Application.ErrorCodes;
 using ExamKing.Core.Entites;
 using ExamKing.Application.Mappers;
-using ExamKing.Core.Utils;
+using Furion.DatabaseAccessor.Extensions;
 using Mapster;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
@@ -131,8 +131,8 @@ namespace ExamKing.Application.Services
             {
                 throw Oops.Oh(DeptErrorCodes.d1301);
             }
-            var changeDept = deptDto.Adapt(dept);
-             await changeDept.UpdateExcludeAsync(u=>u.CreateTime);
+            var changeDept = deptDto.Adapt(dept); 
+            await changeDept.UpdateExcludeAsync(new [] {"CreateTime"});
             return changeDept.Adapt<DeptDto>();
         }
 

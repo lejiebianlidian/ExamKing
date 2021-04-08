@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ExamKing.Application.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
+using Furion.DatabaseAccessor.Extensions;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
@@ -59,7 +59,7 @@ namespace ExamKing.Application.Services
 
             var judgeUpdate = judgeDto.Adapt(judgeEntity);
             await judgeUpdate
-                .UpdateExcludeAsync(u=>u.CreateTime);
+                .UpdateExcludeAsync(new []{"CreateTime"});
 
             return judgeUpdate.Adapt<JudgeDto>();
         }

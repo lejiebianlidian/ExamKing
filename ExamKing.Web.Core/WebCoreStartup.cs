@@ -1,5 +1,4 @@
-﻿using System;
-using ExamKing.Application.Services;
+﻿using System.Text.Json;
 using Furion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,10 +12,14 @@ namespace ExamKing.Web.Core
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCorsAccessor();
             services
                 .AddControllersWithViews()
-                .AddInject()
-                .AddDateTimeJsonConverter("yyyy-MM-dd HH:mm:ss");
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.AddDateFormatString("yyyy-MM-dd HH:mm:ss");
+                })
+                .AddInject();
 
         }
 
@@ -31,7 +34,9 @@ namespace ExamKing.Web.Core
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
+            app.UseCorsAccessor();
+            
             app.UseAuthentication();
             app.UseAuthorization();
 

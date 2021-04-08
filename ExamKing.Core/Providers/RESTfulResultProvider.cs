@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Furion.DataValidation;
 using Furion.DependencyInjection;
 using Furion.UnifyResult;
 
@@ -23,15 +25,16 @@ namespace ExamKing.Core.Providers
         public IActionResult OnException(ExceptionContext context)
         {
             // 解析异常信息
-            var (ErrorCode, ErrorObject) = UnifyResultContext.GetExceptionMetadata(context);
+            var (ErrorCode, _, ErrorObject) = UnifyContext.GetExceptionMetadata(context);
 
             return new JsonResult(new RESTfulResult<object>
             {
                 StatusCode = ErrorCode,
-                Successed = false,
+                Succeeded = false,
                 Data = null,
                 Errors = ErrorObject,
-                Extras = UnifyResultContext.Take()
+                Extras = UnifyContext.Take(),
+                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
             });
         }
 
@@ -40,7 +43,7 @@ namespace ExamKing.Core.Providers
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public IActionResult OnSuccessed(ActionExecutedContext context)
+        public IActionResult OnSucceeded(ActionExecutedContext context)
         {
             object data;
             // 处理内容结果
@@ -54,10 +57,10 @@ namespace ExamKing.Core.Providers
                 StatusCode = context.Result is EmptyResult
                     ? StatusCodes.Status204NoContent
                     : StatusCodes.Status200OK, // 处理没有返回值情况 204
-                Successed = true,
+                Succeeded = true,
                 Data = data,
                 Errors = null,
-                Extras = UnifyResultContext.Take()
+                Extras = UnifyContext.Take()
             });
         }
 
@@ -70,15 +73,15 @@ namespace ExamKing.Core.Providers
         /// <param name="validateFaildMessage"></param>
         /// <returns></returns>
         public IActionResult OnValidateFailed(ActionExecutingContext context, ModelStateDictionary modelStates,
-            Dictionary<string, IEnumerable<string>> validationResults, string validateFaildMessage)
+            IEnumerable<ValidateFailedModel> validationResults, string validateFailedMessage)
         {
             return new JsonResult(new RESTfulResult<object>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                Successed = false,
+                Succeeded = false,
                 Data = null,
                 Errors = validationResults,
-                Extras = UnifyResultContext.Take()
+                Extras = UnifyContext.Take()
             });
         }
 
@@ -97,10 +100,10 @@ namespace ExamKing.Core.Providers
                     await context.Response.WriteAsJsonAsync(new RESTfulResult<object>
                     {
                         StatusCode = StatusCodes.Status401Unauthorized,
-                        Successed = false,
+                        Succeeded = false,
                         Data = null,
                         Errors = "401 Unauthorized",
-                        Extras = UnifyResultContext.Take()
+                        Extras = UnifyContext.Take()
                     });
                     break;
                 // 处理 403 状态码
@@ -108,10 +111,10 @@ namespace ExamKing.Core.Providers
                     await context.Response.WriteAsJsonAsync(new RESTfulResult<object>
                     {
                         StatusCode = StatusCodes.Status403Forbidden,
-                        Successed = false,
+                        Succeeded = false,
                         Data = null,
                         Errors = "403 Forbidden",
-                        Extras = UnifyResultContext.Take()
+                        Extras = UnifyContext.Take()
                     });
                     break;
 

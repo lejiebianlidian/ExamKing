@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
+using Furion.DatabaseAccessor.Extensions;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
@@ -113,7 +113,7 @@ namespace ExamKing.Application.Services
             }
 
             var changeTeacher = teacherDto.Adapt(teacher);
-            await changeTeacher.UpdateExcludeAsync(u=>u.CreateTime);
+            await changeTeacher.UpdateExcludeAsync(new []{"CreateTime"});
             return changeTeacher.Adapt<TeacherDto>();
         }
 

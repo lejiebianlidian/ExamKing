@@ -7,7 +7,7 @@ using ExamKing.Core.Entites;
 using ExamKing.Application.Mappers;
 using System.Threading.Tasks;
 using ExamKing.Application.ErrorCodes;
-using ExamKing.Core.Utils;
+using Furion.DatabaseAccessor.Extensions;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
 using Microsoft.EntityFrameworkCore;
@@ -107,7 +107,7 @@ namespace ExamKing.Application.Services
 
             var changeClasses = classesDto.Adapt(classes);
             await changeClasses
-                .UpdateExcludeAsync(u => u.CreateTime);
+                .UpdateExcludeAsync(new [] {"CreateTime"});
             return changeClasses.Adapt<ClassesDto>();
         }
 

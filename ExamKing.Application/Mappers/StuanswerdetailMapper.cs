@@ -1,10 +1,9 @@
 using ExamKing.Core.Entites;
-using Furion.ObjectMapper;
 using Mapster;
 
 namespace ExamKing.Application.Mappers
 {
-    public class StuanswerdetailMapper : IObjectMapper
+    public class StuanswerdetailMapper : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {

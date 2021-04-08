@@ -1,10 +1,9 @@
 using ExamKing.Core.Entites;
-using Furion.ObjectMapper;
 using Mapster;
 
 namespace ExamKing.Application.Mappers
 {
-    public class SelectMapper :IObjectMapper
+    public class SelectMapper :IRegister
     {
         public void Register(TypeAdapterConfig config)
         {

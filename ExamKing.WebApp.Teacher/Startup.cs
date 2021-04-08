@@ -10,7 +10,6 @@ namespace ExamKing.WebApp.Teacher
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCorsAccessor();
             services
                 .AddControllersWithViews()
                 .AddUnifyResult<RESTfulResultProvider>();
@@ -18,7 +17,6 @@ namespace ExamKing.WebApp.Teacher
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCorsAccessor();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

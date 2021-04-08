@@ -1,11 +1,9 @@
-﻿using Furion.ObjectMapper;
-using Mapster;
+﻿using Mapster;
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
 
 namespace ExamKing.Application.Mappers
 {
-    public class StucoreMapper : IObjectMapper
+    public class StucoreMapper : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {

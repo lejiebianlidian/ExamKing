@@ -1,12 +1,10 @@
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
-using Furion.DependencyInjection;
-using Furion.ObjectMapper;
+
 using Mapster;
 
 namespace ExamKing.Application.Mappers
 {
-    public class CourseMapper : IObjectMapper
+    public class CourseMapper : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {

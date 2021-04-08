@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ExamKing.Application.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
+using Furion.DatabaseAccessor.Extensions;
 using Furion.DatabaseAccessor;
 using Furion.DataEncryption;
 using Furion.DependencyInjection;
@@ -163,7 +163,7 @@ namespace ExamKing.Application.Services
                 .FirstOrDefaultAsync(x => x.Id == studentDto.Id);            
             if (stu == null) throw Oops.Oh(StudentErrorCodes.s1204);
             var newStu= studentDto.Adapt(stu);
-            var changeInfo = await newStu.UpdateExcludeAsync(u => u.CreateTime);
+            var changeInfo = await newStu.UpdateExcludeAsync(new []{"CreateTime"});
             return newStu.Adapt<StudentDto>();
         }
 

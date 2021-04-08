@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ExamKing.Application.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
+using Furion.DatabaseAccessor.Extensions;
 using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
@@ -164,7 +164,7 @@ namespace ExamKing.Application.Services
             await _courseRepository.Change<TbCourseclass>().InsertAsync(courseClasses);
             var changeCourse = courseDto.Adapt(course);
             await changeCourse
-                .UpdateExcludeAsync(u=>u.CreateTime);
+                .UpdateExcludeAsync(new [] {"CreateTime"});
             return changeCourse.Adapt<CourseDto>();
         }
 

@@ -11,7 +11,7 @@ using Furion.DependencyInjection;
 using Furion.FriendlyException;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Furion.DatabaseAccessor.Extensions;
 
 namespace ExamKing.Application.Services
 {
@@ -152,7 +152,7 @@ namespace ExamKing.Application.Services
                 await examJobService.UpdateExamJob(exam.Id, exam.StartTime);
             
             await exam
-                .UpdateExcludeAsync(u => u.CreateTime);
+                .UpdateExcludeAsync(new [] {"CreateTime"});
             
             return exam.Adapt<ExamDto>();
         }
@@ -320,7 +320,7 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(ExamErrorCodes.s1901);
             }
             exam.IsEnable = "1";
-            await _examRepository.UpdateIncludeNowAsync(exam, u=>u.IsEnable);
+            await _examRepository.UpdateIncludeAsync(exam, new []{"IsEnable"});
             return exam.Adapt<ExamDto>();
         }
 
@@ -340,7 +340,7 @@ namespace ExamKing.Application.Services
             }
 
             exam.IsEnable = "0";
-            await _examRepository.UpdateIncludeNowAsync(exam, u=>u.IsEnable);
+            await _examRepository.UpdateIncludeAsync(exam, new []{"IsEnable"});
             return exam.Adapt<ExamDto>();
         }
 
@@ -360,7 +360,7 @@ namespace ExamKing.Application.Services
             }
 
             exam.IsFinish = "0";
-            await _examRepository.UpdateIncludeNowAsync(exam, u=>u.IsFinish);
+            await _examRepository.UpdateIncludeAsync(exam, new []{"IsFinish"});
             return exam.Adapt<ExamDto>();
         }
 
@@ -380,7 +380,7 @@ namespace ExamKing.Application.Services
             }
 
             exam.IsFinish = "1";
-            await _examRepository.UpdateIncludeNowAsync(exam, u=>u.IsFinish);
+            await _examRepository.UpdateIncludeAsync(exam, new []{"IsFinish"});
             return exam.Adapt<ExamDto>();
         }
 

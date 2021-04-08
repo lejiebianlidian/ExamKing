@@ -1,12 +1,11 @@
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
 using Furion.DataEncryption;
-using Furion.ObjectMapper;
+
 using Mapster;
 
 namespace ExamKing.Application.Mappers
 {
-    public class TeacherMapper : IObjectMapper
+    public class TeacherMapper : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {

@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ExamKing.Application.ErrorCodes;
 using ExamKing.Application.Mappers;
 using ExamKing.Core.Entites;
-using ExamKing.Core.Utils;
+using Furion.DatabaseAccessor.Extensions;
 using Furion.DatabaseAccessor;
 using Furion.DataEncryption;
 using Furion.DependencyInjection;
@@ -99,7 +98,7 @@ namespace ExamKing.Application.Services
                 throw Oops.Oh(AdminErrorCodes.a1002);
             }
             var newAdminEntity = adminDto.Adapt(admin);
-            var newAdmin = await newAdminEntity.UpdateExcludeAsync(u=>u.CreateTime);
+            var newAdmin = await newAdminEntity.UpdateExcludeAsync(new []{"CreateTime"});
             return newAdminEntity.Adapt<AdminDto>();
         }
 
