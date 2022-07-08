@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\ExamKing.Core.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\ExamKing.Core.xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Furion" Version="3.7.6" />
+        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="3.7.6" />
+        <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="3.7.6" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+        <PackageReference Include="Quartz" Version="3.3.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Entities\" />
+        <Folder Include="Entities\Exam\" />
+    </ItemGroup>
+</Project>

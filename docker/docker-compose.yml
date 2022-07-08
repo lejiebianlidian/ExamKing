@@ -1,55 +1,113 @@
-version: '3.4'
+version: '3'
 
 services:
-  student:
-    build:
+  mysql:
+    build: 
       context: ../
-      dockerfile: ./docker/student/Dockerfile
-    image: ek_student_server:${VERSIONTAG}
-    container_name: student
+      dockerfile: ./docker/backend/mysql/Dockerfile
+    image: ek_mysql:${VERSIONTAG}
+    container_name: ek_mysql
     ports:
-      - 8071:80
-    networks: 
-      eknet:
-        ipv4_address: 172.16.238.11
-    restart: "always"
+      - ${MYSQL_PORT}:3306
     volumes:
-      - neuget:/var/negut:rw
+      - ${MYSQL_DATA_PATH}:/var/lib/mysql/:rw
+      - ${MYSQL_CONFIG_FILENAME}:/etc/mysql/conf.d/mysql.cnf:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: examking
+    networks:
+      - eknet
   admin:
     build:
       context: ../
-      dockerfile: ./docker/admin/Dockerfile
-    image: ek_admin_server:${VERSIONTAG}
-    container_name: admin
+      dockerfile: ./docker/backend/admin/Dockerfile
+    image: ek_admin_backend:${VERSIONTAG}
+    container_name: ek_admin_backend
     ports:
-      - 8072:80
-    networks: 
-      eknet:
-        ipv4_address: 172.16.238.12
-    restart: "always"
+      - ${ADMIN_BACKEND_PORT}:80
+    networks:
+      - eknet
     volumes:
       - neuget:/var/negut:rw
+    restart: on-failure
+    depends_on:
+      - mysql
+    links:
+      - "mysql"
   teacher:
     build: 
       context: ../
-      dockerfile: ./docker/teacher/Dockerfile
-    image: ek_teacher_server:${VERSIONTAG}
-    container_name: teacher
+      dockerfile: ./docker/backend/teacher/Dockerfile
+    image: ek_teacher_backend:${VERSIONTAG}
+    container_name: ek_teacher_backend
     ports:
-      - 8073:80
+      - ${TEACHET_BACKEND_PORT}:80
     networks:
-      eknet:
-        ipv4_address: 172.16.238.13
-    restart: "always"
+      - eknet
     volumes:
       - neuget:/var/negut:rw
+    restart: on-failure
+    depends_on:
+      - mysql
+    links:
+      - "mysql"
+  student:
+    build:
+      context: ../
+      dockerfile: ./docker/backend/student/Dockerfile
+    image: ek_student_backend:${VERSIONTAG}
+    container_name: ek_student_backend
+    ports:
+      - ${STUDENT_BACKEND_PORT}:80
+    networks:
+      - eknet
+    volumes:
+      - neuget:/var/negut:rw
+    restart: on-failure
+    depends_on:
+      - mysql
+    links:
+      - "mysql"
+  admin_web:
+    build:
+      context: ../
+      dockerfile: ./docker/frontend/admin/Dockerfile
+    image: ek_admin_web:${VERSIONTAG}
+    container_name: ek_admin_web
+    ports:
+      - ${ADMIN_FRONTEND_PORT}:80
+    restart: "on-failure"
+    depends_on:
+      - admin
+    links:
+      - "admin"
+    networks:
+      - eknet
+    volumes:
+      - node_modules:/build/node_modules:rw
+  teacher_web:
+    build:
+      context: ../
+      dockerfile: ./docker/frontend/teacher/Dockerfile
+    image: ek_teacher_web:${VERSIONTAG}
+    container_name: ek_teacher_web
+    ports:
+      - ${TEACHER_FRONTEND_PORT}:80
+    restart: "on-failure"
+    depends_on:
+      - teacher
+    links:
+      - "teacher"
+    networks:
+      - eknet
+    volumes:
+      - node_modules:/build/node_modules:rw
 
 volumes: 
   neuget:
+  node_modules:
 
 networks: # 创建新的网络类型
   eknet:
     ipam:
-      driver: default  # 网络方式：桥接或集群
-      config:
-        - subnet: 172.16.238.0/24
+      driver: default

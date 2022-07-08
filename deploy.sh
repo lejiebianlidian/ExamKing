@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 项目名称
-export COMPOSE_PROJECT_NAME="ek_server"
+export COMPOSE_PROJECT_NAME="examking"
 export COMPOSE_FILE="./docker/docker-compose.yml"
 
 # 部署版本号
@@ -12,7 +12,7 @@ else
 fi
 
 # 容器服务
-services=("ek_student_server" "ek_admin_server" "ek_teacher_server")
+services=("ek_mysql" "ek_student_backend" "ek_admin_backend" "ek_teacher_backend")
 
 version(){
   tips "项目名称:${COMPOSE_PROJECT_NAME}  版本号：${VERSIONTAG}"
@@ -20,7 +20,7 @@ version(){
 
 start(){
   tips "正在运行服务"
-  docker-compose up -d --force-recreate
+  docker-compose up -d
   tips "完成运行服务"
 }
 

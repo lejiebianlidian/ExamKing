@@ -17,7 +17,7 @@
 
 <div align="center">
 
-考试君 - 基于.NET 5语言的Furion框架开发在线考试系统
+考试君 - 基于 .NET 6 的 Furion 框架开发在线考试系统
 
 </div>
 
@@ -27,41 +27,40 @@
 <img src="./imgs/ExamKing-Diagram.png" height="650"/>
 </p>
 
-## 🍻 相关项目
-- APP端：https://gitee.com/pig0224/ExamKing-app
-- 后端：https://gitee.com/pig0224/ExamKing
-- 管理员后台：https://gitee.com/pig0224/ExamKing-Admin
-- 教师后台：https://gitee.com/pig0224/ExamKing-Teacher
-
-## 🥗 环境要求
+## 🥗 开发环境要求
 
 - Visual Studio 2019 16.8 +
-- .NET 5 SDK +
+- .NET 6 SDK +
 - .Net Standard 2.1 +
 
-> 使用Docker部署需要安装Dokcer和Docker-Compose。
+## 🌭 docker 部署 (推荐)
 
-## 🌭 数据迁移
-
-> ⚠️注意：数据迁移先前进入ExamKing.Database.Core程序集配置dbsetting.json中的数据库ConnectionStrings。（dbsettings.Development.json 开发环境、dbsettings.Production.json 生产环境）
+> ⚠️ 注意：请提前准备好 docker 和 docker-compose 环境！相关配置请至 ./docker/.env
 
 ```shell
-方法一：
-cd ./ExamKing.Database.Migrations
-dotnet ef database update -s "../ExamKing.WebApp.Admin"
+# 启动
+./deploy.sh start
 
-方法二：
-直接将仓库目录下的examking.sql文件导入数据库
+# 停止
+./deploy.sh stop
+
+# 帮助
+./deploy.sh help
 ```
 
-## 🍿 运行
-```shell
-使用Visual Studio打开ExamKing.sln分别运行admin、teacher、student项目即可
+## 🍿 本地开发
+```text
+1. 将 ./docker/backend/mysql/init/examkinig.sql 文件导入数据库
+2. 使用 Visual Studio 打开 ./backend/ExamKing.sln 项目
+3. 在 ExamKing.Database.Core 中配置的 dbsettings.Development.json 开发环境数据库
+4. 在 ./frontend/admin 和 ./frontend/teacher 下分别安装依赖 npm install
+5. 在 ./frontend/admin 和 ./frontend/teacher 下分别启动前端项目 npm run dev
+6. 将 ./frontend/examking-app 加载至 uniapp 开发工具, 运行到手机端
 ```
 
-- 学生端接口文档：http://localhost:5001/
-- 管理员端接口文档：http://localhost:5002/
-- 教师端接口文档：http://localhost:5003/
+- APP端接口文档：http://localhost:4001/
+- 管理员端接口文档：http://localhost:4002/
+- 教师端接口文档：http://localhost:4003/
 
 ## 🍖 预览
 
@@ -80,7 +79,7 @@ dotnet ef database update -s "../ExamKing.WebApp.Admin"
 
 ## 🍚 关于作者
 
-一个在校大学生，热爱编程、热爱代码。
+每日每夜的写代码、永无止境。
 
 ## 🧆 友情链接
 

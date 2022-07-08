@@ -1,0 +1,14 @@
+﻿{
+  "profiles": {
+    "ExamKing.WebApp.Admin": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "launchUrl": "api",
+      "applicationUrl": "http://localhost:4002",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
